@@ -1,3 +1,4 @@
+# pyrefly: ignore [missing-import]
 import frappe
 from frappe.model.document import Document
 
