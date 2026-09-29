@@ -1,0 +1,74 @@
+[
+ {
+  "cards": [],
+  "chart_options": null,
+  "charts": [
+   {
+    "chart": "Budget vs Actual by Grant",
+    "width": "Half"
+   },
+   {
+    "chart": "Total Active Grants",
+    "width": "Half"
+   },
+   {
+    "chart": "Spending by Compliance Tag",
+    "width": "Half"
+   },
+   {
+    "chart": "Payment Receipts Over Time",
+    "width": "Half"
+   },
+   {
+    "chart": "Expenses by Account (Monthly)",
+    "width": "Full"
+   }
+  ],
+  "dashboard_name": "Caritas India — Finance Dashboard",
+  "docstatus": 0,
+  "doctype": "Dashboard",
+  "is_default": 0,
+  "is_standard": 0,
+  "modified": "2026-05-22 17:02:04.506103",
+  "module": null,
+  "name": "Caritas India — Finance Dashboard"
+ },
+ {
+  "cards": [],
+  "chart_options": null,
+  "charts": [
+   {
+    "chart": "Projects by Status",
+    "width": "Half"
+   },
+   {
+    "chart": "Active Projects Count",
+    "width": "Half"
+   },
+   {
+    "chart": "Projects by Funding Type",
+    "width": "Half"
+   },
+   {
+    "chart": "Total Budget by Project",
+    "width": "Half"
+   },
+   {
+    "chart": "Projects by Phase",
+    "width": "Half"
+   },
+   {
+    "chart": "Proposal Pipeline",
+    "width": "Half"
+   }
+  ],
+  "dashboard_name": "Caritas India — Project Dashboard",
+  "docstatus": 0,
+  "doctype": "Dashboard",
+  "is_default": 0,
+  "is_standard": 0,
+  "modified": "2026-05-21 17:12:21.397402",
+  "module": null,
+  "name": "Caritas India — Project Dashboard"
+ }
+]

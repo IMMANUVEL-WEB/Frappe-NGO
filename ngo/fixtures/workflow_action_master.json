@@ -1,0 +1,37 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-05-11 14:05:21.393058",
+  "name": "Submit for Review",
+  "workflow_action_name": "Submit for Review"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-05-11 14:07:32.342173",
+  "name": "Mark as Approved",
+  "workflow_action_name": "Mark as Approved"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-05-11 14:08:47.782519",
+  "name": "Revise and Resubmit",
+  "workflow_action_name": "Revise and Resubmit"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-04-30 12:49:43.789658",
+  "name": "Reject",
+  "workflow_action_name": "Reject"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Workflow Action Master",
+  "modified": "2026-05-11 14:06:00.456555",
+  "name": "Send to Donor",
+  "workflow_action_name": "Send to Donor"
+ }
+]

@@ -1,0 +1,571 @@
+[
+ {
+  "aggregate_function_based_on": null,
+  "based_on": "posting_date",
+  "chart_name": "Payment Receipts Over Time",
+  "chart_type": "Sum",
+  "color": null,
+  "currency": "INR",
+  "custom_options": null,
+  "docstatus": 0,
+  "doctype": "Dashboard Chart",
+  "document_type": "Payment Entry",
+  "dynamic_filters_json": "[]",
+  "filters_json": "[[\"Payment Entry\",\"payment_type\",\"=\",\"Receive\"]]",
+  "from_date": null,
+  "group_by_based_on": null,
+  "group_by_type": "Count",
+  "heatmap_year": null,
+  "is_public": 1,
+  "is_standard": 0,
+  "last_synced_on": "2026-06-12 10:28:10.340283",
+  "modified": "2026-05-22 17:17:22.155751",
+  "module": null,
+  "name": "Payment Receipts Over Time",
+  "number_of_groups": 0,
+  "parent_document_type": "",
+  "report_name": null,
+  "roles": [
+   {
+    "role": "Program Manager"
+   },
+   {
+    "role": "Finance Manager"
+   }
+  ],
+  "show_values_over_chart": 0,
+  "source": "",
+  "time_interval": "Yearly",
+  "timeseries": 1,
+  "timespan": "Last Year",
+  "to_date": null,
+  "type": "Line",
+  "use_report_chart": 0,
+  "value_based_on": "paid_amount",
+  "x_field": null,
+  "y_axis": []
+ },
+ {
+  "aggregate_function_based_on": null,
+  "based_on": "creation",
+  "chart_name": "Active Projects Count",
+  "chart_type": "Count",
+  "color": null,
+  "currency": "",
+  "custom_options": null,
+  "docstatus": 0,
+  "doctype": "Dashboard Chart",
+  "document_type": "Project",
+  "dynamic_filters_json": "[]",
+  "filters_json": "[[\"Project\",\"project_type\",\"=\",\"Donor Project\"],[\"Project\",\"status\",\"=\",\"Open\"]]",
+  "from_date": null,
+  "group_by_based_on": null,
+  "group_by_type": "Count",
+  "heatmap_year": null,
+  "is_public": 1,
+  "is_standard": 0,
+  "last_synced_on": "2026-09-04 15:06:52.503345",
+  "modified": "2026-05-26 11:02:11.062722",
+  "module": null,
+  "name": "Active Projects Count",
+  "number_of_groups": 0,
+  "parent_document_type": "",
+  "report_name": null,
+  "roles": [
+   {
+    "role": "Donor Liaison"
+   },
+   {
+    "role": "Program Manager"
+   },
+   {
+    "role": "Finance Manager"
+   },
+   {
+    "role": "Internal Reviewer"
+   }
+  ],
+  "show_values_over_chart": 0,
+  "source": "",
+  "time_interval": "Monthly",
+  "timeseries": 1,
+  "timespan": "Last Year",
+  "to_date": null,
+  "type": "Line",
+  "use_report_chart": 0,
+  "value_based_on": "",
+  "x_field": null,
+  "y_axis": []
+ },
+ {
+  "aggregate_function_based_on": null,
+  "based_on": "",
+  "chart_name": "Projects by Funding Type",
+  "chart_type": "Group By",
+  "color": null,
+  "currency": "",
+  "custom_options": null,
+  "docstatus": 0,
+  "doctype": "Dashboard Chart",
+  "document_type": "Project",
+  "dynamic_filters_json": "[]",
+  "filters_json": "[[\"Project\",\"project_type\",\"=\",\"Donor Project\"]]",
+  "from_date": null,
+  "group_by_based_on": "custom_funding_type",
+  "group_by_type": "Count",
+  "heatmap_year": null,
+  "is_public": 1,
+  "is_standard": 0,
+  "last_synced_on": "2026-09-04 15:06:52.836397",
+  "modified": "2026-05-26 11:02:31.807655",
+  "module": null,
+  "name": "Projects by Funding Type",
+  "number_of_groups": 0,
+  "parent_document_type": "",
+  "report_name": null,
+  "roles": [
+   {
+    "role": "Donor Liaison"
+   },
+   {
+    "role": "Program Manager"
+   },
+   {
+    "role": "Finance Manager"
+   },
+   {
+    "role": "Internal Reviewer"
+   }
+  ],
+  "show_values_over_chart": 0,
+  "source": "",
+  "time_interval": "Yearly",
+  "timeseries": 0,
+  "timespan": "Last Year",
+  "to_date": null,
+  "type": "Pie",
+  "use_report_chart": 0,
+  "value_based_on": "",
+  "x_field": null,
+  "y_axis": []
+ },
+ {
+  "aggregate_function_based_on": null,
+  "based_on": "",
+  "chart_name": "Projects by Phase",
+  "chart_type": "Group By",
+  "color": null,
+  "currency": "",
+  "custom_options": null,
+  "docstatus": 0,
+  "doctype": "Dashboard Chart",
+  "document_type": "Project",
+  "dynamic_filters_json": "[]",
+  "filters_json": "[[\"Project\",\"project_type\",\"=\",\"Donor Project\"]]",
+  "from_date": null,
+  "group_by_based_on": "custom_project_phase",
+  "group_by_type": "Count",
+  "heatmap_year": null,
+  "is_public": 1,
+  "is_standard": 0,
+  "last_synced_on": "2026-09-04 15:06:52.623367",
+  "modified": "2026-05-26 11:03:43.226420",
+  "module": null,
+  "name": "Projects by Phase",
+  "number_of_groups": 0,
+  "parent_document_type": "",
+  "report_name": null,
+  "roles": [
+   {
+    "role": "Donor Liaison"
+   },
+   {
+    "role": "Finance Manager"
+   },
+   {
+    "role": "Program Manager"
+   },
+   {
+    "role": "Internal Reviewer"
+   }
+  ],
+  "show_values_over_chart": 0,
+  "source": "",
+  "time_interval": "Yearly",
+  "timeseries": 0,
+  "timespan": "Last Year",
+  "to_date": null,
+  "type": "Donut",
+  "use_report_chart": 0,
+  "value_based_on": "",
+  "x_field": null,
+  "y_axis": []
+ },
+ {
+  "aggregate_function_based_on": null,
+  "based_on": "",
+  "chart_name": "Proposal Pipeline",
+  "chart_type": "Group By",
+  "color": null,
+  "currency": "",
+  "custom_options": null,
+  "docstatus": 0,
+  "doctype": "Dashboard Chart",
+  "document_type": "Project Proposal",
+  "dynamic_filters_json": "[]",
+  "filters_json": "[]",
+  "from_date": null,
+  "group_by_based_on": "workflow_state",
+  "group_by_type": "Count",
+  "heatmap_year": null,
+  "is_public": 1,
+  "is_standard": 0,
+  "last_synced_on": "2026-09-04 15:06:52.582820",
+  "modified": "2026-05-26 11:04:08.040222",
+  "module": null,
+  "name": "Proposal Pipeline",
+  "number_of_groups": 0,
+  "parent_document_type": "",
+  "report_name": null,
+  "roles": [
+   {
+    "role": "Donor Liaison"
+   },
+   {
+    "role": "Finance Manager"
+   },
+   {
+    "role": "Program Manager"
+   },
+   {
+    "role": "Internal Reviewer"
+   }
+  ],
+  "show_values_over_chart": 0,
+  "source": "",
+  "time_interval": "Yearly",
+  "timeseries": 0,
+  "timespan": "Last Year",
+  "to_date": null,
+  "type": "Bar",
+  "use_report_chart": 0,
+  "value_based_on": "",
+  "x_field": null,
+  "y_axis": []
+ },
+ {
+  "aggregate_function_based_on": null,
+  "based_on": null,
+  "chart_name": "Budget vs Actual by Grant",
+  "chart_type": "Report",
+  "color": null,
+  "currency": "INR",
+  "custom_options": null,
+  "docstatus": 0,
+  "doctype": "Dashboard Chart",
+  "document_type": null,
+  "dynamic_filters_json": "{}",
+  "filters_json": "{\"from_fiscal_year\":\"2026-2027\",\"to_fiscal_year\":\"2026-2027\",\"period\":\"Yearly\",\"company\":\"Boscosoft Technologies  Pvt Ltd\",\"budget_against\":\"Cost Center\",\"show_cumulative\":0}",
+  "from_date": null,
+  "group_by_based_on": null,
+  "group_by_type": "Count",
+  "heatmap_year": null,
+  "is_public": 1,
+  "is_standard": 0,
+  "last_synced_on": null,
+  "modified": "2026-06-02 11:11:42.518708",
+  "module": null,
+  "name": "Budget vs Actual by Grant",
+  "number_of_groups": 0,
+  "parent_document_type": null,
+  "report_name": "Budget Variance Report",
+  "roles": [
+   {
+    "role": "Program Manager"
+   },
+   {
+    "role": "Donor Liaison"
+   },
+   {
+    "role": "Finance Manager"
+   }
+  ],
+  "show_values_over_chart": 0,
+  "source": null,
+  "time_interval": "Yearly",
+  "timeseries": 0,
+  "timespan": "Last Year",
+  "to_date": null,
+  "type": "Bar",
+  "use_report_chart": 0,
+  "value_based_on": null,
+  "x_field": "account",
+  "y_axis": [
+   {
+    "color": "#e82525",
+    "y_field": "budget_2026_2027"
+   },
+   {
+    "color": "#1e23c7",
+    "y_field": "actual_2026_2027"
+   },
+   {
+    "color": "#b3bf2e",
+    "y_field": "variance_2026_2027"
+   }
+  ]
+ },
+ {
+  "aggregate_function_based_on": null,
+  "based_on": "creation",
+  "chart_name": "Total Active Grants",
+  "chart_type": "Count",
+  "color": null,
+  "currency": "",
+  "custom_options": null,
+  "docstatus": 0,
+  "doctype": "Dashboard Chart",
+  "document_type": "Donor Grant",
+  "dynamic_filters_json": "[]",
+  "filters_json": "[[\"Donor Grant\",\"status\",\"=\",\"Active\"]]",
+  "from_date": null,
+  "group_by_based_on": null,
+  "group_by_type": "Count",
+  "heatmap_year": null,
+  "is_public": 1,
+  "is_standard": 0,
+  "last_synced_on": "2026-06-12 10:28:10.038003",
+  "modified": "2026-05-22 17:01:38.436164",
+  "module": null,
+  "name": "Total Active Grants",
+  "number_of_groups": 0,
+  "parent_document_type": "",
+  "report_name": null,
+  "roles": [
+   {
+    "role": "Donor Liaison"
+   },
+   {
+    "role": "Program Manager"
+   },
+   {
+    "role": "Finance Manager"
+   }
+  ],
+  "show_values_over_chart": 0,
+  "source": "",
+  "time_interval": "Monthly",
+  "timeseries": 1,
+  "timespan": "Last Year",
+  "to_date": null,
+  "type": "Bar",
+  "use_report_chart": 0,
+  "value_based_on": "",
+  "x_field": null,
+  "y_axis": []
+ },
+ {
+  "aggregate_function_based_on": "total_debit",
+  "based_on": "",
+  "chart_name": "Spending by Compliance Tag",
+  "chart_type": "Group By",
+  "color": null,
+  "currency": "INR",
+  "custom_options": null,
+  "docstatus": 0,
+  "doctype": "Dashboard Chart",
+  "document_type": "Journal Entry",
+  "dynamic_filters_json": "[]",
+  "filters_json": "[]",
+  "from_date": null,
+  "group_by_based_on": "custom_compliance_tag",
+  "group_by_type": "Sum",
+  "heatmap_year": null,
+  "is_public": 1,
+  "is_standard": 0,
+  "last_synced_on": "2026-06-12 10:31:56.240524",
+  "modified": "2026-05-22 17:14:32.335498",
+  "module": null,
+  "name": "Spending by Compliance Tag",
+  "number_of_groups": 0,
+  "parent_document_type": "",
+  "report_name": null,
+  "roles": [
+   {
+    "role": "Program Manager"
+   },
+   {
+    "role": "Finance Manager"
+   }
+  ],
+  "show_values_over_chart": 0,
+  "source": "",
+  "time_interval": "Yearly",
+  "timeseries": 0,
+  "timespan": "Last Year",
+  "to_date": null,
+  "type": "Pie",
+  "use_report_chart": 0,
+  "value_based_on": "",
+  "x_field": null,
+  "y_axis": []
+ },
+ {
+  "aggregate_function_based_on": null,
+  "based_on": null,
+  "chart_name": "Expenses by Account (Monthly)",
+  "chart_type": "Report",
+  "color": null,
+  "currency": "INR",
+  "custom_options": null,
+  "docstatus": 0,
+  "doctype": "Dashboard Chart",
+  "document_type": null,
+  "dynamic_filters_json": "{}",
+  "filters_json": "{\"company\":\"Boscosoft Technologies  Pvt Ltd\",\"categorize_by\":\"Categorize by Voucher (Consolidated)\",\"cost_center\":[\"Ragu - BSPL\"],\"include_dimensions\":1,\"show_opening_entries\":0,\"include_default_book_entries\":1,\"show_cancelled_entries\":0,\"show_net_values_in_party_account\":0,\"show_amount_in_company_currency\":0,\"add_values_in_transaction_currency\":0,\"show_remarks\":0,\"ignore_err\":0,\"ignore_cr_dr_notes\":0,\"from_date\":\"2026-04-22\",\"to_date\":\"2026-05-22\"}",
+  "from_date": null,
+  "group_by_based_on": null,
+  "group_by_type": "Count",
+  "heatmap_year": null,
+  "is_public": 1,
+  "is_standard": 0,
+  "last_synced_on": null,
+  "modified": "2026-05-22 17:03:35.145562",
+  "module": null,
+  "name": "Expenses by Account (Monthly)",
+  "number_of_groups": 0,
+  "parent_document_type": null,
+  "report_name": "General Ledger",
+  "roles": [
+   {
+    "role": "Donor Liaison"
+   },
+   {
+    "role": "Finance Manager"
+   },
+   {
+    "role": "Program Manager"
+   }
+  ],
+  "show_values_over_chart": 0,
+  "source": null,
+  "time_interval": "Yearly",
+  "timeseries": 0,
+  "timespan": "Last Year",
+  "to_date": null,
+  "type": "Bar",
+  "use_report_chart": 0,
+  "value_based_on": null,
+  "x_field": "posting_date",
+  "y_axis": [
+   {
+    "color": "#4e615e",
+    "y_field": "debit"
+   }
+  ]
+ },
+ {
+  "aggregate_function_based_on": null,
+  "based_on": "creation",
+  "chart_name": "Total Budget by Project",
+  "chart_type": "Sum",
+  "color": null,
+  "currency": "INR",
+  "custom_options": null,
+  "docstatus": 0,
+  "doctype": "Dashboard Chart",
+  "document_type": "Project",
+  "dynamic_filters_json": "[]",
+  "filters_json": "[[\"Project\",\"project_type\",\"=\",\"Donor Project\"],[\"Project\",\"status\",\"=\",\"Open\"]]",
+  "from_date": null,
+  "group_by_based_on": null,
+  "group_by_type": "Count",
+  "heatmap_year": null,
+  "is_public": 1,
+  "is_standard": 0,
+  "last_synced_on": "2026-09-04 15:06:52.600590",
+  "modified": "2026-05-26 11:03:06.249148",
+  "module": null,
+  "name": "Total Budget by Project",
+  "number_of_groups": 0,
+  "parent_document_type": "",
+  "report_name": null,
+  "roles": [
+   {
+    "role": "Donor Liaison"
+   },
+   {
+    "role": "Program Manager"
+   },
+   {
+    "role": "Finance Manager"
+   },
+   {
+    "role": "Internal Reviewer"
+   }
+  ],
+  "show_values_over_chart": 0,
+  "source": "",
+  "time_interval": "Yearly",
+  "timeseries": 1,
+  "timespan": "Last Year",
+  "to_date": null,
+  "type": "Bar",
+  "use_report_chart": 0,
+  "value_based_on": "custom_total_budget",
+  "x_field": null,
+  "y_axis": []
+ },
+ {
+  "aggregate_function_based_on": null,
+  "based_on": "",
+  "chart_name": "Projects by Status",
+  "chart_type": "Group By",
+  "color": "#c92424",
+  "currency": "",
+  "custom_options": null,
+  "docstatus": 0,
+  "doctype": "Dashboard Chart",
+  "document_type": "Project",
+  "dynamic_filters_json": "[]",
+  "filters_json": "[[\"Project\",\"project_type\",\"=\",\"Donor Project\"]]",
+  "from_date": null,
+  "group_by_based_on": "status",
+  "group_by_type": "Count",
+  "heatmap_year": null,
+  "is_public": 1,
+  "is_standard": 0,
+  "last_synced_on": "2026-09-04 15:06:52.412061",
+  "modified": "2026-05-26 11:01:51.449712",
+  "module": null,
+  "name": "Projects by Status",
+  "number_of_groups": 0,
+  "parent_document_type": "",
+  "report_name": null,
+  "roles": [
+   {
+    "role": "Program Manager"
+   },
+   {
+    "role": "Finance Manager"
+   },
+   {
+    "role": "Donor Liaison"
+   },
+   {
+    "role": "Internal Reviewer"
+   }
+  ],
+  "show_values_over_chart": 0,
+  "source": "",
+  "time_interval": "Yearly",
+  "timeseries": 0,
+  "timespan": "Last Year",
+  "to_date": null,
+  "type": "Pie",
+  "use_report_chart": 0,
+  "value_based_on": "",
+  "x_field": null,
+  "y_axis": []
+ }
+]
