@@ -231,6 +231,8 @@ fixtures = [
 	},
 
 	# 14. Custom DocPerms (Role Permission Manager overrides for NGO roles)
+	#     All roles whose permissions were configured via Role Permission Manager
+	#     on caritasindia.local (14 roles, 47 DocTypes, 111 permission rows)
 	{
 		"dt": "Custom DocPerm",
 		"filters": [
@@ -238,7 +240,17 @@ fixtures = [
 				"Program Manager",
 				"Donor Liaison",
 				"Internal Reviewer",
-				"Finance Manager"
+				"Finance Manager",
+				"Finance Officer",
+				"Finance Approver",
+				"Admin",
+				"Document Controller",
+				"Procurement Officer",
+				"Chair Person",
+				"Committee Member",
+				"Committee Chair",
+				"Committee Observer",
+				"Committee Secretary"
 			]]
 		]
 	}
