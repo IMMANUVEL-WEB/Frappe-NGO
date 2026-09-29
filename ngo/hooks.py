@@ -227,5 +227,28 @@ fixtures = [
 				"New Project Arrived"
 			]]
 		]
+	},
+
+	# 14. Custom DocPerms (Role Permission Manager overrides for NGO roles)
+	{
+		"dt": "Custom DocPerm",
+		"filters": [
+			["role", "in", [
+				"Program Manager",
+				"Donor Liaison",
+				"Internal Reviewer",
+				"Finance Manager",
+				"Finance Officer",
+				"Finance Approver",
+				"Admin",
+				"Document Controller",
+				"Procurement Officer",
+				"Chair Person",
+				"Committee Member",
+				"Committee Chair",
+				"Committee Observer",
+				"Committee Secretary"
+			]]
+		]
 	}
 ]
