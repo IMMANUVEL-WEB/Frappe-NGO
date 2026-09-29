@@ -91,7 +91,7 @@ fixtures = [
 		]
 	},
 
-	# 5. Custom Fields on Standard DocTypes
+	# 5. Custom Fields on Standard ERPNext DocTypes
 	{
 		"dt": "Custom Field",
 		"filters": [
@@ -115,13 +115,12 @@ fixtures = [
 				"Supplier-custom_cost_center",
 				"Payment Entry-custom_destination",
 				"Journal Entry-custom_donor_grant",
-				"Journal Entry-custom_compliance_tag",
-				"Leave Application-custom_google_calendar_event_id"
+				"Journal Entry-custom_compliance_tag"
 			]]
 		]
 	},
 
-	# 6. Property Setters on Standard DocTypes
+	# 6. Property Setters on Standard ERPNext DocTypes
 	{
 		"dt": "Property Setter",
 		"filters": [
