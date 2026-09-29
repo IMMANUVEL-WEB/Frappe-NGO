@@ -1,0 +1,154 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "autoname": "DG-.YYYY.-.#####.name",
+ "creation": "2026-05-14 17:25:22.771248",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "grant_id",
+  "grant_title",
+  "currency",
+  "linked_project",
+  "valid_from",
+  "status",
+  "cost_center",
+  "column_break_tehu",
+  "donor_name",
+  "funding_type",
+  "total_amount",
+  "valid_to",
+  "compliance_tag",
+  "donor_notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "grant_id",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Grant ID",
+   "read_only": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "grant_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Grant Title",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "default": "INR",
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Currency",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "linked_project",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Linked Project",
+   "link_filters": "[\r\n  [\"Project\", \"project_type\", \"=\", \"Donor Project\"]\r\n]",
+   "options": "Project",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "linked_project.expected_start_date",
+   "fieldname": "valid_from",
+   "fieldtype": "Date",
+   "label": "Valid From"
+  },
+  {
+   "default": "Active",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Draft\nActive\nClosed\nExpired"
+  },
+  {
+   "fetch_from": "linked_project.cost_center",
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_tehu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "linked_project.custom_donor",
+   "fieldname": "donor_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Donor Name",
+   "link_filters": "[\r\n  [\"Supplier\", \"supplier_type\", \"=\", \"Donor\"]\r\n]",
+   "options": "Supplier",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "linked_project.custom_funding_type",
+   "fieldname": "funding_type",
+   "fieldtype": "Select",
+   "label": "Funding Type",
+   "options": "CSR\nFCRA\nGovernment\nGeneral",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "linked_project.custom_total_budget",
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Amount"
+  },
+  {
+   "fetch_from": "linked_project.expected_end_date",
+   "fieldname": "valid_to",
+   "fieldtype": "Date",
+   "label": "Valid To"
+  },
+  {
+   "fieldname": "compliance_tag",
+   "fieldtype": "Select",
+   "label": "Compliance Tag",
+   "options": "FCRA Receipt\n80G\n10BD\nCSR Form"
+  },
+  {
+   "fieldname": "donor_notes",
+   "fieldtype": "Text",
+   "label": "Donor Notes"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-29 14:01:58.158607",
+ "modified_by": "Administrator",
+ "module": "Ngo",
+ "name": "Donor Grant",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,236 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "autoname": "PROP-.YYYY.-.MM.-.#####",
+ "creation": "2026-05-09 15:59:13.901049",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "project_proposal_section",
+  "proposal_title",
+  "proposal_code",
+  "sector",
+  "geography",
+  "proposal_owner",
+  "donor_profile",
+  "funding_type",
+  "proposed_start_date",
+  "proposed_end_date",
+  "budge_budget_section_section",
+  "budget_breakdown",
+  "total_budget",
+  "compliance_section_section",
+  "mou_document",
+  "csr_form",
+  "fcra_receipt_no",
+  "workflow_section_section",
+  "approval_notes",
+  "linked_project",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "project_proposal_section",
+   "fieldtype": "Section Break",
+   "label": "Project Proposal"
+  },
+  {
+   "fieldname": "proposal_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Proposal Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "proposal_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Proposal Code",
+   "read_only": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "sector",
+   "fieldtype": "Select",
+   "label": "Sector",
+   "options": "Health\nEducation\nWASH\nLivelihoods\nDisaster Relief\nGovernance"
+  },
+  {
+   "description": "State / district / region",
+   "fieldname": "geography",
+   "fieldtype": "Geolocation",
+   "label": "Geography"
+  },
+  {
+   "fieldname": "proposal_owner",
+   "fieldtype": "Link",
+   "label": "Proposal Owner",
+   "options": "Employee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "donor_profile",
+   "fieldtype": "Link",
+   "label": "Donor Profile",
+   "link_filters": "[\r\n  [\"Supplier\", \"supplier_type\", \"=\", \"Donor\"]\r\n]",
+   "options": "Supplier",
+   "reqd": 1
+  },
+  {
+   "fieldname": "funding_type",
+   "fieldtype": "Select",
+   "label": "Funding Type",
+   "options": "FCRA\nCSR\nDomestic Grant\nInternal"
+  },
+  {
+   "fieldname": "proposed_start_date",
+   "fieldtype": "Date",
+   "label": "Proposed Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "proposed_end_date",
+   "fieldtype": "Date",
+   "label": "Proposed End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "budge_budget_section_section",
+   "fieldtype": "Section Break",
+   "label": "Budget Section"
+  },
+  {
+   "fieldname": "budget_breakdown",
+   "fieldtype": "Table",
+   "label": "Budget Breakdown",
+   "options": "Budget Item"
+  },
+  {
+   "fieldname": "total_budget",
+   "fieldtype": "Currency",
+   "label": "Total Budget",
+   "read_only": 1
+  },
+  {
+   "fieldname": "compliance_section_section",
+   "fieldtype": "Section Break",
+   "label": "Compliance Section "
+  },
+  {
+   "fieldname": "mou_document",
+   "fieldtype": "Attach",
+   "label": "MoU Document"
+  },
+  {
+   "depends_on": "eval:doc.funding_type==\"CSR\"",
+   "fieldname": "csr_form",
+   "fieldtype": "Attach",
+   "label": "CSR Form",
+   "mandatory_depends_on": "doc."
+  },
+  {
+   "depends_on": "eval:doc.funding_type==\"FCRA\"",
+   "fieldname": "fcra_receipt_no",
+   "fieldtype": "Data",
+   "label": "FCRA Receipt No."
+  },
+  {
+   "fieldname": "workflow_section_section",
+   "fieldtype": "Section Break",
+   "label": " Workflow Section "
+  },
+  {
+   "fieldname": "approval_notes",
+   "fieldtype": "Text",
+   "label": "Approval Notes"
+  },
+  {
+   "fieldname": "linked_project",
+   "fieldtype": "Data",
+   "label": "Linked Project",
+   "options": "Project",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Project Proposal",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2026-09-29 14:01:58.481228",
+ "modified_by": "Administrator",
+ "module": "Ngo",
+ "name": "Project Proposal",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Program Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Donor Liaison",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Admin",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "proposal_title",
+ "track_changes": 1
+}
