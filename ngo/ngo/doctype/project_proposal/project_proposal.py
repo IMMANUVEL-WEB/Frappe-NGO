@@ -6,13 +6,16 @@ class ProjectProposal(Document):
 		if not self.proposal_code:
 			self.proposal_code = self.name
 
+		# Auto-calculate total budget server-side as well
+		self.total_budget = sum((flt(row.amount) for row in (self.budget_breakdown or [])), 0.0)
+
 	def on_submit(self):
 		if self.docstatus == 1 and not self.linked_project:
 			capex = 0
 			opex = 0
 			admin = 0
 			for row in (self.budget_breakdown or []):
-				amount = row.amount or 0
+				amount = flt(row.amount)
 				if row.category == "CapEx":
 					capex += amount
 				elif row.category == "OpEx":
@@ -29,8 +32,22 @@ class ProjectProposal(Document):
 					"custom_cost_center"
 				)
 
+			# Ensure Project Type "Donor Project" exists
+			if not frappe.db.exists("Project Type", "Donor Project"):
+				pt = frappe.get_doc({
+					"doctype": "Project Type",
+					"project_type": "Donor Project"
+				})
+				pt.insert(ignore_permissions=True)
+
+			company = frappe.defaults.get_user_default("Company")
+			if not company:
+				companies = frappe.get_all("Company", limit=1, pluck="name")
+				company = companies[0] if companies else None
+
 			project = frappe.new_doc("Project")
 			project.project_name = self.proposal_title
+			project.company = company
 			project.status = "Open"
 			project.is_active = "Yes"
 			project.expected_start_date = self.proposed_start_date
@@ -68,3 +85,9 @@ class ProjectProposal(Document):
 				title="Project Created",
 				indicator="green"
 			)
+
+def flt(val):
+	try:
+		return float(val or 0.0)
+	except (ValueError, TypeError):
+		return 0.0
