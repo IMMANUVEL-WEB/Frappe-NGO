@@ -1,264 +1,211 @@
 app_name = "ngo"
 app_title = "Ngo"
-app_publisher = "immanuvel S"
-app_description = "Non Govermental organization"
-app_email = "immanuvels@dbcyelagiri.edu.in"
+app_publisher = "bsoft"
+app_description = "Non Governmental Organization Management"
+app_email = "bsoft@BSOFT-CH-L-06"
 app_license = "mit"
 
 # Apps
 # ------------------
-
 required_apps = ["erpnext"]
-
-# Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "ngo",
-# 		"logo": "/assets/ngo/logo.png",
-# 		"title": "Ngo",
-# 		"route": "/ngo",
-# 		"has_permission": "ngo.api.permission.has_app_permission"
-# 	}
-# ]
 
 # Includes in <head>
 # ------------------
-
-# include js, css files in header of desk.html
-# app_include_css = "/assets/ngo/css/ngo.css"
-# app_include_js = "/assets/ngo/js/ngo.js"
-
-# include js, css files in header of web template
-# web_include_css = "/assets/ngo/css/ngo.css"
-# web_include_js = "/assets/ngo/js/ngo.js"
-
-# include custom scss in every website theme (without file extension ".scss")
-# website_theme_scss = "ngo/public/scss/website"
-
-# include js, css files in header of web form
-# webform_include_js = {"doctype": "public/js/doctype.js"}
-# webform_include_css = {"doctype": "public/css/doctype.css"}
-
-# include js in page
-# page_js = {"page" : "public/js/file.js"}
-
-# include js in doctype views
-# doctype_js = {"doctype" : "public/js/doctype.js"}
-# doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
-# doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
-# doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
-
-# Svg Icons
-# ------------------
-# include app icons in desk
-# app_include_icons = "ngo/public/icons.svg"
-
-# Home Pages
-# ----------
-
-# application home page (will override Website Settings)
-# home_page = "login"
-
-# website user home page (by Role)
-# role_home_page = {
-# 	"Role": "home_page"
-# }
-
-# Generators
-# ----------
-
-# automatically create page for each record of this doctype
-# website_generators = ["Web Page"]
-
-# automatically load and sync documents of this doctype from downstream apps
-# importable_doctypes = [doctype_1]
-
-# Jinja
-# ----------
-
-# add methods and filters to jinja environment
-# jinja = {
-# 	"methods": "ngo.utils.jinja_methods",
-# 	"filters": "ngo.utils.jinja_filters"
-# }
-
-# Installation
-# ------------
-
-# before_install = "ngo.install.before_install"
-# after_install = "ngo.install.after_install"
-
-# Uninstallation
-# ------------
-
-# before_uninstall = "ngo.uninstall.before_uninstall"
-# after_uninstall = "ngo.uninstall.after_uninstall"
-
-# Integration Setup
-# ------------------
-# To set up dependencies/integrations with other apps
-# Name of the app being installed is passed as an argument
-
-# before_app_install = "ngo.utils.before_app_install"
-# after_app_install = "ngo.utils.after_app_install"
-
-# Integration Cleanup
-# -------------------
-# To clean up dependencies/integrations with other apps
-# Name of the app being uninstalled is passed as an argument
-
-# before_app_uninstall = "ngo.utils.before_app_uninstall"
-# after_app_uninstall = "ngo.utils.after_app_uninstall"
-
-# Build
-# ------------------
-# To hook into the build process
-
-# after_build = "ngo.build.after_build"
-
-# Desk Notifications
-# ------------------
-# See frappe.core.notifications.get_notification_config
-
-# notification_config = "ngo.notifications.get_notification_config"
-
-# Awesome Bar
-# -----------
-# Extra search results: list of dicts with label, description, route, index.
-# route: ["List", "ToDo"], "/desk/docs/some/page", or "https://example.com"
-# awesomebar_search = ["ngo.search.awesomebar_results"]
-
-# Permissions
-# -----------
-# Permissions evaluated in scripted ways
-
-# permission_query_conditions = {
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
-# }
-#
-# has_permission = {
-# 	"Event": "frappe.desk.doctype.event.event.has_permission",
-# }
+doctype_js = {
+	"Project": "public/js/project.js",
+	"Payment Entry": "public/js/payment_entry.js"
+}
 
 # Document Events
 # ---------------
-# Hook on document methods and events
-
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"Project": {
+		"before_save": "ngo.project_events.validate_closure_data"
+	},
+	"Supplier": {
+		"after_insert": "ngo.supplier_events.create_supplier_cost_center"
+	}
+}
 
 # Scheduled Tasks
 # ---------------
+scheduler_events = {
+	"daily": [
+		"ngo.tasks.compliance_doc_expiry_alert"
+	]
+}
 
-# scheduler_events = {
-# 	"all": [
-# 		"ngo.tasks.all"
-# 	],
-# 	"daily": [
-# 		"ngo.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"ngo.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"ngo.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"ngo.tasks.monthly"
-# 	],
-# }
+# Fixtures
+# --------
+# Ordered strictly to ensure dependencies resolve on clean install:
+# Roles -> Workflow States -> Workflow Action Masters -> Workflows -> Custom Fields -> Property Setters -> Reports -> Dashboard Charts -> Dashboards -> Print Formats -> Notifications
+fixtures = [
+	# 1. Custom Roles needed for Workflows and DocTypes
+	{
+		"dt": "Role",
+		"filters": [
+			["name", "in", [
+				"Program Manager",
+				"Donor Liaison",
+				"Internal Reviewer",
+				"Employee Self Service"
+			]]
+		]
+	},
 
-# Testing
-# -------
+	# 2. Workflow States
+	{
+		"dt": "Workflow State",
+		"filters": [
+			["name", "in", [
+				"Draft",
+				"Internal Review",
+				"Donor Approval Pending",
+				"Approved",
+				"Rejected"
+			]]
+		]
+	},
 
-# before_tests = "ngo.install.before_tests"
+	# 3. Workflow Action Masters
+	{
+		"dt": "Workflow Action Master",
+		"filters": [
+			["name", "in", [
+				"Submit for Review",
+				"Send to Donor",
+				"Mark as Approved",
+				"Reject",
+				"Revise and Resubmit"
+			]]
+		]
+	},
 
-# Extend DocType Class
-# ------------------------------
-#
-# Specify custom mixins to extend the standard doctype controller.
-# extend_doctype_class = {
-# 	"Task": "ngo.custom.task.CustomTaskMixin"
-# }
+	# 4. Workflows
+	{
+		"dt": "Workflow",
+		"filters": [
+			["name", "in", [
+				"Project Proposal Approval"
+			]]
+		]
+	},
 
-# Overriding Methods
-# ------------------------------
-#
-# override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "ngo.event.get_events"
-# }
-#
-# each overriding function accepts a `data` argument;
-# generated from the base implementation of the doctype dashboard,
-# along with any modifications made in other Frappe apps
-# override_doctype_dashboards = {
-# 	"Task": "ngo.task.get_dashboard_data"
-# }
+	# 5. Custom Fields on Standard DocTypes
+	{
+		"dt": "Custom Field",
+		"filters": [
+			["name", "in", [
+				"Project-custom_project_code",
+				"Project-custom_sector",
+				"Project-custom_geography",
+				"Project-custom_donor",
+				"Project-custom_funding_type",
+				"Project-custom_source_proposal",
+				"Project-custom_capex_budget",
+				"Project-custom_opex_budget",
+				"Project-custom_admin_budget",
+				"Project-custom_total_budget",
+				"Project-custom_fcra_receipt_no",
+				"Project-custom_compliance_documents",
+				"Project-custom_project_phase",
+				"Project-custom_reason_for_suspended",
+				"Project-custom_impact_metrics",
+				"Project-custom_closure_summary",
+				"Supplier-custom_cost_center",
+				"Payment Entry-custom_destination",
+				"Journal Entry-custom_donor_grant",
+				"Journal Entry-custom_compliance_tag",
+				"Leave Application-custom_google_calendar_event_id"
+			]]
+		]
+	},
 
-# exempt linked doctypes from being automatically cancelled
-#
-# auto_cancel_exempted_doctypes = ["Auto Repeat"]
+	# 6. Property Setters on Standard DocTypes
+	{
+		"dt": "Property Setter",
+		"filters": [
+			["name", "in", [
+				"Project-main-field_order",
+				"Supplier-main-field_order",
+				"Payment Entry-main-field_order",
+				"Journal Entry-main-field_order",
+				"Budget-budget_against-options",
+				"Project-naming_series-options",
+				"Budget-naming_series-options",
+				"Supplier-naming_series-options",
+				"Payment Entry-naming_series-options",
+				"Journal Entry-naming_series-options"
+			]]
+		]
+	},
 
-# Ignore links to specified DocTypes when deleting documents
-# -----------------------------------------------------------
+	# 7. Reports
+	{
+		"dt": "Report",
+		"filters": [
+			["name", "in", [
+				"Pipeline project",
+				"Project Proposal Status",
+				"Budget utilization"
+			]]
+		]
+	},
 
-# ignore_links_on_delete = ["Communication", "ToDo"]
+	# 8. Dashboard Charts
+	{
+		"dt": "Dashboard Chart",
+		"filters": [
+			["chart_name", "in", [
+				"Projects by Status",
+				"Active Projects Count",
+				"Projects by Funding Type",
+				"Total Budget by Project",
+				"Projects by Phase",
+				"Proposal Pipeline",
+				"Budget vs Actual by Grant",
+				"Total Active Grants",
+				"Spending by Compliance Tag",
+				"Payment Receipts Over Time",
+				"Expenses by Account (Monthly)"
+			]]
+		]
+	},
 
-# Request Events
-# ----------------
-# before_request = ["ngo.utils.before_request"]
-# after_request = ["ngo.utils.after_request"]
+	# 9. Dashboards
+	{
+		"dt": "Dashboard",
+		"filters": [
+			["name", "in", [
+				"Caritas India — Project Dashboard",
+				"Caritas India — Finance Dashboard"
+			]]
+		]
+	},
 
-# Job Events
-# ----------
-# before_job = ["ngo.utils.before_job"]
-# after_job = ["ngo.utils.after_job"]
+	# 10. Print Formats
+	{
+		"dt": "Print Format",
+		"filters": [
+			["name", "in", [
+				"Project Proposal - Domestic Grant",
+				"Project Proposal - CSR",
+				"Project Proposal - FCRA"
+			]]
+		]
+	},
 
-# User Data Protection
-# --------------------
-
-# user_data_fields = [
-# 	{
-# 		"doctype": "{doctype_1}",
-# 		"filter_by": "{filter_by}",
-# 		"redact_fields": ["{field_1}", "{field_2}"],
-# 		"partial": 1,
-# 	},
-# 	{
-# 		"doctype": "{doctype_2}",
-# 		"filter_by": "{filter_by}",
-# 		"partial": 1,
-# 	},
-# 	{
-# 		"doctype": "{doctype_3}",
-# 		"strict": False,
-# 	},
-# 	{
-# 		"doctype": "{doctype_4}"
-# 	}
-# ]
-
-# Authentication and authorization
-# --------------------------------
-
-# auth_hooks = [
-# 	"ngo.auth.validate"
-# ]
-
-# Automatically update python controller files with type annotations for this app.
-# export_python_type_annotations = True
-
-# default_log_clearing_doctypes = {
-# 	"Logging DocType Name": 30  # days to retain logs
-# }
-
-# Translation
-# ------------
-# List of apps whose translatable strings should be excluded from this app's translations.
-# ignore_translatable_strings_from = []
-
+	# 11. Notifications
+	{
+		"dt": "Notification",
+		"filters": [
+			["name", "in", [
+				"Internal review in project proposal",
+				"Approval pending",
+				"Grant Expiry Alert",
+				"Donor Grant",
+				"New Project Arrived"
+			]]
+		]
+	}
+]

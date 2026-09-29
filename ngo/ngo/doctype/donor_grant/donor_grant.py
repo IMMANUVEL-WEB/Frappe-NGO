@@ -1,9 +1,7 @@
-# Copyright (c) 2026, immanuvel S and contributors
-# For license information, please see license.txt
-
-# import frappe
+import frappe
 from frappe.model.document import Document
 
-
 class DonorGrant(Document):
-	pass
+	def before_save(self):
+		if not self.grant_id:
+			self.grant_id = self.name
