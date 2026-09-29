@@ -133,13 +133,34 @@ fixtures = [
 				"Project-naming_series-options",
 				"Budget-naming_series-options",
 				"Supplier-naming_series-options",
+				"Supplier-supplier_type-options",
 				"Payment Entry-naming_series-options",
 				"Journal Entry-naming_series-options"
 			]]
 		]
 	},
 
-	# 7. Reports
+	# 7. Workspace Sidebars
+	{
+		"dt": "Workspace Sidebar",
+		"filters": [
+			["name", "in", [
+				"Finance"
+			]]
+		]
+	},
+
+	# 8. Desktop Icons
+	{
+		"dt": "Desktop Icon",
+		"filters": [
+			["name", "in", [
+				"Finance"
+			]]
+		]
+	},
+
+	# 9. Reports
 	{
 		"dt": "Report",
 		"filters": [
@@ -151,7 +172,7 @@ fixtures = [
 		]
 	},
 
-	# 8. Dashboard Charts
+	# 10. Dashboard Charts
 	{
 		"dt": "Dashboard Chart",
 		"filters": [
@@ -171,7 +192,7 @@ fixtures = [
 		]
 	},
 
-	# 9. Dashboards
+	# 11. Dashboards
 	{
 		"dt": "Dashboard",
 		"filters": [
@@ -182,7 +203,7 @@ fixtures = [
 		]
 	},
 
-	# 10. Print Formats
+	# 12. Print Formats
 	{
 		"dt": "Print Format",
 		"filters": [
@@ -194,7 +215,7 @@ fixtures = [
 		]
 	},
 
-	# 11. Notifications
+	# 13. Notifications
 	{
 		"dt": "Notification",
 		"filters": [
