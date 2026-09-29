@@ -1,0 +1,31 @@
+[
+ {
+  "app": "ngo",
+  "bg_color": "gray",
+  "docstatus": 0,
+  "doctype": "Desktop Icon",
+  "hidden": 0,
+  "icon": null,
+  "icon_image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkM8BPEq6pECwcOEp_1xbN_M_2lCakfz_XPFD8IYbVPw&s=10",
+  "icon_type": "Link",
+  "label": "Finance",
+  "link": null,
+  "link_to": "Finance",
+  "link_type": "Workspace Sidebar",
+  "logo_url": null,
+  "modified": "2026-09-29 15:45:21.588630",
+  "name": "Finance",
+  "parent_icon": null,
+  "restrict_removal": 0,
+  "roles": [
+   {
+    "role": "Administrator"
+   },
+   {
+    "role": "Finance Manager"
+   }
+  ],
+  "sidebar": "",
+  "standard": 0
+ }
+]
