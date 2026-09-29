@@ -48,7 +48,8 @@ fixtures = [
 				"Program Manager",
 				"Donor Liaison",
 				"Internal Reviewer",
-				"Employee Self Service"
+				"Employee Self Service",
+				"Finance Manager"
 			]]
 		]
 	},
@@ -237,17 +238,7 @@ fixtures = [
 				"Program Manager",
 				"Donor Liaison",
 				"Internal Reviewer",
-				"Finance Manager",
-				"Finance Officer",
-				"Finance Approver",
-				"Admin",
-				"Document Controller",
-				"Procurement Officer",
-				"Chair Person",
-				"Committee Member",
-				"Committee Chair",
-				"Committee Observer",
-				"Committee Secretary"
+				"Finance Manager"
 			]]
 		]
 	}
