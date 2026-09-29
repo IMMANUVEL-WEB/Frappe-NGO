@@ -40,7 +40,8 @@ scheduler_events = {
 # Ordered strictly to ensure dependencies resolve on clean install:
 # Roles -> Workflow States -> Workflow Action Masters -> Workflows -> Custom Fields -> Property Setters -> Reports -> Dashboard Charts -> Dashboards -> Print Formats -> Notifications
 fixtures = [
-	# 1. Custom Roles needed for Workflows and DocTypes
+	# 1. Custom Roles needed for Workflows, DocTypes and Custom DocPerms
+	#    Includes all roles configured via Role Permission Manager on caritasindia.local
 	{
 		"dt": "Role",
 		"filters": [
@@ -48,8 +49,18 @@ fixtures = [
 				"Program Manager",
 				"Donor Liaison",
 				"Internal Reviewer",
-				"Employee Self Service",
-				"Finance Manager"
+				"Finance Manager",
+				"Finance Officer",
+				"Finance Approver",
+				"Admin",
+				"Document Controller",
+				"Procurement Officer",
+				"Chair Person",
+				"Committee Member",
+				"Committee Chair",
+				"Committee Observer",
+				"Committee Secretary",
+				"Employee Self Service"
 			]]
 		]
 	},
