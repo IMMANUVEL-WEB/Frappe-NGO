@@ -24,6 +24,10 @@ doc_events = {
 	},
 	"Supplier": {
 		"after_insert": "ngo.supplier_events.create_supplier_cost_center"
+	},
+	"Journal Entry": {
+		"on_submit": "ngo.ngo.project_cost.update_project_cost",
+		"on_cancel": "ngo.ngo.project_cost.update_project_cost"
 	}
 }
 
