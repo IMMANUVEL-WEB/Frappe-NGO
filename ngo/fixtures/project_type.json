@@ -1,0 +1,34 @@
+[
+ {
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Project Type",
+  "modified": "2026-09-30 10:57:43.933726",
+  "name": "Internal",
+  "project_type": "Internal"
+ },
+ {
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Project Type",
+  "modified": "2026-09-30 10:57:43.939358",
+  "name": "External",
+  "project_type": "External"
+ },
+ {
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Project Type",
+  "modified": "2026-09-30 10:57:43.940896",
+  "name": "Other",
+  "project_type": "Other"
+ },
+ {
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Project Type",
+  "modified": "2026-09-30 12:27:27.913263",
+  "name": "Donor Project",
+  "project_type": "Donor Project"
+ }
+]

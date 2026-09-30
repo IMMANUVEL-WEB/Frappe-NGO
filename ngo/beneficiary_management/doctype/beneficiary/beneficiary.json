@@ -1,0 +1,229 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-09-30 12:44:13.959119",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "full_name",
+  "gender",
+  "date_of_birth",
+  "age",
+  "status",
+  "territory",
+  "photo",
+  "sb_personal",
+  "national_id_type",
+  "national_id_number",
+  "phone",
+  "address",
+  "sb_consent",
+  "consent_given",
+  "consent_date",
+  "consent_taken_by",
+  "consent_document",
+  "data_sharing_consent",
+  "cb_withdraw",
+  "consent_withdrawn",
+  "withdrawal_date",
+  "sb_family",
+  "family_members"
+ ],
+ "fields": [
+  {
+   "default": "BEN-.YYYY.-.#####",
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming Series",
+   "options": "BEN-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Full Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Gender",
+   "options": "\nMale\nFemale\nOther"
+  },
+  {
+   "fieldname": "date_of_birth",
+   "fieldtype": "Date",
+   "label": "Date of Birth"
+  },
+  {
+   "fieldname": "age",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Age",
+   "read_only": 1
+  },
+  {
+   "default": "Active",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Active\nInactive\nExited"
+  },
+  {
+   "fieldname": "territory",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Territory",
+   "options": "Territory"
+  },
+  {
+   "fieldname": "photo",
+   "fieldtype": "Attach Image",
+   "label": "Photo"
+  },
+  {
+   "fieldname": "sb_personal",
+   "fieldtype": "Section Break",
+   "label": "Personal & Sensitive Info"
+  },
+  {
+   "fieldname": "national_id_type",
+   "fieldtype": "Select",
+   "label": "National ID Type",
+   "options": "\nNational ID\nPassport\nDriving License\nOther",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "national_id_number",
+   "fieldtype": "Data",
+   "label": "National ID Number",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "label": "Phone",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Small Text",
+   "label": "Address",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "sb_consent",
+   "fieldtype": "Section Break",
+   "label": "Consent Details"
+  },
+  {
+   "default": "0",
+   "fieldname": "consent_given",
+   "fieldtype": "Check",
+   "label": "Consent Given"
+  },
+  {
+   "depends_on": "eval:doc.consent_given==1",
+   "fieldname": "consent_date",
+   "fieldtype": "Date",
+   "label": "Consent Date"
+  },
+  {
+   "depends_on": "eval:doc.consent_given==1",
+   "fieldname": "consent_taken_by",
+   "fieldtype": "Link",
+   "label": "Consent Taken By",
+   "options": "User"
+  },
+  {
+   "depends_on": "eval:doc.consent_given==1",
+   "fieldname": "consent_document",
+   "fieldtype": "Attach",
+   "label": "Consent Document",
+   "permlevel": 1
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.consent_given==1",
+   "fieldname": "data_sharing_consent",
+   "fieldtype": "Check",
+   "label": "Data Sharing Consent"
+  },
+  {
+   "fieldname": "cb_withdraw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "consent_withdrawn",
+   "fieldtype": "Check",
+   "label": "Consent Withdrawn"
+  },
+  {
+   "depends_on": "eval:doc.consent_withdrawn==1",
+   "fieldname": "withdrawal_date",
+   "fieldtype": "Date",
+   "label": "Withdrawal Date"
+  },
+  {
+   "fieldname": "sb_family",
+   "fieldtype": "Section Break",
+   "label": "Family Members"
+  },
+  {
+   "fieldname": "family_members",
+   "fieldtype": "Table",
+   "label": "Family Members",
+   "options": "Beneficiary Family Member"
+  }
+ ],
+ "grid_page_length": 50,
+ "image_field": "photo",
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-09-30 12:44:13.959119",
+ "modified_by": "Administrator",
+ "module": "Beneficiary Management",
+ "name": "Beneficiary",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "permlevel": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "full_name",
+ "track_changes": 1
+}
