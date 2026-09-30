@@ -1,0 +1,65 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-09-30 14:08:01.066290",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "company",
+  "default_credit_account",
+  "default_stock_expense_account"
+ ],
+ "fields": [
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "description": "Cash/Bank/Payable account to credit for services",
+   "fieldname": "default_credit_account",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Default Credit Account",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "description": "Used as the difference account for Stock Entries if needed",
+   "fieldname": "default_stock_expense_account",
+   "fieldtype": "Link",
+   "label": "Default Stock Expense Account",
+   "options": "Account"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-09-30 14:13:39.309588",
+ "modified_by": "Administrator",
+ "module": "Beneficiary Management",
+ "name": "NGO Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "NGO Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
