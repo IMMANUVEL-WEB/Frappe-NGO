@@ -9,15 +9,15 @@ class VolunteerOpportunity(Document):
 		if self.end_date and self.start_date and getdate(self.end_date) < getdate(self.start_date):
 			frappe.throw(_("End Date cannot be before Start Date."))
 
-		if cint(self.vacancies) < cint(self.filled_count):
+		if cint(self.vacancies) < cint(self.get("filled_count", 0)):
 			frappe.throw(
 				_("Vacancies ({0}) cannot be less than already filled positions ({1}).").format(
-					self.vacancies, self.filled_count
+					self.vacancies, self.get("filled_count", 0)
 				)
 			)
 
 		# keep status in step when vacancies are edited
-		if self.status == "Open" and cint(self.filled_count) >= cint(self.vacancies) > 0:
+		if self.status == "Open" and cint(self.get("filled_count", 0)) >= cint(self.vacancies) > 0:
 			self.status = "Filled"
-		elif self.status == "Filled" and cint(self.filled_count) < cint(self.vacancies):
+		elif self.status == "Filled" and cint(self.get("filled_count", 0)) < cint(self.vacancies):
 			self.status = "Open"

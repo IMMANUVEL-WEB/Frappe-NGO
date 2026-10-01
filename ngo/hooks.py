@@ -268,7 +268,9 @@ fixtures = [
 				"Committee Member",
 				"Committee Chair",
 				"Committee Observer",
-				"Committee Secretary"
+				"Committee Secretary",
+				"Volunteer",
+				"Volunteer Coordinator"
 			]]
 		]
 	}
