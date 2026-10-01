@@ -1,0 +1,156 @@
+{
+    "doctype": "DocType",
+    "name": "Volunteer Opportunity",
+    "module": "Volunteer Management",
+    "creation": "2026-10-01 00:00:00.000000",
+    "modified": "2026-10-01 00:00:00.000000",
+    "owner": "Administrator",
+    "modified_by": "Administrator",
+    "custom": 0,
+    "engine": "InnoDB",
+    "editable_grid": 1,
+    "track_changes": 1,
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": [],
+    "field_order": [
+        "naming_series",
+        "title",
+        "project",
+        "status",
+        "column_break_1",
+        "start_date",
+        "end_date",
+        "location",
+        "section_vacancy",
+        "vacancies",
+        "column_break_2",
+        "filled_count",
+        "section_details",
+        "description",
+        "required_skills"
+    ],
+    "fields": [
+        {
+            "fieldname": "naming_series",
+            "fieldtype": "Select",
+            "label": "Series",
+            "options": "VOPP-.#####",
+            "reqd": 1,
+            "set_only_once": 1,
+            "print_hide": 1,
+            "no_copy": 1
+        },
+        {
+            "fieldname": "title",
+            "fieldtype": "Data",
+            "label": "Title",
+            "reqd": 1,
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "project",
+            "fieldtype": "Link",
+            "label": "Project",
+            "options": "Project",
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "label": "Status",
+            "options": "Open\nFilled\nClosed\nCancelled",
+            "default": "Open",
+            "in_list_view": 1,
+            "in_standard_filter": 1
+        },
+        {
+            "fieldname": "column_break_1",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "start_date",
+            "fieldtype": "Date",
+            "label": "Start Date"
+        },
+        {
+            "fieldname": "end_date",
+            "fieldtype": "Date",
+            "label": "End Date"
+        },
+        {
+            "fieldname": "location",
+            "fieldtype": "Data",
+            "label": "Location"
+        },
+        {
+            "fieldname": "section_vacancy",
+            "fieldtype": "Section Break",
+            "label": "Vacancies"
+        },
+        {
+            "fieldname": "vacancies",
+            "fieldtype": "Int",
+            "label": "Vacancies",
+            "reqd": 1
+        },
+        {
+            "fieldname": "column_break_2",
+            "fieldtype": "Column Break"
+        },
+        {
+            "fieldname": "filled_count",
+            "fieldtype": "Int",
+            "label": "Filled",
+            "read_only": 1,
+            "no_copy": 1,
+            "default": "0"
+        },
+        {
+            "fieldname": "section_details",
+            "fieldtype": "Section Break",
+            "label": "Details"
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Text Editor",
+            "label": "Description"
+        },
+        {
+            "fieldname": "required_skills",
+            "fieldtype": "Table",
+            "label": "Required Skills",
+            "options": "Volunteer Skill Item"
+        }
+    ],
+    "permissions": [
+        {
+            "role": "System Manager",
+            "read": 1,
+            "write": 1,
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "print": 1,
+            "report": 1,
+            "export": 1,
+            "share": 1
+        },
+        {
+            "role": "Volunteer Coordinator",
+            "read": 1,
+            "write": 1,
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "print": 1,
+            "report": 1,
+            "export": 1,
+            "share": 1
+        }
+    ],
+    "autoname": "naming_series:",
+    "naming_rule": "By \"Naming Series\" field",
+    "title_field": "title",
+    "show_title_field_in_link": 1
+}

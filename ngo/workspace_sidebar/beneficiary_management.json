@@ -44,11 +44,11 @@
   {
    "child": 0,
    "collapsible": 1,
-   "icon": "badge-dollar-sign",
+   "icon": "user-round-search",
    "indent": 0,
    "keep_closed": 0,
-   "label": "Beneficiary Service",
-   "link_to": "Beneficiary Service",
+   "label": "Beneficiary Assessment",
+   "link_to": "Beneficiary Assessment",
    "link_type": "DocType",
    "show_arrow": 0,
    "type": "Link"
@@ -56,11 +56,11 @@
   {
    "child": 0,
    "collapsible": 1,
-   "icon": "user-round-search",
+   "icon": "badge-dollar-sign",
    "indent": 0,
    "keep_closed": 0,
-   "label": "Beneficiary Assessment",
-   "link_to": "Beneficiary Assessment",
+   "label": "Beneficiary Service",
+   "link_to": "Beneficiary Service",
    "link_type": "DocType",
    "show_arrow": 0,
    "type": "Link"
@@ -78,7 +78,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-10-01 09:33:07.369547",
+ "modified": "2026-10-01 11:51:49.430054",
  "modified_by": "Administrator",
  "module": "Beneficiary Management",
  "name": "Beneficiary Management",
