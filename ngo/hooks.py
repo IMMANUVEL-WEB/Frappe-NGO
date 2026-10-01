@@ -65,7 +65,9 @@ fixtures = [
 				"Committee Chair",
 				"Committee Observer",
 				"Committee Secretary",
-				"Employee Self Service"
+				"Employee Self Service",
+				"Volunteer",
+				"Volunteer Coordinator"
 			]]
 		]
 	},

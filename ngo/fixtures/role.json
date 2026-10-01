@@ -6,6 +6,19 @@
   "doctype": "Role",
   "home_page": null,
   "is_custom": 0,
+  "modified": "2026-10-01 14:12:12.894966",
+  "name": "Volunteer Coordinator",
+  "restrict_to_domain": null,
+  "role_name": "Volunteer Coordinator",
+  "two_factor_auth": 0
+ },
+ {
+  "desk_access": 1,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Role",
+  "home_page": null,
+  "is_custom": 0,
   "modified": "2026-05-05 12:26:56.201695",
   "name": "Procurement Officer",
   "restrict_to_domain": null,
@@ -192,6 +205,19 @@
   "name": "Internal Reviewer",
   "restrict_to_domain": null,
   "role_name": "Internal Reviewer",
+  "two_factor_auth": 0
+ },
+ {
+  "desk_access": 0,
+  "disabled": 0,
+  "docstatus": 0,
+  "doctype": "Role",
+  "home_page": null,
+  "is_custom": 0,
+  "modified": "2026-10-01 16:44:43.820723",
+  "name": "Volunteer",
+  "restrict_to_domain": null,
+  "role_name": "Volunteer",
   "two_factor_auth": 0
  }
 ]
