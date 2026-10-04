@@ -81,7 +81,8 @@ fixtures = [
 				"Internal Review",
 				"Donor Approval Pending",
 				"Approved",
-				"Rejected"
+				"Rejected",
+				"Pending"
 			]]
 		]
 	},
@@ -95,7 +96,8 @@ fixtures = [
 				"Send to Donor",
 				"Mark as Approved",
 				"Reject",
-				"Revise and Resubmit"
+				"Revise and Resubmit",
+				"Approve"
 			]]
 		]
 	},
@@ -105,7 +107,8 @@ fixtures = [
 		"dt": "Workflow",
 		"filters": [
 			["name", "in", [
-				"Project Proposal Approval"
+				"Project Proposal Approval",
+				"Volunteer Approval Flow"
 			]]
 		]
 	},
