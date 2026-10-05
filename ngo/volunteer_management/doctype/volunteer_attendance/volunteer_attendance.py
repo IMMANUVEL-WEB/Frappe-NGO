@@ -26,13 +26,13 @@ class VolunteerAttendance(Document):
 
 	# ---- helpers -------------------------------------------------------
 	def validate_date(self):
-		if getdate(self.attendance_date) > getdate(nowdate()):
+		if getdate(self.date) > getdate(nowdate()):
 			frappe.throw(_("Attendance cannot be marked for a future date."))
 
 	def validate_duplicate(self):
 		filters = {
 			"volunteer": self.volunteer,
-			"attendance_date": self.attendance_date,
+			"date": self.date,
 			"docstatus": ["<", 2],
 			"name": ["!=", self.name],
 		}

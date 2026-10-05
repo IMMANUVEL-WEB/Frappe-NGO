@@ -1,4 +1,4 @@
-import frappe
+﻿import frappe
 from frappe import _
 from frappe.model.document import Document
 from frappe.utils import today
@@ -14,9 +14,15 @@ class VolunteerApplication(Document):
 		if self.status in ("Approved", "Rejected") and not self.reviewed_by:
 			self.reviewed_by = frappe.session.user
 
+	def on_update(self):
+		# Trigger if either workflow_state or status is Approved
+		state = getattr(self, "workflow_state", None)
+		if self.status == "Approved" or state == "Approved":
+			self.create_volunteer()
+
 	def on_submit(self):
-		# Workflow: Pending -> Approve (submit) -> status = Approved
-		if self.status == "Approved":
+		state = getattr(self, "workflow_state", None)
+		if self.status == "Approved" or state == "Approved":
 			self.create_volunteer()
 
 	# ---- helpers -------------------------------------------------------
@@ -54,9 +60,9 @@ class VolunteerApplication(Document):
 				"status": "Active",
 			}
 		)
-		for row in self.skills:
+		for row in self.get("skills", []):
 			vol.append("skills", {"skill": row.skill, "proficiency": row.proficiency})
-		for row in self.availability:
+		for row in self.get("availability", []):
 			vol.append(
 				"availability",
 				{"day_of_week": row.day_of_week, "from_time": row.from_time, "to_time": row.to_time},

@@ -130,7 +130,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-10-01 18:02:34.127586",
+ "modified": "2026-10-05 10:50:01.702996",
  "modified_by": "Administrator",
  "module": "Volunteer Management",
  "name": "Volunteer Application",
@@ -183,5 +183,6 @@
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": [],
+ "title_field": "applicant_name",
  "track_changes": 1
 }
