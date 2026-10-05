@@ -80,7 +80,7 @@ def update_opportunity_filled_count(opportunity, exclude=None):
 		return
 
 	filled = get_filled_count(opportunity, exclude)
-	values = {"filled_count": filled}
+	values = {"filled": filled}
 	if opp.status == "Open" and filled >= cint(opp.vacancies):
 		values["status"] = "Filled"
 	elif opp.status == "Filled" and filled < cint(opp.vacancies):

@@ -1,0 +1,60 @@
+{
+ "cards": [
+  {
+   "card": "Active Volunteers"
+  },
+  {
+   "card": "New Volunteers This Month"
+  },
+  {
+   "card": "Pending Applications"
+  },
+  {
+   "card": "Open Opportunities"
+  },
+  {
+   "card": "Total Volunteer Hours"
+  },
+  {
+   "card": "Shifts This Week"
+  }
+ ],
+ "charts": [
+  {
+   "chart": "New Volunteers per Month",
+   "width": "Half"
+  },
+  {
+   "chart": "Volunteers by Status",
+   "width": "Half"
+  },
+  {
+   "chart": "Applications by Status",
+   "width": "Half"
+  },
+  {
+   "chart": "Opportunities by Status",
+   "width": "Half"
+  },
+  {
+   "chart": "Hours by Project",
+   "width": "Half"
+  },
+  {
+   "chart": "Attendance by Status",
+   "width": "Half"
+  }
+ ],
+ "creation": "2026-10-05 11:57:54.228600",
+ "dashboard_name": "Volunteer Management",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 0,
+ "is_default": 0,
+ "is_standard": 1,
+ "modified": "2026-10-05 12:31:34.772063",
+ "modified_by": "Administrator",
+ "module": "Volunteer Management",
+ "name": "Volunteer Management",
+ "owner": "Administrator"
+}

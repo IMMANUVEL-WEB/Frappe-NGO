@@ -12,7 +12,7 @@
    "indent": 0,
    "keep_closed": 0,
    "label": "Project Dashboard",
-   "link_to": "Caritas India \u2014 Project Dashboard",
+   "link_to": "Project Dashboard",
    "link_type": "Dashboard",
    "show_arrow": 0,
    "type": "Link"
@@ -24,13 +24,37 @@
    "indent": 0,
    "keep_closed": 0,
    "label": "Finance Dashboard",
-   "link_to": "Caritas India \u2014 Finance Dashboard",
+   "link_to": "Finance Dashboard",
+   "link_type": "Dashboard",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 0,
+   "collapsible": 1,
+   "icon": "activity",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Volunteer Dashboard",
+   "link_to": "Volunteer Management",
+   "link_type": "Dashboard",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 0,
+   "collapsible": 1,
+   "icon": "activity",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Beneficiary Dashboard",
+   "link_to": "Beneficiary Management",
    "link_type": "Dashboard",
    "show_arrow": 0,
    "type": "Link"
   }
  ],
- "modified": "2026-10-01 12:12:39.693967",
+ "modified": "2026-10-05 12:32:51.057279",
  "modified_by": "Administrator",
  "name": "Dashboard",
  "owner": "Administrator",
