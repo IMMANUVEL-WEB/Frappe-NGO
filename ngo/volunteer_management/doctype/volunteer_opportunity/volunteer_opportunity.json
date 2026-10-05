@@ -1,132 +1,138 @@
 {
- "actions": [],
- "allow_bulk_edit": 1,
- "allow_rename": 1,
- "autoname": "naming_series:naming_series",
- "creation": "2026-10-01 15:51:21.984906",
- "doctype": "DocType",
- "engine": "InnoDB",
- "field_order": [
-  "naming_series",
-  "title",
-  "project",
-  "status",
-  "start_date",
-  "end_date",
-  "vacancies",
-  "filled",
-  "description",
-  "required_skills"
- ],
- "fields": [
-  {
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "label": "Series",
-   "options": "VOPP-.#####"
-  },
-  {
-   "fieldname": "title",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Title",
-   "reqd": 1
-  },
-  {
-   "fieldname": "project",
-   "fieldtype": "Link",
-   "label": "Project",
-   "options": "Project"
-  },
-  {
-   "default": "Open",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Open\nFilled\nClosed\nCancelled"
-  },
-  {
-   "fieldname": "start_date",
-   "fieldtype": "Date",
-   "label": "Start Date"
-  },
-  {
-   "fieldname": "end_date",
-   "fieldtype": "Date",
-   "label": "End Date"
-  },
-  {
-   "fieldname": "vacancies",
-   "fieldtype": "Int",
-   "label": "Vacancies",
-   "reqd": 1
-  },
-  {
-   "fieldname": "filled",
-   "fieldtype": "Int",
-   "label": "Filled",
-   "read_only": 1
-  },
-  {
-   "fieldname": "description",
-   "fieldtype": "Text Editor",
-   "label": "Description"
-  },
-  {
-   "fieldname": "required_skills",
-   "fieldtype": "Table",
-   "label": "Required Skills",
-   "options": "Volunteer Skill Item"
-  }
- ],
- "grid_page_length": 50,
- "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2026-10-05 11:09:26.592001",
- "modified_by": "Administrator",
- "module": "Volunteer Management",
- "name": "Volunteer Opportunity",
- "naming_rule": "By \"Naming Series\" field",
- "owner": "Administrator",
- "permissions": [
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "System Manager",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "create": 1,
-   "delete": 1,
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Volunteer Coordinator",
-   "share": 1,
-   "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Volunteer",
-   "share": 1
-  }
- ],
- "row_format": "Dynamic",
- "rows_threshold_for_grid_search": 20,
- "sort_field": "creation",
- "sort_order": "DESC",
- "states": [],
- "title_field": "title"
+    "actions": [],
+    "allow_bulk_edit": 1,
+    "allow_rename": 1,
+    "autoname": "naming_series:naming_series",
+    "creation": "2026-10-01 15:51:21.984906",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "naming_series",
+        "title",
+        "project",
+        "status",
+        "start_date",
+        "end_date",
+        "vacancies",
+        "filled",
+        "description",
+        "required_skills"
+    ],
+    "fields": [
+        {
+            "fieldname": "naming_series",
+            "fieldtype": "Select",
+            "label": "Series",
+            "options": "VOPP-.#####"
+        },
+        {
+            "fieldname": "title",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Title",
+            "reqd": 1
+        },
+        {
+            "fieldname": "project",
+            "fieldtype": "Link",
+            "label": "Project",
+            "options": "Project"
+        },
+        {
+            "default": "Open",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "label": "Status",
+            "options": "Open\nFilled\nClosed\nCancelled"
+        },
+        {
+            "fieldname": "start_date",
+            "fieldtype": "Date",
+            "label": "Start Date"
+        },
+        {
+            "fieldname": "end_date",
+            "fieldtype": "Date",
+            "label": "End Date"
+        },
+        {
+            "fieldname": "location",
+            "fieldtype": "Data",
+            "label": "Location",
+            "in_list_view": 1
+        },
+        {
+            "fieldname": "vacancies",
+            "fieldtype": "Int",
+            "label": "Vacancies",
+            "reqd": 1
+        },
+        {
+            "fieldname": "filled",
+            "fieldtype": "Int",
+            "label": "Filled",
+            "read_only": 1
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Text Editor",
+            "label": "Description"
+        },
+        {
+            "fieldname": "required_skills",
+            "fieldtype": "Table",
+            "label": "Required Skills",
+            "options": "Volunteer Skill Item"
+        }
+    ],
+    "grid_page_length": 50,
+    "index_web_pages_for_search": 1,
+    "links": [],
+    "modified": "2026-10-05 11:09:26.592001",
+    "modified_by": "Administrator",
+    "module": "Volunteer Management",
+    "name": "Volunteer Opportunity",
+    "naming_rule": "By \"Naming Series\" field",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Volunteer Coordinator",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Volunteer",
+            "share": 1
+        }
+    ],
+    "row_format": "Dynamic",
+    "rows_threshold_for_grid_search": 20,
+    "sort_field": "creation",
+    "sort_order": "DESC",
+    "states": [],
+    "title_field": "title"
 }
