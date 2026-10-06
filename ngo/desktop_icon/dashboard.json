@@ -5,7 +5,7 @@
  "docstatus": 0,
  "doctype": "Desktop Icon",
  "hidden": 0,
- "icon_image": "/assets/ngo/public/images/dashboard.png",
+ "icon_image": "/assets/ngo/images/dashboard.png",
  "icon_type": "Link",
  "idx": 0,
  "label": "Dashboard",
