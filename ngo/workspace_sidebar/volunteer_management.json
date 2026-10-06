@@ -42,6 +42,18 @@
    "type": "Link"
   },
   {
+   "child": 1,
+   "collapsible": 1,
+   "icon": "anvil",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Volunteer Opportunity Interest",
+   "link_to": "Volunteer Opportunity Interest",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
    "child": 0,
    "collapsible": 1,
    "icon": "assign",
@@ -83,6 +95,18 @@
    "icon": "settings",
    "indent": 0,
    "keep_closed": 0,
+   "label": "Volunteer Portal Settings",
+   "link_to": "Volunteer Settings",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 0,
+   "collapsible": 1,
+   "icon": "settings",
+   "indent": 0,
+   "keep_closed": 0,
    "label": "Setup",
    "link_type": "Workspace",
    "show_arrow": 0,
@@ -101,7 +125,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-10-05 12:50:20.334580",
+ "modified": "2026-10-06 15:47:28.501808",
  "modified_by": "Administrator",
  "module": "Volunteer Management",
  "name": "Volunteer Management",

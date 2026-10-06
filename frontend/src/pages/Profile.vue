@@ -17,7 +17,7 @@
         
         <!-- Header Card -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-          <div class="h-32 bg-gradient-to-r from-blue-600 to-cyan-500 relative"></div>
+          <div class="h-32 bg-gradient-to-r from-primary to-secondary relative"></div>
           <div class="px-8 pb-8 relative">
             <div class="flex flex-col sm:flex-row items-center sm:items-end gap-6 -mt-16 mb-4">
               
@@ -61,11 +61,11 @@
               <div class="space-y-5">
                 <div>
                   <label class="block text-sm font-semibold text-gray-700 mb-1">Phone Number</label>
-                  <input v-model="formData.phone" type="tel" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-gray-50/50" />
+                  <input v-model="formData.phone" type="tel" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-shadow bg-gray-50/50" />
                 </div>
                 <div>
                   <label class="block text-sm font-semibold text-gray-700 mb-1">Address</label>
-                  <textarea v-model="formData.address" rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-shadow bg-gray-50/50"></textarea>
+                  <textarea v-model="formData.address" rows="3" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-shadow bg-gray-50/50"></textarea>
                 </div>
                 <div class="pt-2 flex justify-end">
                   <Button variant="solid" theme="blue" :loading="savingInfo" @click="saveInfo">
@@ -78,7 +78,7 @@
             <!-- Password Update -->
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
               <h3 class="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-cyan-500"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-secondary"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                 Security
               </h3>
               
@@ -88,11 +88,11 @@
                 
                 <div>
                   <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">Current Password</label>
-                  <input v-model="pwdData.old" type="password" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition-shadow bg-gray-50/50" />
+                  <input v-model="pwdData.old" type="password" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition-shadow bg-gray-50/50" />
                 </div>
                 <div>
                   <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">New Password</label>
-                  <input v-model="pwdData.new" type="password" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 outline-none transition-shadow bg-gray-50/50" />
+                  <input v-model="pwdData.new" type="password" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-secondary focus:border-secondary outline-none transition-shadow bg-gray-50/50" />
                 </div>
                 <div class="pt-2">
                   <Button variant="subtle" theme="cyan" :loading="savingPwd" @click="updatePassword">
@@ -105,7 +105,7 @@
 
           <!-- Right Column: Skills & Availability -->
           <div class="space-y-6">
-            <div class="bg-gradient-to-br from-blue-600 to-cyan-500 rounded-2xl shadow-sm p-6 text-white text-center">
+            <div class="bg-gradient-to-br from-primary to-secondary rounded-2xl shadow-sm p-6 text-white text-center">
               <h3 class="text-lg font-bold mb-1 opacity-90">Total Impact</h3>
               <div class="text-5xl font-black">{{ profile.data.total_hours || 0 }}</div>
               <p class="text-sm opacity-80 mt-1">Hours Volunteered</p>

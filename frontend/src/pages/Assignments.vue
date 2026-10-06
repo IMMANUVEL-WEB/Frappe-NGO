@@ -10,7 +10,7 @@
           <select 
             v-model="statusFilter"
             @change="assignments.fetch()"
-            class="form-select text-sm border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            class="form-select text-sm border-gray-300 rounded-md shadow-sm focus:border-primary focus:ring-primary"
           >
             <option value="">All</option>
             <option value="Assigned">Assigned</option>

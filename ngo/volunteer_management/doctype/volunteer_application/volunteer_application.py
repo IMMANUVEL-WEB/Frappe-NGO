@@ -1,4 +1,4 @@
-﻿import frappe
+import frappe
 from frappe import _
 from frappe.model.document import Document
 from frappe.utils import today
@@ -47,6 +47,23 @@ class VolunteerApplication(Document):
 			frappe.msgprint(_("Linked to existing Volunteer {0}.").format(existing), alert=True)
 			return
 
+		# Create User if not exists
+		user_email = self.email
+		if not frappe.db.exists("User", user_email):
+			user = frappe.new_doc("User")
+			user.email = user_email
+			user.first_name = self.applicant_name.split(' ')[0] if self.applicant_name else "Volunteer"
+			if len(self.applicant_name.split(' ')) > 1:
+				user.last_name = " ".join(self.applicant_name.split(' ')[1:])
+			user.send_welcome_email = 1
+			user.insert(ignore_permissions=True)
+			user.add_roles("Volunteer")
+		else:
+			# Just ensure role exists
+			user = frappe.get_doc("User", user_email)
+			if "Volunteer" not in [r.role for r in user.roles]:
+				user.add_roles("Volunteer")
+
 		vol = frappe.new_doc("Volunteer")
 		vol.update(
 			{
@@ -58,6 +75,7 @@ class VolunteerApplication(Document):
 				"gender": self.gender,
 				"joined_on": today(),
 				"status": "Active",
+				"user": user_email
 			}
 		)
 		for row in self.get("skills", []):
@@ -71,6 +89,6 @@ class VolunteerApplication(Document):
 
 		self.db_set("volunteer", vol.name)
 		frappe.msgprint(
-			_("Volunteer {0} created.").format(frappe.utils.get_link_to_form("Volunteer", vol.name)),
+			_("Volunteer {0} and User {1} created.").format(frappe.utils.get_link_to_form("Volunteer", vol.name), user_email),
 			alert=True,
 		)

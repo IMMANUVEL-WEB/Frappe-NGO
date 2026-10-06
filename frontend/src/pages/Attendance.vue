@@ -11,14 +11,14 @@
           <input 
             type="date" 
             v-model="filters.from_date" 
-            class="px-4 py-2 border border-gray-200 rounded-lg text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full md:w-auto"
+            class="px-4 py-2 border border-gray-200 rounded-lg text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary w-full md:w-auto"
             title="From Date"
           />
           <span class="text-gray-400 font-medium">to</span>
           <input 
             type="date" 
             v-model="filters.to_date" 
-            class="px-4 py-2 border border-gray-200 rounded-lg text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full md:w-auto"
+            class="px-4 py-2 border border-gray-200 rounded-lg text-sm bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary w-full md:w-auto"
             title="To Date"
           />
           <Button @click="applyFilters" variant="solid" theme="blue" class="px-6 shadow-sm">
@@ -36,7 +36,7 @@
       </div>
       
       <div v-else class="space-y-6">
-        <div class="bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl shadow-sm p-6 text-white flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="bg-gradient-to-r from-primary to-secondary rounded-2xl shadow-sm p-6 text-white flex flex-col md:flex-row items-center justify-between gap-6">
           <div class="flex items-center gap-4">
             <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
@@ -83,7 +83,7 @@
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">{{ formatTime(row.in_time) }}</td>
                   <td class="px-6 py-4 whitespace-nowrap">{{ formatTime(row.out_time) }}</td>
-                  <td class="px-6 py-4 whitespace-nowrap text-right font-bold text-blue-600">
+                  <td class="px-6 py-4 whitespace-nowrap text-right font-bold text-primary">
                     {{ row.total_hours ? parseFloat(row.total_hours).toFixed(1) : '0.0' }}
                   </td>
                 </tr>

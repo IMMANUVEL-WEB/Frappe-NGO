@@ -20,7 +20,7 @@
         
         <!-- Key Metrics Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="bg-gradient-to-br from-blue-600 to-blue-700 p-6 rounded-2xl shadow-lg shadow-blue-500/20 text-white transform hover:-translate-y-1 transition-transform duration-300">
+          <div class="bg-gradient-to-br from-primary to-blue-700 p-6 rounded-2xl shadow-lg shadow-blue-500/20 text-white transform hover:-translate-y-1 transition-transform duration-300">
             <h3 class="text-blue-100 font-semibold mb-2 text-sm uppercase tracking-wider">Total Impact</h3>
             <div class="text-5xl font-black mb-2">{{ dashboard.data.total_hours || 0 }}</div>
             <p class="text-blue-100 text-sm font-medium">Hours Volunteered</p>
@@ -37,7 +37,7 @@
               <h3 class="text-gray-500 font-semibold mb-2 text-sm uppercase tracking-wider">Active Assignments</h3>
               <div class="text-5xl font-black text-gray-900">{{ dashboard.data.active_assignments || 0 }}</div>
             </div>
-            <router-link to="/assignments" class="text-blue-600 text-sm font-bold mt-4 flex items-center gap-1 hover:text-blue-700 transition-colors">
+            <router-link to="/assignments" class="text-primary text-sm font-bold mt-4 flex items-center gap-1 hover:text-blue-700 transition-colors">
               View all
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </router-link>
@@ -96,7 +96,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                 Upcoming Shifts
               </h2>
-              <router-link to="/shifts" class="text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors">See all</router-link>
+              <router-link to="/shifts" class="text-sm font-semibold text-primary hover:text-blue-800 transition-colors">See all</router-link>
             </div>
             
             <div v-if="!dashboard.data.upcoming_shifts || dashboard.data.upcoming_shifts.length === 0" class="flex-1 flex flex-col items-center justify-center bg-gray-50 rounded-xl p-8">

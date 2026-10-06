@@ -8,7 +8,14 @@ export default {
 		"./node_modules/frappe-ui/src/components/**/*.{vue,js,ts,jsx,tsx}",
 	],
 	theme: {
-		extend: {},
+		extend: {
+            colors: {
+                primary: 'var(--primary-color)',
+                secondary: 'var(--secondary-color)',
+                login: 'var(--login-color)',
+                sidebar: 'var(--sidebar-color)'
+            }
+        },
 	},
 	plugins: [],
 }

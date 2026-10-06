@@ -34,6 +34,11 @@ const routes = [
 		component: () => import("@/pages/Dashboard.vue"),
 	},
 	{
+		name: "Apply",
+		path: "/apply",
+		component: () => import("@/pages/Apply.vue"),
+	},
+	{
 		name: "Login",
 		path: "/account/login",
 		component: () => import("@/pages/Login.vue"),
@@ -55,7 +60,7 @@ router.beforeEach(async (to, from, next) => {
 
 	if (to.name === "Login" && isLoggedIn) {
 		next({ name: "Dashboard" })
-	} else if (to.name !== "Login" && !isLoggedIn) {
+	} else if (to.name !== "Login" && to.name !== "Apply" && !isLoggedIn) {
 		next({ name: "Login" })
 	} else {
 		next()

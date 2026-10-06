@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black flex items-center justify-center p-4">
+  <div class="min-h-screen bg-login flex items-center justify-center p-4">
     <div class="w-full max-w-md bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:shadow-cyan-500/20">
       
       <div class="p-8">
@@ -26,7 +26,7 @@
                 v-model="email" 
                 type="email" 
                 required 
-                class="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-xl leading-5 bg-gray-900/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm transition-all shadow-inner" 
+                class="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-xl leading-5 bg-gray-900/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white focus:border-white sm:text-sm transition-all shadow-inner" 
                 placeholder="you@example.com" 
               />
             </div>
@@ -42,7 +42,7 @@
                 v-model="password" 
                 type="password" 
                 required 
-                class="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-xl leading-5 bg-gray-900/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm transition-all shadow-inner" 
+                class="block w-full pl-10 pr-3 py-3 border border-gray-600 rounded-xl leading-5 bg-gray-900/50 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white focus:border-white sm:text-sm transition-all shadow-inner" 
                 placeholder="••••••••" 
               />
             </div>
@@ -51,7 +51,7 @@
           <button 
             type="submit" 
             :disabled="loading"
-            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 focus:ring-offset-gray-900 transform transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed mt-4 relative overflow-hidden group"
+            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg text-sm font-bold text-white bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-gray-900 transform transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed mt-4 relative overflow-hidden group"
           >
             <span class="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-10"></span>
             <span v-if="loading" class="flex items-center gap-2">
@@ -60,7 +60,7 @@
             </span>
             <span v-else class="relative">Sign In to Dashboard</span>
           </button>
-        </form>
+        </form><div class="mt-6"><router-link to="/apply" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-secondary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-secondary transition-all">Apply to be a Volunteer</router-link></div>
       </div>
       
       <div class="px-8 py-5 bg-black/40 border-t border-white/10 text-center">
@@ -91,15 +91,19 @@ async function login() {
       password: password.value
     })
     
-    // session.js handles the redirect on success automatically
-    // but we can check if there was an error set by the resource
     if (session.login.error) {
-      error.value = session.login.error
+      throw new Error(session.login.error)
     }
   } catch (err) {
-    error.value = session.login.error || "Invalid login credentials"
+    const rawError = String(err.message || session.login.error || err || "")
+    if (rawError.includes('AuthenticationError') || rawError.includes('Invalid Login') || rawError.includes('401')) {
+      error.value = "Invalid email or password. Please try again."
+    } else {
+      error.value = "An error occurred during login. Please try again later."
+    }
   } finally {
     loading.value = false
   }
 }
 </script>
+

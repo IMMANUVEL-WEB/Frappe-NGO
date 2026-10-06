@@ -7,7 +7,7 @@
         <div class="absolute inset-0 opacity-20">
           <svg class="h-full w-full" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><defs><pattern id="dots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse"><circle fill="#ffffff" cx="2" cy="2" r="1.5"></circle></pattern></defs><rect x="0" y="0" width="100%" height="100%" fill="url(#dots)"></rect></svg>
         </div>
-        <div class="absolute inset-0 bg-gradient-to-r from-blue-600/50 to-cyan-500/50 mix-blend-multiply"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/50 to-secondary/50 mix-blend-multiply"></div>
         <div class="relative px-8 py-14 md:px-12 md:py-20 flex flex-col md:flex-row items-center justify-between gap-8 text-white z-10 text-center md:text-left">
           <div class="max-w-2xl">
             <h1 class="text-4xl md:text-5xl font-black tracking-tight mb-4 leading-tight">Find Your Next <br class="hidden md:block"/>Volunteer Opportunity</h1>
@@ -55,7 +55,7 @@
               </div>
               
               <h3 class="text-xl font-bold text-gray-900 mb-2 leading-tight">{{ opp.title }}</h3>
-              <p class="text-sm font-semibold text-blue-600 mb-4 flex items-center gap-1.5">
+              <p class="text-sm font-semibold text-primary mb-4 flex items-center gap-1.5">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
                 {{ opp.project }}
               </p>
@@ -91,7 +91,7 @@
                   @click="submitInterest(opp)"
                   variant="solid" 
                   theme="blue"
-                  class="w-full justify-center group-hover:bg-blue-600 shadow-sm"
+                  class="w-full justify-center group-hover:bg-primary shadow-sm"
                   :loading="submitting === opp.name"
                   :disabled="submitting"
                 >

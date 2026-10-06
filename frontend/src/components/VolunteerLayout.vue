@@ -3,10 +3,10 @@
     
     <!-- Mobile Header -->
     <div class="md:hidden bg-white border-b border-gray-200 px-4 py-3 flex justify-between items-center shadow-sm sticky top-0 z-20">
-      <div class="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-500">
+      <div class="font-bold text-xl bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
         Volunteer Portal
       </div>
-      <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-600 hover:text-blue-600 transition-colors p-1">
+      <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-600 hover:text-primary transition-colors p-1">
         <svg v-if="!mobileMenuOpen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
         <svg v-else xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
@@ -14,11 +14,11 @@
 
     <!-- Sidebar -->
     <div :class="[
-      'fixed md:static inset-y-0 left-0 transform md:transform-none md:flex flex-col w-64 bg-white border-r border-gray-200 z-10 transition-transform duration-300 ease-in-out shadow-xl md:shadow-none',
+      'fixed md:static inset-y-0 left-0 transform md:transform-none md:flex flex-col w-64 bg-sidebar border-r border-gray-200 z-10 transition-transform duration-300 ease-in-out shadow-xl md:shadow-none',
       mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'
     ]">
       <div class="p-6 hidden md:block">
-        <h2 class="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-500 tracking-tight">Volunteer Portal</h2>
+        <h2 class="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary tracking-tight">Volunteer Portal</h2>
       </div>
       
       <nav class="flex-1 px-4 py-4 md:py-0 space-y-2 mt-16 md:mt-0 overflow-y-auto">
@@ -36,7 +36,7 @@
         >
           <div :class="[
             'p-1.5 rounded-lg transition-colors',
-            $route.path === item.path ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200 group-hover:text-gray-700'
+            $route.path === item.path ? 'bg-blue-100 text-primary' : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200 group-hover:text-gray-700'
           ]" v-html="item.icon"></div>
           {{ item.label }}
         </router-link>

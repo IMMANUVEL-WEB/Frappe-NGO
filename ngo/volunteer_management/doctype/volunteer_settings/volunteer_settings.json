@@ -1,0 +1,86 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "creation": "2026-10-06 12:03:00.319281",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "primary_color",
+  "secondary_color",
+  "login_color",
+  "sidebar_color"
+ ],
+ "fields": [
+  {
+   "default": "#2563eb",
+   "fieldname": "primary_color",
+   "fieldtype": "Color",
+   "label": "Primary Color"
+  },
+  {
+   "default": "#0891b2",
+   "fieldname": "secondary_color",
+   "fieldtype": "Color",
+   "label": "Secondary Color"
+  },
+  {
+   "default": "#1e3a8a",
+   "fieldname": "login_color",
+   "fieldtype": "Color",
+   "label": "Login Color"
+  },
+  {
+   "default": "#1f2937",
+   "fieldname": "sidebar_color",
+   "fieldtype": "Color",
+   "label": "Sidebar Color"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-10-06 12:33:41.259293",
+ "modified_by": "Administrator",
+ "module": "Volunteer Management",
+ "name": "Volunteer Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Volunteer",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Guest",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

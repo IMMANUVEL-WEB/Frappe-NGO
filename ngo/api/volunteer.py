@@ -22,10 +22,10 @@ def my_dashboard():
     attendances = frappe.get_list("Volunteer Attendance", 
         filters={
             "volunteer": volunteer,
-            "docstatus": 1,
+            
             "date": ["between", [current_month_start, current_month_end]]
         },
-        pluck="total_hours"
+        pluck="total_hours", ignore_permissions=True
     )
     hours_this_month = sum([h for h in attendances if h])
     
@@ -90,7 +90,7 @@ def my_dashboard():
 def my_assignments(status=None):
     volunteer = get_current_volunteer()
     
-    filters = {"volunteer": volunteer}
+    filters = {"volunteer": volunteer, "docstatus": ["<", 2]}
     if status:
         filters["status"] = status
         
@@ -151,7 +151,7 @@ def my_attendance(from_date=None, to_date=None):
     
     filters = {
         "volunteer": volunteer,
-        "docstatus": 1
+        
     }
     
     date_filter = []
@@ -312,7 +312,67 @@ def update_password(old_password, new_password):
         frappe.throw("Not logged in")
         
     try:
-        frappe.core.doctype.user.user.update_password(old_password, new_password)
+        frappe.core.doctype.user.user.update_password(new_password=new_password, old_password=old_password)
         return "Password updated successfully"
     except frappe.AuthenticationError:
         frappe.throw("Incorrect old password", frappe.AuthenticationError)
+
+@frappe.whitelist(allow_guest=True)
+def get_portal_settings():
+    return {
+        "primary_color": frappe.db.get_single_value("Volunteer Settings", "primary_color"),
+        "secondary_color": frappe.db.get_single_value("Volunteer Settings", "secondary_color"),
+        "login_color": frappe.db.get_single_value("Volunteer Settings", "login_color"),
+        "sidebar_color": frappe.db.get_single_value("Volunteer Settings", "sidebar_color")
+    }
+
+
+
+
+@frappe.whitelist(allow_guest=True)
+def submit_application(applicant_name, email, phone, date_of_birth, gender, address, skills=None, availability=None):
+    import json
+    try:
+        doc = frappe.new_doc("Volunteer Application")
+        doc.applicant_name = applicant_name
+        doc.email = email
+        doc.phone = phone
+        doc.date_of_birth = date_of_birth
+        doc.gender = gender
+        doc.address = address
+        doc.status = "Pending"
+        
+        if skills:
+            if isinstance(skills, str):
+                skills = json.loads(skills)
+            for s in skills:
+                doc.append("skills", {
+                    "skill": s.get("skill"),
+                    "proficiency": s.get("proficiency")
+                })
+                
+        if availability:
+            if isinstance(availability, str):
+                availability = json.loads(availability)
+            for a in availability:
+                doc.append("availability", {
+                    "day_of_week": a.get("day_of_week"),
+                    "from_time": a.get("from_time"),
+                    "to_time": a.get("to_time")
+                })
+                
+        doc.insert(ignore_permissions=True)
+        
+        # Override the workflow state directly
+        if getattr(doc, "workflow_state", None) == "Draft":
+            doc.db_set("workflow_state", "Pending")
+            
+        frappe.db.commit()
+        return "Success"
+    except Exception as e:
+        frappe.db.rollback()
+        frappe.throw(str(e))
+
+
+
+
