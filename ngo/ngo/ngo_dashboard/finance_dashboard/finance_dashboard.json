@@ -1,0 +1,37 @@
+{
+ "cards": [],
+ "charts": [
+  {
+   "chart": "Budget vs Actual by Grant",
+   "width": "Half"
+  },
+  {
+   "chart": "Total Active Grants",
+   "width": "Half"
+  },
+  {
+   "chart": "Spending by Compliance Tag",
+   "width": "Half"
+  },
+  {
+   "chart": "Payment Receipts Over Time",
+   "width": "Half"
+  },
+  {
+   "chart": "Expenses by Account (Monthly)",
+   "width": "Full"
+  }
+ ],
+ "creation": "2026-10-05 12:21:06.350110",
+ "dashboard_name": "Finance Dashboard",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 2,
+ "is_default": 0,
+ "is_standard": 1,
+ "modified": "2026-10-06 09:42:57.226891",
+ "modified_by": "Administrator",
+ "module": "Ngo",
+ "name": "Finance Dashboard",
+ "owner": "Administrator"
+}

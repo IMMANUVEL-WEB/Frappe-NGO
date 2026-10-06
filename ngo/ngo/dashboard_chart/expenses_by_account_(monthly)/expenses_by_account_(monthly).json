@@ -1,0 +1,45 @@
+{
+ "chart_name": "Expenses by Account (Monthly)",
+ "chart_type": "Report",
+ "creation": "2026-10-05 21:48:30.337938",
+ "currency": "INR",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "dynamic_filters_json": "{}",
+ "filters_json": "{\"company\":\"Bsoft Tech\",\"categorize_by\":\"Categorize by Voucher (Consolidated)\",\"include_dimensions\":1,\"disable_opening_balance_calculation\":0,\"show_opening_entries\":0,\"include_default_book_entries\":1,\"show_cancelled_entries\":0,\"show_net_values_in_party_account\":0,\"show_amount_in_company_currency\":0,\"add_values_in_transaction_currency\":0,\"show_remarks\":0,\"ignore_err\":0,\"ignore_cr_dr_notes\":0,\"from_date\":\"2026-09-06\",\"to_date\":\"2026-10-06\"}",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "modified": "2026-10-06 09:39:41.751103",
+ "modified_by": "Administrator",
+ "module": "Ngo",
+ "name": "Expenses by Account (Monthly)",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "report_name": "General Ledger",
+ "roles": [
+  {
+   "role": "Donor Liaison"
+  },
+  {
+   "role": "Finance Manager"
+  },
+  {
+   "role": "Program Manager"
+  }
+ ],
+ "show_values_over_chart": 0,
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "x_field": "posting_date",
+ "y_axis": [
+  {
+   "color": "#4e615e",
+   "y_field": "debit"
+  }
+ ]
+}

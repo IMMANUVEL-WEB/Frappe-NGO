@@ -1,0 +1,47 @@
+{
+ "based_on": "creation",
+ "chart_name": "Active Projects Count",
+ "chart_type": "Count",
+ "creation": "2026-10-05 21:48:30.157186",
+ "currency": "",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "document_type": "Project",
+ "dynamic_filters_json": "[]",
+ "filters_json": "[[\"Project\",\"project_type\",\"=\",\"Donor Project\"],[\"Project\",\"status\",\"=\",\"Open\"]]",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "last_synced_on": "2026-10-05 22:07:53.727454",
+ "modified": "2026-10-06 09:27:22.786227",
+ "modified_by": "Administrator",
+ "module": "Ngo",
+ "name": "Active Projects Count",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "parent_document_type": "",
+ "roles": [
+  {
+   "role": "Donor Liaison"
+  },
+  {
+   "role": "Program Manager"
+  },
+  {
+   "role": "Finance Manager"
+  },
+  {
+   "role": "Internal Reviewer"
+  }
+ ],
+ "show_values_over_chart": 0,
+ "source": "",
+ "time_interval": "Monthly",
+ "timeseries": 1,
+ "timespan": "Last Year",
+ "type": "Line",
+ "use_report_chart": 0,
+ "value_based_on": "",
+ "y_axis": []
+}

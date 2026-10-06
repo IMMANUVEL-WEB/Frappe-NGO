@@ -1,0 +1,41 @@
+{
+ "cards": [],
+ "charts": [
+  {
+   "chart": "Projects by Status",
+   "width": "Half"
+  },
+  {
+   "chart": "Active Projects Count",
+   "width": "Half"
+  },
+  {
+   "chart": "Projects by Funding Type",
+   "width": "Half"
+  },
+  {
+   "chart": "Total Budget by Project",
+   "width": "Half"
+  },
+  {
+   "chart": "Projects by Phase",
+   "width": "Half"
+  },
+  {
+   "chart": "Proposal Pipeline",
+   "width": "Half"
+  }
+ ],
+ "creation": "2026-10-05 12:21:06.385506",
+ "dashboard_name": "Project Dashboard",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 1,
+ "is_default": 0,
+ "is_standard": 1,
+ "modified": "2026-10-06 09:29:31.462814",
+ "modified_by": "Administrator",
+ "module": "Ngo",
+ "name": "Project Dashboard",
+ "owner": "Administrator"
+}

@@ -1,0 +1,53 @@
+{
+ "chart_name": "Budget vs Actual by Grant",
+ "chart_type": "Report",
+ "creation": "2026-10-05 21:48:30.255984",
+ "currency": "INR",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart",
+ "dynamic_filters_json": "{}",
+ "filters_json": "{\"company\":\"Bsoft Tech\",\"from_fiscal_year\":\"2026-2027\",\"to_fiscal_year\":\"2026-2027\",\"period\":\"Yearly\",\"budget_against\":\"Project\",\"show_cumulative\":0}",
+ "group_by_type": "Count",
+ "idx": 0,
+ "is_public": 1,
+ "is_standard": 1,
+ "modified": "2026-10-06 09:38:04.087607",
+ "modified_by": "Administrator",
+ "module": "Ngo",
+ "name": "Budget vs Actual by Grant",
+ "number_of_groups": 0,
+ "owner": "Administrator",
+ "report_name": "Budget Variance Report",
+ "roles": [
+  {
+   "role": "Program Manager"
+  },
+  {
+   "role": "Donor Liaison"
+  },
+  {
+   "role": "Finance Manager"
+  }
+ ],
+ "show_values_over_chart": 0,
+ "time_interval": "Yearly",
+ "timeseries": 0,
+ "timespan": "Last Year",
+ "type": "Bar",
+ "use_report_chart": 0,
+ "x_field": "account",
+ "y_axis": [
+  {
+   "color": "#e82525",
+   "y_field": "budget_2026_2027"
+  },
+  {
+   "color": "#1e23c7",
+   "y_field": "actual_2026_2027"
+  },
+  {
+   "color": "#b3bf2e",
+   "y_field": "variance_2026_2027"
+  }
+ ]
+}
