@@ -330,9 +330,21 @@ def get_portal_settings():
 
 
 @frappe.whitelist(allow_guest=True)
+def get_all_skills():
+    return frappe.get_all("Volunteer Skill", pluck="name", ignore_permissions=True, order_by="name asc")
+
+@frappe.whitelist(allow_guest=True)
 def submit_application(applicant_name, email, phone, date_of_birth, gender, address, skills=None, availability=None):
     import json
     try:
+        # Check for duplicates before creating doc to return a clean message
+        existing = frappe.db.exists(
+            "Volunteer Application",
+            {"email": email, "status": "Pending", "docstatus": 0}
+        )
+        if existing:
+            return {"status": "error", "message": "An application is already pending for this email address. Please wait for it to be reviewed."}
+            
         doc = frappe.new_doc("Volunteer Application")
         doc.applicant_name = applicant_name
         doc.email = email
@@ -341,15 +353,23 @@ def submit_application(applicant_name, email, phone, date_of_birth, gender, addr
         doc.gender = gender
         doc.address = address
         doc.status = "Pending"
-        
         if skills:
             if isinstance(skills, str):
                 skills = json.loads(skills)
             for s in skills:
-                doc.append("skills", {
-                    "skill": s.get("skill"),
-                    "proficiency": s.get("proficiency")
-                })
+                skill_name = s.get("skill")
+                if skill_name:
+                    # Create the skill dynamically if it doesn't exist in the system
+                    if not frappe.db.exists("Volunteer Skill", skill_name):
+                        frappe.get_doc({
+                            "doctype": "Volunteer Skill",
+                            "skill_name": skill_name
+                        }).insert(ignore_permissions=True)
+                        
+                    doc.append("skills", {
+                        "skill": skill_name,
+                        "proficiency": s.get("proficiency")
+                    })
                 
         if availability:
             if isinstance(availability, str):
@@ -368,10 +388,18 @@ def submit_application(applicant_name, email, phone, date_of_birth, gender, addr
             doc.db_set("workflow_state", "Pending")
             
         frappe.db.commit()
-        return "Success"
+        return {"status": "success"}
     except Exception as e:
         frappe.db.rollback()
-        frappe.throw(str(e))
+        import traceback
+        return {"status": "error", "message": f"Error: {str(e)}", "trace": traceback.format_exc()}
+
+
+
+
+
+
+
 
 
 

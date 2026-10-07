@@ -64,7 +64,10 @@
           </div>
           <div class="space-y-2">
             <div v-for="(skill, index) in form.skills" :key="'skill-'+index" class="flex gap-2 items-center bg-gray-900/50 p-2 rounded-xl border border-gray-600/50">
-              <input v-model="skill.skill" type="text" placeholder="Skill (e.g. Teaching)" required class="flex-1 px-3 py-2 bg-transparent text-white border-none focus:outline-none text-sm" />
+                            <select v-model="skill.skill" required class="flex-1 px-3 py-2 bg-gray-800 text-white border-none focus:outline-none rounded-lg text-sm">
+                <option value="" disabled selected>Select a Skill...</option>
+                <option v-for="s in availableSkills" :key="s" :value="s">{{ s }}</option>
+              </select>
               <select v-model="skill.proficiency" required class="w-1/3 px-3 py-2 bg-gray-800 text-white border-none focus:outline-none rounded-lg text-sm">
                 <option value="Beginner">Beginner</option>
                 <option value="Intermediate">Intermediate</option>
@@ -109,8 +112,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { call } from 'frappe-ui'
+
+const availableSkills = ref([])
+
+onMounted(async () => {
+  try {
+    const res = await call('ngo.api.volunteer.get_all_skills')
+    if (res) {
+      availableSkills.value = res
+    }
+  } catch(e) {
+    console.error(e)
+  }
+})
 
 const form = ref({
   applicant_name: '',
@@ -146,7 +162,7 @@ async function submitForm() {
   error.value = ''
   
   try {
-    await call('ngo.api.volunteer.submit_application', {
+        const res = await call('ngo.api.volunteer.submit_application', {
       applicant_name: form.value.applicant_name,
       email: form.value.email,
       phone: form.value.phone,
@@ -156,7 +172,12 @@ async function submitForm() {
       skills: JSON.stringify(form.value.skills),
       availability: JSON.stringify(form.value.availability)
     })
-    success.value = true
+    
+    if (res && res.status === 'error') {
+      error.value = res.message;
+    } else {
+      success.value = true
+    }
   } catch (err) {
     error.value = err.message || err.exc || 'Failed to submit application. Please try again.'
   } finally {
@@ -164,3 +185,6 @@ async function submitForm() {
   }
 }
 </script>
+
+
+
