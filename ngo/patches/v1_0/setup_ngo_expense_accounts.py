@@ -91,4 +91,18 @@ def execute():
                 "NGO COA: Created account '{}' under '{}'.".format(full_name, parent)
             )
 
+    enable_dimensions_in_journal_entry()
     frappe.db.commit()
+
+
+def enable_dimensions_in_journal_entry():
+    """Ensure cost center and project accounting dimensions are visible in Journal Entry Account."""
+    from frappe.custom.doctype.property_setter.property_setter import make_property_setter
+
+    acc_settings = frappe.get_doc("Accounts Settings")
+    if not acc_settings.enable_accounting_dimensions:
+        acc_settings.enable_accounting_dimensions = 1
+        acc_settings.save(ignore_permissions=True)
+
+    make_property_setter("Journal Entry Account", "accounting_dimensions_section", "hidden", 0, "Check")
+    make_property_setter("Journal Entry Account", "accounting_dimensions_section", "collapsible", 0, "Check")

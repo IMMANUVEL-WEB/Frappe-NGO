@@ -284,3 +284,9 @@ website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': '
 role_home_page = {
 	"Volunteer": "frontend"
 }
+
+
+# Installation and Migration
+# --------------------------
+after_install = "ngo.patches.v1_0.setup_ngo_expense_accounts.execute"
+after_migrate = "ngo.patches.v1_0.setup_ngo_expense_accounts.execute"
