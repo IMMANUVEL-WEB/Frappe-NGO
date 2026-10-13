@@ -33,7 +33,8 @@ env.bak/
 venv.bak/
 
 # Dependency directories
-node_modules/
+node_modules
+/yarn.lock
 jspm_packages/
 
 # IDEs and editors

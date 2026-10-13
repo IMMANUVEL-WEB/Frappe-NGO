@@ -282,5 +282,5 @@ fixtures = [
 website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'},]
 
 role_home_page = {
-	"Volunteer User": "frontend"
+	"Volunteer": "frontend"
 }
