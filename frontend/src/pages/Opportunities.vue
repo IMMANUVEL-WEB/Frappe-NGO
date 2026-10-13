@@ -65,9 +65,9 @@
                 {{ opp.location }}
               </div>
               
-              <div v-if="opp.application_deadline" class="flex items-center gap-2 text-sm text-gray-600 font-medium mb-4">
+              <div v-if="opp.application_deadline || opp.end_date" class="flex items-center gap-2 text-sm text-gray-600 font-medium mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                Apply by {{ formatDate(opp.application_deadline) }}
+                Apply by {{ formatDate(opp.application_deadline || opp.end_date) }}
               </div>
               
               <div class="prose prose-sm prose-gray max-w-none text-gray-600 mb-6 flex-1 line-clamp-3" v-html="opp.description"></div>
@@ -130,6 +130,7 @@ async function submitInterest(opp) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+          ...(window.csrf_token && { 'X-Frappe-CSRF-Token': window.csrf_token }),
       },
       body: JSON.stringify({
         opportunity: opp.name

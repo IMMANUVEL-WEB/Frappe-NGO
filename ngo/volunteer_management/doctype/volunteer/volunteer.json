@@ -9,6 +9,7 @@
  "field_order": [
   "naming_series",
   "full_name",
+  "image",
   "status",
   "user",
   "contact_section",
@@ -42,6 +43,11 @@
    "in_list_view": 1,
    "label": "Full Name",
    "reqd": 1
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "label": "Image"
   },
   {
    "default": "Active",
@@ -200,5 +206,6 @@
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": [],
- "title_field": "full_name"
+ "title_field": "full_name",
+ "image_field": "image"
 }

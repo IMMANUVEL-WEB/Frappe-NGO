@@ -10,7 +10,11 @@ import { onMounted } from 'vue'
 
 const settings = createResource({
   url: 'ngo.api.volunteer.get_portal_settings',
+  method: 'GET',
   auto: true,
+  onError(err) {
+    console.warn("Could not load portal settings:", err)
+  },
   onSuccess(data) {
     if (data) {
       if (data.primary_color) {

@@ -186,7 +186,8 @@ async function handleImageUpload(e) {
       method: 'POST',
       body: form,
       headers: {
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        ...(window.csrf_token && { 'X-Frappe-CSRF-Token': window.csrf_token })
       }
     })
     const uploadData = await uploadRes.json()
@@ -199,6 +200,7 @@ async function handleImageUpload(e) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          ...(window.csrf_token && { 'X-Frappe-CSRF-Token': window.csrf_token }),
         },
         body: JSON.stringify({
           image: fileUrl
@@ -221,6 +223,7 @@ async function saveInfo() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+          ...(window.csrf_token && { 'X-Frappe-CSRF-Token': window.csrf_token }),
       },
       body: JSON.stringify({
         phone: formData.value.phone,
@@ -250,6 +253,7 @@ async function updatePassword() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+          ...(window.csrf_token && { 'X-Frappe-CSRF-Token': window.csrf_token }),
       },
       body: JSON.stringify({
         old_password: pwdData.value.old,

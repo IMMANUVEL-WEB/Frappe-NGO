@@ -195,7 +195,7 @@ def my_profile():
     
     return {
         "full_name": doc.full_name,
-        "image": doc.image,
+        "image": doc.get("image") or (frappe.db.get_value("User", doc.user, "user_image") if getattr(doc, "user", None) else None),
         "email": doc.email,
         "phone": doc.phone,
         "address": doc.address,
@@ -220,6 +220,8 @@ def update_my_profile(phone=None, address=None, availability=None, image=None):
         
     if image is not None:
         doc.image = image
+        if getattr(doc, "user", None):
+            frappe.db.set_value("User", doc.user, "user_image", image)
         
     if address is not None:
         doc.address = address
@@ -260,8 +262,8 @@ def open_opportunities():
     
     opportunities = frappe.get_list("Volunteer Opportunity",
         filters={"status": "Open"},
-        fields=["name", "title", "project", "description", "vacancies", "application_deadline", "location"],
-        order_by="application_deadline asc",
+        fields=["name", "title", "project", "description", "vacancies", "end_date", "location"],
+        order_by="end_date asc",
         ignore_permissions=True
     )
     
@@ -272,6 +274,7 @@ def open_opportunities():
     )
     
     for opp in opportunities:
+        opp["application_deadline"] = opp.end_date
         opp["has_interest"] = opp.name in interests
         # Fetch required skills
         skills = frappe.get_all("Volunteer Skill Item", filters={"parent": opp.name, "parenttype": "Volunteer Opportunity"}, pluck="skill")

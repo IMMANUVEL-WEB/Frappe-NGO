@@ -132,7 +132,7 @@ onMounted(async () => {
 async function logout() {
   loggingOut.value = true
   try {
-    await fetch('/api/method/logout', { method: 'POST' })
+    await fetch('/api/method/logout', { method: 'POST', headers: { ...(window.csrf_token && { 'X-Frappe-CSRF-Token': window.csrf_token }) } })
     window.location.href = '/frontend/account/login'
   } catch (e) {
     console.error(e)
