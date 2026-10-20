@@ -12,12 +12,15 @@
   "project",
   "status",
   "start_date",
+  "column_break_b2hc",
   "end_date",
   "vacancies",
   "filled",
-  "description",
+  "location",
+  "section_break_8tjz",
   "required_skills",
-  "location"
+  "section_break_d8hv",
+  "description"
  ],
  "fields": [
   {
@@ -84,12 +87,24 @@
    "fieldtype": "Table",
    "label": "Required Skills",
    "options": "Volunteer Skill Item"
+  },
+  {
+   "fieldname": "column_break_b2hc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_d8hv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_8tjz",
+   "fieldtype": "Section Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-10-06 17:30:33.240249",
+ "modified": "2026-10-20 15:52:29.709861",
  "modified_by": "Administrator",
  "module": "Volunteer Management",
  "name": "Volunteer Opportunity",

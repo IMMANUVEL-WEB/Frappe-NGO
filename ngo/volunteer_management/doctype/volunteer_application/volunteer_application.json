@@ -11,18 +11,23 @@
   "applicant_name",
   "email",
   "phone",
+  "volunteer",
+  "status",
+  "column_break_vni0",
   "date_of_birth",
   "gender",
-  "address",
   "application_date",
-  "motivation",
-  "skills",
-  "availability",
-  "status",
   "reviewed_by",
-  "review_remarks",
-  "volunteer",
-  "amended_from"
+  "amended_from",
+  "section_break_tptj",
+  "skills",
+  "column_break_1r4r",
+  "availability",
+  "section_break_cazf",
+  "address",
+  "motivation",
+  "section_break_pffc",
+  "review_remarks"
  ],
  "fields": [
   {
@@ -124,13 +129,33 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "section_break_tptj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_1r4r",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_cazf",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_pffc",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_vni0",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-10-05 10:50:01.702996",
+ "modified": "2026-10-20 15:59:58.424367",
  "modified_by": "Administrator",
  "module": "Volunteer Management",
  "name": "Volunteer Application",

@@ -11,12 +11,13 @@
   "volunteer",
   "volunteer_name",
   "opportunity",
+  "remarks",
+  "column_break_q1x7",
   "project",
   "role",
   "from_date",
   "to_date",
-  "status",
-  "remarks"
+  "status"
  ],
  "fields": [
   {
@@ -80,12 +81,16 @@
    "fieldname": "remarks",
    "fieldtype": "Small Text",
    "label": "Remarks"
+  },
+  {
+   "fieldname": "column_break_q1x7",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-10-01 17:08:10.269425",
+ "modified": "2026-10-20 15:47:20.063450",
  "modified_by": "Administrator",
  "module": "Volunteer Management",
  "name": "Volunteer Assignment",

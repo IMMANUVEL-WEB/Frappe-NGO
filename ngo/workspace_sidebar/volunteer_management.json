@@ -8,6 +8,18 @@
   {
    "child": 0,
    "collapsible": 1,
+   "icon": "chart-column",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Volunteer Dashboard",
+   "link_to": "Volunteer Management",
+   "link_type": "Dashboard",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
+   "child": 0,
+   "collapsible": 1,
    "icon": "panel-left-right-dashed",
    "indent": 0,
    "keep_closed": 0,
@@ -125,7 +137,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-10-06 15:47:28.501808",
+ "modified": "2026-10-20 15:07:14.089917",
  "modified_by": "Administrator",
  "module": "Volunteer Management",
  "name": "Volunteer Management",
