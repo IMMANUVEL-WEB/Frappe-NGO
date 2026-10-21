@@ -3,17 +3,66 @@ from frappe.utils import today, get_first_day, get_last_day
 import re
 
 def get_current_volunteer():
-    volunteer = frappe.db.get_value("Volunteer", {"user": frappe.session.user, "status": "Active"}, "name")
+    user = frappe.session.user
+    if not user or user == "Guest":
+        return None
+        
+    volunteer = frappe.db.get_value("Volunteer", {"user": user, "status": "Active"}, "name")
     if not volunteer:
-        frappe.throw("No active volunteer profile is linked to this account")
+        volunteer = frappe.db.get_value("Volunteer", {"user": user}, "name")
+    if not volunteer:
+        volunteer = frappe.db.get_value("Volunteer", {"email": user}, "name")
+        if volunteer:
+            frappe.db.set_value("Volunteer", volunteer, "user", user)
+            frappe.db.commit()
+
+    # If still not found, check if user has Volunteer role and create a Volunteer record
+    if not volunteer:
+        roles = frappe.get_roles(user)
+        if "Volunteer" in roles:
+            user_doc = frappe.get_doc("User", user)
+            full_name = user_doc.full_name or f"{user_doc.first_name or ''} {user_doc.last_name or ''}".strip() or user
+            vol = frappe.get_doc({
+                "doctype": "Volunteer",
+                "full_name": full_name,
+                "email": user,
+                "user": user,
+                "status": "Active",
+                "joined_on": today()
+            })
+            vol.insert(ignore_permissions=True)
+            frappe.db.commit()
+            return vol.name
+
     return volunteer
 
 @frappe.whitelist()
 def my_dashboard():
     volunteer = get_current_volunteer()
-    
+    user = frappe.session.user
+    user_info = frappe.db.get_value("User", user, ["first_name", "last_name", "full_name"], as_dict=True) or {}
+    first_name = user_info.get("first_name") or ""
+    last_name = user_info.get("last_name") or ""
+    display_name = user_info.get("full_name") or (f"{first_name} {last_name}".strip()) or user
+
+    if not volunteer:
+        return {
+            "volunteer": None,
+            "volunteer_name": display_name,
+            "first_name": first_name or display_name,
+            "total_hours": 0.0,
+            "hours_this_month": 0.0,
+            "active_assignments": 0,
+            "annual_goal": 100,
+            "next_shift": None,
+            "upcoming_shifts": [],
+            "recent_attendances": []
+        }
+
     # Total Hours
-    total_hours = frappe.db.get_value("Volunteer", volunteer, "total_hours") or 0.0
+    vol_data = frappe.db.get_value("Volunteer", volunteer, ["full_name", "total_hours"], as_dict=True) or {}
+    total_hours = vol_data.get("total_hours") or 0.0
+    vol_name = vol_data.get("full_name") or display_name
     
     # Hours this month
     current_month_start = get_first_day(today())
@@ -22,12 +71,11 @@ def my_dashboard():
     attendances = frappe.get_list("Volunteer Attendance", 
         filters={
             "volunteer": volunteer,
-            
             "date": ["between", [current_month_start, current_month_end]]
         },
         pluck="total_hours", ignore_permissions=True
     )
-    hours_this_month = sum([h for h in attendances if h])
+    hours_this_month = sum([float(h) for h in attendances if h])
     
     # Active assignments
     active_assignments = frappe.db.count("Volunteer Assignment", {
@@ -36,7 +84,6 @@ def my_dashboard():
     })
     
     # Shifts where volunteer is participant
-    # Note: Use get_all for child tables to avoid PermissionError
     shifts = frappe.get_all("Volunteer Shift Participant",
         filters={"volunteer": volunteer},
         pluck="parent"
@@ -54,37 +101,78 @@ def my_dashboard():
             },
             fields=["name", "opportunity", "project", "shift_date", "start_time", "end_time"],
             order_by="shift_date asc, start_time asc",
-            limit_page_length=5
+            limit_page_length=5,
+            ignore_permissions=True
         )
         
         if upcoming_shifts_data:
             next_shift_doc = upcoming_shifts_data[0]
-            opportunity_title = frappe.db.get_value("Volunteer Opportunity", next_shift_doc.opportunity, "title")
+            opportunity_title = ""
+            location = ""
+            if next_shift_doc.opportunity:
+                opp_info = frappe.db.get_value("Volunteer Opportunity", next_shift_doc.opportunity, ["title", "location"], as_dict=True) or {}
+                opportunity_title = opp_info.get("title") or next_shift_doc.opportunity
+                location = opp_info.get("location") or ""
+            
+            project_title = frappe.db.get_value("Project", next_shift_doc.project, "project_name") if next_shift_doc.project else ""
+            
             next_shift = {
                 "opportunity_title": opportunity_title,
-                "project": next_shift_doc.project,
-                "date": next_shift_doc.shift_date,
-                "start_time": next_shift_doc.start_time,
-                "end_time": next_shift_doc.end_time
+                "project": project_title or next_shift_doc.project or "",
+                "date": str(next_shift_doc.shift_date),
+                "start_time": str(next_shift_doc.start_time),
+                "end_time": str(next_shift_doc.end_time),
+                "location": location
             }
             
             for s in upcoming_shifts_data:
-                opp_title = frappe.db.get_value("Volunteer Opportunity", s.opportunity, "title")
+                opp_title = frappe.db.get_value("Volunteer Opportunity", s.opportunity, "title") or s.opportunity
                 upcoming_shifts.append({
                     "opportunity_title": opp_title,
                     "project": s.project,
-                    "date": s.shift_date,
-                    "start_time": s.start_time,
-                    "end_time": s.end_time
+                    "date": str(s.shift_date),
+                    "start_time": str(s.start_time),
+                    "end_time": str(s.end_time)
                 })
 
+    # Recent attendances for this volunteer
+    recent_attendances_data = frappe.get_list("Volunteer Attendance",
+        filters={"volunteer": volunteer},
+        fields=["name", "date", "shift", "opportunity", "project", "total_hours", "status"],
+        order_by="date desc",
+        limit_page_length=5,
+        ignore_permissions=True
+    )
+    recent_attendances = []
+    for a in recent_attendances_data:
+        opp_title = ""
+        location = ""
+        if a.opportunity:
+            opp_info = frappe.db.get_value("Volunteer Opportunity", a.opportunity, ["title", "location"], as_dict=True) or {}
+            opp_title = opp_info.get("title") or a.opportunity
+            location = opp_info.get("location") or ""
+        recent_attendances.append({
+            "activity": opp_title or a.project or a.name,
+            "date": str(a.date) if a.date else "-",
+            "hours": f"{float(a.total_hours):.1f} hrs" if a.total_hours else "0.0 hrs",
+            "location": location or "-",
+            "status": a.status or "Present",
+            "remarks": ""
+        })
+
     return {
-        "total_hours": total_hours,
-        "hours_this_month": hours_this_month,
-        "active_assignments": active_assignments,
+        "volunteer": volunteer,
+        "volunteer_name": vol_name,
+        "first_name": first_name or vol_name,
+        "total_hours": float(total_hours),
+        "hours_this_month": float(hours_this_month),
+        "active_assignments": int(active_assignments),
+        "annual_goal": 100,
         "next_shift": next_shift,
-        "upcoming_shifts": upcoming_shifts
+        "upcoming_shifts": upcoming_shifts,
+        "recent_attendances": recent_attendances
     }
+
 
 @frappe.whitelist()
 def my_assignments(status=None):
@@ -273,9 +361,17 @@ def open_opportunities():
         pluck="opportunity"
     )
     
+    # Map human-readable project names
+    project_names = {}
+    project_ids = list({o.get("project") for o in opportunities if o.get("project")})
+    if project_ids:
+        p_data = frappe.get_all("Project", filters={"name": ["in", project_ids]}, fields=["name", "project_name"])
+        project_names = {p.name: (p.project_name or p.name) for p in p_data}
+
     for opp in opportunities:
         opp["application_deadline"] = opp.end_date
         opp["has_interest"] = opp.name in interests
+        opp["project_name"] = project_names.get(opp.get("project")) or opp.get("project") or ""
         # Fetch required skills
         skills = frappe.get_all("Volunteer Skill Item", filters={"parent": opp.name, "parenttype": "Volunteer Opportunity"}, pluck="skill")
         opp["required_skills"] = ", ".join(skills) if skills else ""
