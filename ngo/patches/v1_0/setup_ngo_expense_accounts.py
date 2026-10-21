@@ -92,6 +92,11 @@ def execute():
             )
 
     enable_dimensions_in_journal_entry()
+    # Ensure Volunteer role does not have home_page override in Role doctype
+    if frappe.db.exists("Role", "Volunteer"):
+        if frappe.db.get_value("Role", "Volunteer", "home_page"):
+            frappe.db.set_value("Role", "Volunteer", "home_page", None)
+
     frappe.db.commit()
 
 
