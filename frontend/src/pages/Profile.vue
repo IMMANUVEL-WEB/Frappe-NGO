@@ -25,8 +25,8 @@
               <div class="relative group">
                 <div class="w-32 h-32 rounded-2xl border-4 border-white shadow-lg overflow-hidden bg-gray-100 flex justify-center items-center">
                   <img v-if="profile.data.image" :src="profile.data.image" class="w-full h-full object-cover" />
-                  <div v-else class="text-gray-400">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  <div v-else class="w-full h-full bg-[#043226] text-emerald-200 font-bold text-3xl uppercase flex items-center justify-center select-none">
+                    {{ (profile.data.full_name || 'V').slice(0, 2) }}
                   </div>
                 </div>
                 <div class="absolute inset-0 rounded-2xl bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex justify-center items-center border-4 border-transparent cursor-pointer" @click="triggerImageUpload">
@@ -58,10 +58,10 @@
                 Contact Details
               </h3>
               
-              <div class="space-y-5">
+              <div class="space-y-4">
                 <div>
                   <label class="block text-sm font-semibold text-gray-700 mb-1">Phone Number</label>
-                  <input v-model="formData.phone" type="tel" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-shadow bg-gray-50/50" />
+                  <input v-model="formData.phone" type="text" class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-shadow bg-gray-50/50" />
                 </div>
                 <div>
                   <label class="block text-sm font-semibold text-gray-700 mb-1">Address</label>
@@ -138,7 +138,7 @@
 
 <script setup>
 import { createResource, Button, LoadingText, Badge } from "frappe-ui"
-import { ref, onMounted } from "vue"
+import { ref } from "vue"
 import VolunteerLayout from "../components/VolunteerLayout.vue"
 
 const imageUploadInput = ref(null)
@@ -208,7 +208,8 @@ async function handleImageUpload(e) {
       })
       
       // Refresh
-      profile.fetch()
+      await profile.fetch()
+      window.dispatchEvent(new CustomEvent('volunteer-image-updated', { detail: { image: fileUrl } }))
     }
   } catch (error) {
     alert("Failed to upload image")
