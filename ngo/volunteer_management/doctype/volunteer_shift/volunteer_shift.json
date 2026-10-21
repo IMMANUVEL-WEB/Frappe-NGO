@@ -89,7 +89,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-10-20 15:45:03.634279",
+ "modified": "2026-10-21 21:41:04.704389",
  "modified_by": "Administrator",
  "module": "Volunteer Management",
  "name": "Volunteer Shift",
@@ -135,5 +135,6 @@
  "rows_threshold_for_grid_search": 20,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "naming_series"
 }

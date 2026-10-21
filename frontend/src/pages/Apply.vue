@@ -102,7 +102,7 @@
           <!-- Middle: Featured Volunteer Photo Card with Script Calligraphy -->
           <div class="relative my-3 rounded-2xl overflow-hidden shadow-lg border border-emerald-500/25 z-10 group">
             <img 
-              src="/volunteers_planting.jpg" 
+              :src="volunteersPlanting" 
               alt="Volunteers planting trees in the community" 
               class="w-full h-32 lg:h-36 object-cover object-center group-hover:scale-105 transition-transform duration-500"
             />
@@ -540,6 +540,8 @@
 </template>
 
 <script setup>
+import volunteersPlanting from "@/assets/volunteers_planting.jpg"
+
 import { ref, computed, onMounted } from "vue";
 import { call, createResource } from "frappe-ui";
 

@@ -191,6 +191,26 @@ def my_assignments(status=None):
     
     for a in assignments:
         a["opportunity_title"] = frappe.db.get_value("Volunteer Opportunity", a.opportunity, "title") or a.opportunity
+        if a.project:
+            a["project_name"] = frappe.db.get_value("Project", a.project, "project_name") or a.project
+        else:
+            a["project_name"] = ""
+        if a.opportunity:
+            opp_vals = frappe.db.get_value("Volunteer Opportunity", a.opportunity, ["location", "description"], as_dict=True)
+            if opp_vals:
+                a["location"] = opp_vals.get("location") or ""
+            skills = frappe.get_all("Volunteer Skill Item", filters={"parent": a.opportunity}, fields=["skill"])
+            a["skills"] = [s.skill for s in skills]
+        else:
+            a["location"] = ""
+            a["skills"] = []
+        
+        # Calculate real hours done for this assignment from approved attendance
+        att_hours = frappe.db.sql("""
+            SELECT SUM(total_hours) FROM `tabVolunteer Attendance`
+            WHERE volunteer = %s AND (opportunity = %s OR project = %s) AND status = 'Approved' AND docstatus < 2
+        """, (volunteer, a.opportunity, a.project))
+        a["hours_done"] = float(att_hours[0][0]) if (att_hours and att_hours[0][0]) else 0.0
         
     return assignments
 
@@ -230,6 +250,18 @@ def my_shifts(period="upcoming"):
     for s in shifts:
         s["opportunity_title"] = frappe.db.get_value("Volunteer Opportunity", s.opportunity, "title") or s.opportunity
         s["participant_status"] = participant_status_map.get(s.name)
+        if s.project:
+            s["project_name"] = frappe.db.get_value("Project", s.project, "project_name") or s.project
+        else:
+            s["project_name"] = ""
+        if s.opportunity:
+            opp_vals = frappe.db.get_value("Volunteer Opportunity", s.opportunity, ["location", "vacancies"], as_dict=True)
+            if opp_vals:
+                s["location"] = opp_vals.get("location") or ""
+                s["vacancies"] = opp_vals.get("vacancies") or 0
+        else:
+            s["location"] = ""
+            s["vacancies"] = 0
         
     return shifts
 
@@ -266,8 +298,14 @@ def my_attendance(from_date=None, to_date=None):
             period_total += float(a.total_hours)
         if a.opportunity:
             a["opportunity_title"] = frappe.db.get_value("Volunteer Opportunity", a.opportunity, "title") or a.opportunity
+            a["location"] = frappe.db.get_value("Volunteer Opportunity", a.opportunity, "location") or ""
         else:
             a["opportunity_title"] = ""
+            a["location"] = ""
+        if a.project:
+            a["project_name"] = frappe.db.get_value("Project", a.project, "project_name") or a.project
+        else:
+            a["project_name"] = ""
             
     return {
         "data": attendances,
@@ -281,6 +319,24 @@ def my_profile():
     volunteer = get_current_volunteer()
     doc = frappe.get_doc("Volunteer", volunteer)
     
+    # Calculate stats
+    total_assignments = frappe.db.count("Volunteer Assignment", {"volunteer": volunteer, "docstatus": ["<", 2]})
+    completed_assignments = frappe.db.count("Volunteer Assignment", {"volunteer": volunteer, "status": "Completed", "docstatus": ["<", 2]})
+    
+    # Shifts count
+    shift_parts = frappe.get_all("Volunteer Shift Participant", filters={"volunteer": volunteer}, fields=["parent"])
+    upcoming_shifts = 0
+    if shift_parts:
+        s_names = [p.parent for p in shift_parts]
+        upcoming_shifts = frappe.db.count("Volunteer Shift", {"name": ["in", s_names], "shift_date": [">=", today()], "docstatus": ["<", 2]})
+
+    # Count distinct projects for active campaigns
+    active_campaigns = frappe.db.sql("""
+        SELECT COUNT(DISTINCT project) FROM `tabVolunteer Assignment`
+        WHERE volunteer = %s AND status = 'Active' AND docstatus < 2
+    """, (volunteer,))
+    active_camp_count = active_campaigns[0][0] if active_campaigns else 0
+
     return {
         "full_name": doc.full_name,
         "image": doc.get("image") or (frappe.db.get_value("User", doc.user, "user_image") if getattr(doc, "user", None) else None),
@@ -291,9 +347,16 @@ def my_profile():
         "gender": doc.gender,
         "status": doc.status,
         "joined_on": doc.joined_on,
-        "total_hours": doc.total_hours,
+        "total_hours": doc.total_hours or 0.0,
+        "bio": doc.get("bio") or "Passionate about community service, education and environmental initiatives. Eager to contribute my skills and time for a better society.",
         "skills": [{"skill": s.skill, "proficiency": s.proficiency} for s in doc.skills],
-        "availability": [{"day_of_week": a.day_of_week, "from_time": a.from_time, "to_time": a.to_time} for a in doc.availability]
+        "availability": [{"day_of_week": a.day_of_week, "from_time": a.from_time, "to_time": a.to_time} for a in doc.availability],
+        "stats": {
+            "total_assignments": total_assignments,
+            "completed_assignments": completed_assignments,
+            "upcoming_shifts": upcoming_shifts,
+            "active_campaigns": active_camp_count
+        }
     }
 
 @frappe.whitelist()

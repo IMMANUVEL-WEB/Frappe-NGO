@@ -36,7 +36,7 @@
         <!-- Right Side Image with Soft Gradient Masking -->
         <div class="absolute right-0 top-0 bottom-0 w-full md:w-1/2 lg:w-[48%] pointer-events-none overflow-hidden">
           <img 
-            src="/volunteers_planting.jpg" 
+            :src="volunteersPlanting" 
             alt="Volunteers planting trees in the community" 
             class="w-full h-full object-cover object-center transform scale-105"
           />
@@ -335,6 +335,8 @@
 </template>
 
 <script setup>
+import volunteersPlanting from "@/assets/volunteers_planting.jpg"
+
 import { createResource, LoadingText } from "frappe-ui"
 import { ref, computed, watch } from "vue"
 import VolunteerLayout from "../components/VolunteerLayout.vue"

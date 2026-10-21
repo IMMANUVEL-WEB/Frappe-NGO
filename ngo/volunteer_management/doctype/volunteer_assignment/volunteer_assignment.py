@@ -87,3 +87,21 @@ def update_opportunity_filled_count(opportunity, exclude=None):
 		values["status"] = "Open"
 
 	frappe.db.set_value("Volunteer Opportunity", opportunity, values)
+
+@frappe.whitelist()
+def make_volunteer_shift(source_name):
+	assignment = frappe.get_doc("Volunteer Assignment", source_name)
+	shift = frappe.new_doc("Volunteer Shift")
+	shift.opportunity = assignment.opportunity
+	shift.project = assignment.project
+	shift.shift_date = assignment.from_date or frappe.utils.today()
+	shift.status = "Scheduled"
+	shift.required_count = 1
+	if assignment.volunteer:
+		vol_name = assignment.volunteer_name or frappe.db.get_value("Volunteer", assignment.volunteer, "full_name") or assignment.volunteer
+		shift.append("participants", {
+			"volunteer": assignment.volunteer,
+			"volunteer_name": vol_name,
+			"status": "Confirmed"
+		})
+	return shift.as_dict()
