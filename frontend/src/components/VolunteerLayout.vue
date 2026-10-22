@@ -149,18 +149,284 @@
     <!-- Main Content Area with Top Header -->
     <div class="flex-1 flex flex-col min-w-0 overflow-y-auto">
       
-      <!-- Top Header Bar: Cleaned (Network selector, search bar, and notification bell removed) -->
-      <header class="bg-white border-b border-gray-100 px-6 lg:px-8 py-3.5 flex items-center justify-end sticky top-0 z-20 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
+      <!-- Top Header Bar: Rich, Aesthetic, Interactive Navbar -->
+      <header class="bg-white/95 backdrop-blur-md border-b border-gray-200/70 px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between sticky top-0 z-20 shadow-[0_1px_3px_rgba(0,0,0,0.02)] transition-all">
         
-        <!-- Right: Profile Avatar Button with Volunteer Image -->
-        <router-link 
-          to="/profile" 
-          class="w-9 h-9 rounded-full bg-[#043226] text-white font-bold text-xs flex items-center justify-center hover:ring-2 hover:ring-emerald-700/30 transition-all shadow-sm uppercase overflow-hidden"
-          :title="displayName"
-        >
-          <img v-if="userImage" :src="userImage" :alt="displayName" class="w-full h-full object-cover" />
-          <span v-else>{{ userInitials }}</span>
-        </router-link>
+        <!-- Left: Current Page Indicator + Quick Global Search -->
+        <div class="flex items-center gap-3 lg:gap-4 min-w-0">
+          <!-- Mobile Sidebar Hamburger (visible on small screens) -->
+          <button 
+            @click="mobileMenuOpen = !mobileMenuOpen" 
+            class="md:hidden text-gray-600 hover:text-emerald-800 p-1.5 -ml-1 rounded-xl hover:bg-gray-100 transition-colors focus:outline-none"
+            aria-label="Toggle Navigation"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+
+          <!-- Current Page Title with Live Indicator -->
+          <div class="flex items-center gap-2.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <div class="min-w-0">
+              <h2 class="text-sm font-bold text-gray-900 leading-tight truncate">
+                {{ currentPageInfo.title }}
+              </h2>
+              <p class="hidden sm:block text-[10px] text-gray-400 font-medium truncate">
+                {{ currentPageInfo.subtitle }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="hidden sm:block h-6 w-px bg-gray-200/80 mx-1"></div>
+
+          <!-- Global Quick Search -->
+          <div class="hidden sm:flex items-center relative">
+            <svg class="w-3.5 h-3.5 text-gray-400 absolute left-3 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input 
+              type="text" 
+              v-model="globalSearch" 
+              @keydown.enter="handleSearch"
+              placeholder="Search opportunities, causes..." 
+              class="w-44 lg:w-64 pl-8 pr-7 py-1.5 text-xs bg-gray-50 hover:bg-gray-100 focus:bg-white border border-gray-200 focus:border-emerald-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-600/10 transition-all text-gray-700 placeholder-gray-400"
+            />
+            <button 
+              v-if="globalSearch" 
+              @click="globalSearch = ''" 
+              class="absolute right-2 text-gray-400 hover:text-gray-600 text-xs p-0.5"
+            >
+              &times;
+            </button>
+            <span v-else class="absolute right-2 px-1 py-0.2 text-[9px] font-semibold text-gray-400 bg-white border border-gray-200 rounded shadow-2xs">?</span>
+          </div>
+        </div>
+
+        <!-- Center: Date & Live Status Pill (on wide screens) -->
+        <div class="hidden xl:flex items-center gap-2 px-3 py-1 bg-emerald-50/80 border border-emerald-100/90 rounded-full text-xs text-emerald-800 shadow-2xs">
+          <svg class="w-3.5 h-3.5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span class="font-medium text-emerald-950">{{ formattedTodayDate }}</span>
+          <span class="text-emerald-300 font-semibold">?</span>
+          <span class="font-bold text-emerald-700">Active Volunteer</span>
+        </div>
+
+        <!-- Right Side: Quick Action + Notifications + Profile Pill -->
+        <div class="flex items-center gap-2.5 sm:gap-3 flex-shrink-0">
+          
+          <!-- Quick Action: Explore Causes -->
+          <router-link 
+            to="/opportunities" 
+            class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-emerald-800 bg-emerald-50/80 hover:bg-emerald-100 border border-emerald-200/80 rounded-xl transition-all shadow-2xs hover:shadow-xs group"
+          >
+            <svg class="w-3.5 h-3.5 text-emerald-600 group-hover:rotate-45 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polygon points="12 8 8 12 12 16 12 8"></polygon>
+            </svg>
+            <span>Explore Causes</span>
+          </router-link>
+
+          <!-- Notifications Bell Dropdown -->
+          <div class="relative" ref="notificationsRef">
+            <button 
+              @click="toggleNotifications" 
+              class="relative p-2 rounded-xl text-gray-500 hover:text-emerald-800 hover:bg-emerald-50/70 border border-transparent hover:border-emerald-100 transition-all focus:outline-none"
+              :class="{ 'bg-emerald-50/70 text-emerald-800 border-emerald-100': notificationsOpen }"
+              aria-label="View notifications"
+            >
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              <!-- Unread badge dot -->
+              <span v-if="unreadCount > 0" class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white"></span>
+            </button>
+
+            <!-- Notifications Flyout -->
+            <div 
+              v-if="notificationsOpen"
+              class="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 overflow-hidden transform transition-all"
+            >
+              <div class="px-4 py-3 bg-gray-50/80 border-b border-gray-100 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-gray-900">Notifications</span>
+                  <span v-if="unreadCount > 0" class="px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                    {{ unreadCount }} new
+                  </span>
+                </div>
+                <button 
+                  v-if="unreadCount > 0"
+                  @click="unreadCount = 0"
+                  class="text-[11px] font-semibold text-emerald-700 hover:text-emerald-900 transition-colors"
+                >
+                  Mark read
+                </button>
+              </div>
+
+              <div class="divide-y divide-gray-50 max-h-80 overflow-y-auto">
+                <div 
+                  v-for="(n, idx) in notificationsList" 
+                  :key="idx"
+                  class="p-3.5 hover:bg-gray-50/80 transition-colors flex items-start gap-3"
+                >
+                  <div 
+                    class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
+                    :class="n.iconBg"
+                  >
+                    <span v-html="n.icon"></span>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-xs font-semibold text-gray-800 leading-snug">{{ n.title }}</p>
+                    <p class="text-[11px] text-gray-500 mt-0.5 leading-relaxed">{{ n.desc }}</p>
+                    <span class="text-[10px] text-gray-400 font-medium block mt-1">{{ n.time }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-2.5 bg-gray-50/50 border-t border-gray-100 text-center">
+                <router-link 
+                  to="/shifts" 
+                  @click="notificationsOpen = false"
+                  class="text-xs font-bold text-emerald-700 hover:text-emerald-900 transition-colors"
+                >
+                  View All Shifts & Schedules &rarr;
+                </router-link>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vertical separator -->
+          <div class="h-6 w-px bg-gray-200/80"></div>
+
+          <!-- Profile User Pill + Dropdown -->
+          <div class="relative" ref="profileMenuRef">
+            <button 
+              @click="toggleProfileMenu" 
+              class="flex items-center gap-2 p-1 pl-1.5 sm:pr-2.5 rounded-xl hover:bg-gray-100/80 border border-transparent hover:border-gray-200/60 transition-all focus:outline-none"
+              :class="{ 'bg-gray-100/90 border-gray-200/70': profileMenuOpen }"
+              aria-label="User profile menu"
+            >
+              <!-- Avatar Circle with online ring -->
+              <div class="relative flex-shrink-0">
+                <div class="w-8 h-8 rounded-full bg-[#043226] text-white font-bold text-xs flex items-center justify-center shadow-xs uppercase overflow-hidden border border-emerald-700/20">
+                  <img v-if="userImage" :src="userImage" :alt="displayName" class="w-full h-full object-cover" />
+                  <span v-else>{{ userInitials }}</span>
+                </div>
+                <span class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full"></span>
+              </div>
+
+              <!-- Name and Role (hidden on tiny screens) -->
+              <div class="hidden sm:block text-left min-w-0 max-w-[120px]">
+                <p class="text-xs font-bold text-gray-900 truncate leading-tight">{{ displayName }}</p>
+                <p class="text-[10px] text-emerald-700 font-medium leading-none">Volunteer</p>
+              </div>
+
+              <!-- Chevron Down -->
+              <svg 
+                class="w-3.5 h-3.5 text-gray-400 transition-transform duration-200 hidden sm:block" 
+                :class="{ 'rotate-180': profileMenuOpen }" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                stroke-width="2.5"
+              >
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+
+            <!-- Profile Dropdown Menu -->
+            <div 
+              v-if="profileMenuOpen"
+              class="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-gray-100 z-50 py-1.5 overflow-hidden transform transition-all"
+            >
+              <!-- User Summary Header -->
+              <div class="px-4 py-3 border-b border-gray-100 bg-gray-50/60">
+                <p class="text-xs font-bold text-gray-900 truncate">{{ displayName }}</p>
+                <p class="text-[11px] text-gray-400 truncate mt-0.5">{{ userEmail || 'volunteer@impactsphere.org' }}</p>
+                <span class="inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/60">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Verified Volunteer
+                </span>
+              </div>
+
+              <!-- Links -->
+              <div class="py-1">
+                <router-link 
+                  to="/profile" 
+                  @click="profileMenuOpen = false" 
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-gray-700 hover:bg-emerald-50/60 hover:text-emerald-900 transition-colors"
+                >
+                  <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                  Profile Settings
+                </router-link>
+
+                <router-link 
+                  to="/assignments" 
+                  @click="profileMenuOpen = false" 
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-gray-700 hover:bg-emerald-50/60 hover:text-emerald-900 transition-colors"
+                >
+                  <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                  </svg>
+                  My Assignments
+                </router-link>
+
+                <router-link 
+                  to="/shifts" 
+                  @click="profileMenuOpen = false" 
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-gray-700 hover:bg-emerald-50/60 hover:text-emerald-900 transition-colors"
+                >
+                  <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                  </svg>
+                  My Shifts
+                </router-link>
+
+                <router-link 
+                  to="/attendance" 
+                  @click="profileMenuOpen = false" 
+                  class="flex items-center gap-2.5 px-4 py-2 text-xs font-medium text-gray-700 hover:bg-emerald-50/60 hover:text-emerald-900 transition-colors"
+                >
+                  <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="9 12 11 14 15 10"></polyline>
+                  </svg>
+                  Attendance Record
+                </router-link>
+              </div>
+
+              <!-- Sign Out Item -->
+              <div class="pt-1 border-t border-gray-100">
+                <button 
+                  @click="profileMenuOpen = false; showLogoutDialog = true" 
+                  class="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50/70 transition-colors"
+                >
+                  <svg class="w-4 h-4 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                  </svg>
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
 
       </header>
 
@@ -248,10 +514,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
 const portalSettings = ref({})
 const userEmail = ref('')
 const displayName = ref('Volunteer')
@@ -260,6 +527,78 @@ const userImage = ref('')
 const mobileMenuOpen = ref(false)
 const showLogoutDialog = ref(false)
 const loggingOut = ref(false)
+
+const globalSearch = ref('')
+const notificationsOpen = ref(false)
+const profileMenuOpen = ref(false)
+const unreadCount = ref(2)
+const notificationsRef = ref(null)
+const profileMenuRef = ref(null)
+
+const formattedTodayDate = computed(() => {
+  const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }
+  return new Date().toLocaleDateString('en-US', options)
+})
+
+const currentPageInfo = computed(() => {
+  const path = route.path
+  if (path === '/') return { title: 'Dashboard', subtitle: 'Overview & metrics' }
+  if (path.startsWith('/opportunities')) return { title: 'Opportunities', subtitle: 'Browse community causes' }
+  if (path.startsWith('/assignments')) return { title: 'My Assignments', subtitle: 'Active & completed roles' }
+  if (path.startsWith('/shifts')) return { title: 'My Shifts', subtitle: 'Upcoming & past schedules' }
+  if (path.startsWith('/attendance')) return { title: 'Attendance Record', subtitle: 'Service hours log' }
+  if (path.startsWith('/profile')) return { title: 'Profile Settings', subtitle: 'Manage your volunteer info' }
+  return { title: 'Volunteer Portal', subtitle: 'ImpactSphere' }
+})
+
+const notificationsList = ref([
+  {
+    title: 'Attendance Verified',
+    desc: '5.0 hours verified for Emergency Blood Donation Camp Support.',
+    time: 'Today',
+    iconBg: 'bg-emerald-100 text-emerald-700',
+    icon: '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>'
+  },
+  {
+    title: 'Shift Assignment Ready',
+    desc: 'You are enrolled in Volunteer Opportunities.',
+    time: 'Oct 21',
+    iconBg: 'bg-blue-100 text-blue-700',
+    icon: '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line></svg>'
+  },
+  {
+    title: 'Welcome to Volunteer Portal',
+    desc: 'Thank you for contributing to your community with ImpactSphere.',
+    time: 'Oct 20',
+    iconBg: 'bg-amber-100 text-amber-700',
+    icon: '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>'
+  }
+])
+
+function toggleNotifications() {
+  notificationsOpen.value = !notificationsOpen.value
+  if (notificationsOpen.value) profileMenuOpen.value = false
+}
+
+function toggleProfileMenu() {
+  profileMenuOpen.value = !profileMenuOpen.value
+  if (profileMenuOpen.value) notificationsOpen.value = false
+}
+
+function handleSearch() {
+  if (globalSearch.value.trim()) {
+    router.push({ path: '/opportunities', query: { search: globalSearch.value.trim() } })
+  }
+}
+
+function handleDocumentClick(e) {
+  if (profileMenuRef.value && !profileMenuRef.value.contains(e.target)) {
+    profileMenuOpen.value = false
+  }
+  if (notificationsRef.value && !notificationsRef.value.contains(e.target)) {
+    notificationsOpen.value = false
+  }
+}
 
 const navItems = [
   { 
@@ -305,8 +644,22 @@ function handleProfileImageUpdated(e) {
   }
 }
 
+function handleProfileUpdated(e) {
+  if (e?.detail?.full_name) {
+    displayName.value = e.detail.full_name
+    const parts = e.detail.full_name.trim().split(/\s+/)
+    if (parts.length >= 2) {
+      userInitials.value = `${parts[0].charAt(0)}${parts[parts.length - 1].charAt(0)}`.toUpperCase()
+    } else {
+      userInitials.value = parts[0].slice(0, 2).toUpperCase()
+    }
+  }
+}
+
 onMounted(async () => {
+  document.addEventListener('click', handleDocumentClick)
   window.addEventListener('volunteer-image-updated', handleProfileImageUpdated)
+  window.addEventListener('volunteer-profile-updated', handleProfileUpdated)
 
   // 1. Fetch portal settings for dynamic branding logo and title
   try {
@@ -376,7 +729,9 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
+  document.removeEventListener('click', handleDocumentClick)
   window.removeEventListener('volunteer-image-updated', handleProfileImageUpdated)
+  window.removeEventListener('volunteer-profile-updated', handleProfileUpdated)
 })
 
 async function logout() {

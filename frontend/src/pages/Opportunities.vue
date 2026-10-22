@@ -339,10 +339,18 @@ import volunteersPlanting from "@/assets/volunteers_planting.jpg"
 
 import { createResource, LoadingText } from "frappe-ui"
 import { ref, computed, watch } from "vue"
+import { useRoute } from "vue-router"
 import VolunteerLayout from "../components/VolunteerLayout.vue"
 
+const route = useRoute()
 const submitting = ref(null)
-const searchQuery = ref("")
+const searchQuery = ref(route.query?.search ? String(route.query.search) : "")
+
+watch(() => route.query?.search, (newSearch) => {
+  if (newSearch !== undefined) {
+    searchQuery.value = String(newSearch)
+  }
+})
 const selectedLocation = ref("")
 const selectedSkill = ref("")
 const sortBy = ref("newest")

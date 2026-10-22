@@ -205,12 +205,26 @@ def my_assignments(status=None):
             a["location"] = ""
             a["skills"] = []
         
-        # Calculate real hours done for this assignment from approved attendance
-        att_hours = frappe.db.sql("""
+        # Calculate real hours done for this assignment from attendance
+        cond = ["volunteer = %s", "docstatus < 2", "status IN ('Present', 'Half Day', 'Approved')"]
+        params = [volunteer]
+        if a.opportunity and a.project:
+            cond.append("(opportunity = %s OR (IFNULL(opportunity, '') = '' AND project = %s))")
+            params.extend([a.opportunity, a.project])
+        elif a.opportunity:
+            cond.append("opportunity = %s")
+            params.append(a.opportunity)
+        elif a.project:
+            cond.append("project = %s")
+            params.append(a.project)
+        else:
+            cond.append("1 = 0")
+
+        att_hours = frappe.db.sql(f"""
             SELECT SUM(total_hours) FROM `tabVolunteer Attendance`
-            WHERE volunteer = %s AND (opportunity = %s OR project = %s) AND status = 'Approved' AND docstatus < 2
-        """, (volunteer, a.opportunity, a.project))
-        a["hours_done"] = float(att_hours[0][0]) if (att_hours and att_hours[0][0]) else 0.0
+            WHERE {" AND ".join(cond)}
+        """, tuple(params))
+        a["hours_done"] = round(float(att_hours[0][0]), 1) if (att_hours and att_hours[0][0]) else 0.0
         
     return assignments
 
@@ -337,6 +351,10 @@ def my_profile():
     """, (volunteer,))
     active_camp_count = active_campaigns[0][0] if active_campaigns else 0
 
+    user_bio = None
+    if getattr(doc, "user", None):
+        user_bio = frappe.db.get_value("User", doc.user, "bio")
+
     return {
         "full_name": doc.full_name,
         "image": doc.get("image") or (frappe.db.get_value("User", doc.user, "user_image") if getattr(doc, "user", None) else None),
@@ -348,7 +366,7 @@ def my_profile():
         "status": doc.status,
         "joined_on": doc.joined_on,
         "total_hours": doc.total_hours or 0.0,
-        "bio": doc.get("bio") or "Passionate about community service, education and environmental initiatives. Eager to contribute my skills and time for a better society.",
+        "bio": user_bio or doc.get("bio") or "Passionate about community service, education and environmental initiatives. Eager to contribute my skills and time for a better society.",
         "skills": [{"skill": s.skill, "proficiency": s.proficiency} for s in doc.skills],
         "availability": [{"day_of_week": a.day_of_week, "from_time": a.from_time, "to_time": a.to_time} for a in doc.availability],
         "stats": {
@@ -360,22 +378,50 @@ def my_profile():
     }
 
 @frappe.whitelist()
-def update_my_profile(phone=None, address=None, availability=None, image=None):
+def update_my_profile(full_name=None, phone=None, address=None, date_of_birth=None, bio=None, availability=None, image=None):
     volunteer = get_current_volunteer()
+    if not volunteer:
+        frappe.throw("Volunteer record not found")
+
     doc = frappe.get_doc("Volunteer", volunteer)
     
-    if phone:
-        if not re.match(r'^\+?[\d\s-]{10,}$', phone):
+    if full_name:
+        doc.full_name = full_name.strip()
+        if getattr(doc, "user", None):
+            parts = doc.full_name.split(" ", 1)
+            first_name = parts[0]
+            last_name = parts[1] if len(parts) > 1 else ""
+            frappe.db.set_value("User", doc.user, {
+                "first_name": first_name,
+                "last_name": last_name,
+                "full_name": doc.full_name
+            })
+            
+    if phone is not None:
+        p = phone.strip()
+        if p and not re.match(r"^\+?[\d\s-]{7,30}$", p):
             frappe.throw("Invalid phone number format")
-        doc.phone = phone
+        doc.phone = p
+        if getattr(doc, "user", None):
+            frappe.db.set_value("User", doc.user, "mobile_no", p)
+        
+    if date_of_birth:
+        try:
+            from frappe.utils import getdate
+            doc.date_of_birth = getdate(date_of_birth)
+        except Exception:
+            pass
+            
+    if address is not None:
+        doc.address = address.strip()
+        
+    if bio is not None and getattr(doc, "user", None):
+        frappe.db.set_value("User", doc.user, "bio", bio)
         
     if image is not None:
         doc.image = image
         if getattr(doc, "user", None):
             frappe.db.set_value("User", doc.user, "user_image", image)
-        
-    if address is not None:
-        doc.address = address
         
     if availability is not None:
         if isinstance(availability, str):
@@ -405,7 +451,36 @@ def update_my_profile(phone=None, address=None, availability=None, image=None):
             
     doc.flags.ignore_permissions = True
     doc.save()
+    frappe.db.commit()
     return "Success"
+
+@frappe.whitelist()
+def upload_profile_image():
+    volunteer = get_current_volunteer()
+    if not volunteer:
+        frappe.throw("Volunteer not found")
+        
+    if "file" not in frappe.request.files:
+        frappe.throw("No file uploaded")
+        
+    uploaded_file = frappe.request.files["file"]
+    from frappe.utils.file_manager import save_file
+    file_doc = save_file(
+        uploaded_file.filename,
+        uploaded_file.stream.read(),
+        "Volunteer",
+        volunteer,
+        is_private=0
+    )
+    
+    frappe.db.set_value("Volunteer", volunteer, "image", file_doc.file_url)
+    
+    user = frappe.db.get_value("Volunteer", volunteer, "user")
+    if user:
+        frappe.db.set_value("User", user, "user_image", file_doc.file_url)
+        
+    frappe.db.commit()
+    return {"file_url": file_doc.file_url}
 
 @frappe.whitelist()
 def open_opportunities():

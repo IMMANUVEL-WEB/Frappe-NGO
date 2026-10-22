@@ -292,7 +292,7 @@
                 ></div>
               </div>
               <p class="text-xs text-gray-500 font-medium">
-                {{ item.hours_done }} hours completed
+                {{ Number(item.hours_done || 0).toFixed(1) }} hours completed
               </p>
             </div>
 
@@ -304,7 +304,7 @@
                   <circle cx="12" cy="12" r="10"></circle>
                   <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
-                <span>{{ item.hours_done }} hrs</span>
+                <span>{{ Number(item.hours_done || 0).toFixed(1) }} hrs</span>
               </div>
               <div class="w-full h-2 bg-emerald-600 rounded-full"></div>
             </div>
@@ -393,7 +393,7 @@
           </div>
           <div class="flex justify-between">
             <span class="font-medium text-gray-500">Hours Completed:</span>
-            <span class="font-bold text-emerald-800">{{ selectedItem.hours_done || 0 }} hrs</span>
+            <span class="font-bold text-emerald-800">{{ Number(selectedItem.hours_done || 0).toFixed(1) }} hrs</span>
           </div>
         </div>
 

@@ -653,91 +653,107 @@ function triggerPhotoUpload() {
   }
 }
 
-function handlePhotoUpload(event) {
+function getCsrfToken() {
+  return window.csrf_token || (window.frappe ? window.frappe.csrf_token : "") || ""
+}
+
+async function handlePhotoUpload(event) {
   const file = event.target.files[0]
   if (!file) return
 
   const formData = new FormData()
   formData.append("file", file)
-  formData.append("is_private", "0")
-  formData.append("doctype", "Volunteer")
 
-  fetch("/api/method/upload_file", {
-    method: "POST",
-    headers: {
-      "X-Frappe-CSRF-Token": window.frappe ? window.frappe.csrf_token : "",
-    },
-    body: formData,
-  })
-    .then((r) => r.json())
-    .then((res) => {
-      if (res.message && res.message.file_url) {
-        updateProfileAvatar(res.message.file_url)
-      }
+  const csrf = getCsrfToken()
+  try {
+    const res = await fetch("/api/method/ngo.api.volunteer.upload_profile_image", {
+      method: "POST",
+      headers: {
+        ...(csrf && { "X-Frappe-CSRF-Token": csrf }),
+      },
+      body: formData,
     })
-    .catch((err) => console.error(err))
+    const data = await res.json()
+    if (data.message && data.message.file_url) {
+      const fileUrl = data.message.file_url
+      await profileResource.fetch()
+      window.dispatchEvent(new CustomEvent('volunteer-image-updated', { detail: { image: fileUrl } }))
+    } else if (data.exc) {
+      alert("Upload failed: " + (data._server_messages || "Could not upload image"))
+    }
+  } catch (err) {
+    console.error("Photo upload error:", err)
+    alert("Could not upload photo. Please try again.")
+  } finally {
+    if (event.target) event.target.value = ""
+  }
 }
 
-function updateProfileAvatar(fileUrl) {
-  fetch("/api/method/ngo.api.volunteer.update_my_profile", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Frappe-CSRF-Token": window.frappe ? window.frappe.csrf_token : "",
-    },
-    body: JSON.stringify({ image: fileUrl }),
-  }).then(() => {
-    profileResource.fetch()
-    window.dispatchEvent(new CustomEvent('volunteer-image-updated', { detail: { image: fileUrl } }))
-  })
-}
-
-function saveProfile() {
+async function saveProfile() {
   savingProfile.value = true
-  fetch("/api/method/ngo.api.volunteer.update_my_profile", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Frappe-CSRF-Token": window.frappe ? window.frappe.csrf_token : "",
-    },
-    body: JSON.stringify({
-      phone: editForm.value.phone,
-      address: editForm.value.address,
-    }),
-  })
-    .then(() => {
-      savingProfile.value = false
+  const csrf = getCsrfToken()
+  try {
+    const res = await fetch("/api/method/ngo.api.volunteer.update_my_profile", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(csrf && { "X-Frappe-CSRF-Token": csrf }),
+      },
+      body: JSON.stringify({
+        full_name: editForm.value.full_name,
+        phone: editForm.value.phone,
+        date_of_birth: editForm.value.date_of_birth,
+        address: editForm.value.address,
+        bio: editForm.value.bio,
+      }),
+    })
+    const data = await res.json()
+    if (!data.exc) {
       isEditing.value = false
-      profileResource.fetch()
-    })
-    .catch(() => {
-      savingProfile.value = false
-    })
+      await profileResource.fetch()
+      window.dispatchEvent(new CustomEvent('volunteer-profile-updated', {
+        detail: { full_name: editForm.value.full_name }
+      }))
+    } else {
+      alert("Error saving profile: " + (data._server_messages || "Failed to update profile"))
+    }
+  } catch (err) {
+    console.error("Save profile error:", err)
+    alert("An error occurred while saving profile changes.")
+  } finally {
+    savingProfile.value = false
+  }
 }
 
-function submitPasswordChange() {
+async function submitPasswordChange() {
   if (!pwdForm.value.old || !pwdForm.value.new) {
     alert("Please enter both current and new passwords")
     return
   }
-  fetch("/api/method/frappe.core.doctype.user.user.update_password", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Frappe-CSRF-Token": window.frappe ? window.frappe.csrf_token : "",
-    },
-    body: JSON.stringify({
-      old_password: pwdForm.value.old,
-      new_password: pwdForm.value.new,
-    }),
-  })
-    .then((r) => r.json())
-    .then(() => {
+  const csrf = getCsrfToken()
+  try {
+    const res = await fetch("/api/method/frappe.core.doctype.user.user.update_password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(csrf && { "X-Frappe-CSRF-Token": csrf }),
+      },
+      body: JSON.stringify({
+        old_password: pwdForm.value.old,
+        new_password: pwdForm.value.new,
+      }),
+    })
+    const data = await res.json()
+    if (!data.exc) {
       showPasswordModal.value = false
+      pwdForm.value.old = ""
+      pwdForm.value.new = ""
       alert("Password updated successfully!")
-    })
-    .catch(() => {
+    } else {
       alert("Could not update password. Please check your current password.")
-    })
+    }
+  } catch (err) {
+    alert("Could not update password. Please check your current password.")
+  }
 }
 </script>
