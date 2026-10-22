@@ -279,9 +279,25 @@ fixtures = [
 	}
 ]
 
-website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'},]
+website_route_rules = [
+	{"from_route": "/frontend/<path:app_path>", "to_route": "frontend"},
+	{"from_route": "/donor-portal/<path:app_path>", "to_route": "frontend"},
+	{"from_route": "/donor_portal/<path:app_path>", "to_route": "frontend"},
+	{"from_route": "/donor-portal", "to_route": "frontend"},
+	{"from_route": "/donor_portal", "to_route": "frontend"},
+]
 
-get_website_user_home_page = "ngo.api.volunteer.get_website_user_home_page"
+get_website_user_home_page = "ngo.api.donor_portal.auth.get_website_user_home_page"
+
+permission_query_conditions = {
+	"Donor Grant": "ngo.api.donor_portal.auth.get_donor_grant_query_conditions",
+	"Project Proposal": "ngo.api.donor_portal.auth.get_project_proposal_query_conditions",
+}
+
+has_permission = {
+	"Donor Grant": "ngo.api.donor_portal.auth.has_donor_grant_permission",
+	"Project Proposal": "ngo.api.donor_portal.auth.has_project_proposal_permission",
+}
 
 
 # Installation and Migration

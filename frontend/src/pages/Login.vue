@@ -438,7 +438,7 @@
                 <label
                   class="block text-[10px] font-bold text-gray-700 uppercase tracking-wider pb-2"
                 >
-                  {{ settings.login_email_label || "VOLUNTEER EMAIL ADDRESS" }}
+                  {{ settings.login_email_label || "EMAIL ADDRESS" }}
                 </label>
                 <div
                   class="relative rounded-xl border border-gray-200 focus-within:border-emerald-700 focus-within:ring-2 focus-within:ring-emerald-700/15 transition shadow-sm bg-white"
@@ -820,13 +820,45 @@ async function login() {
   error.value = "";
 
   try {
-    await session.login.submit({
+    const loginRes = await session.login.submit({
       email: email.value,
       password: password.value,
     });
 
     if (session.login.error) {
       throw new Error(session.login.error);
+    }
+
+    // Role-based redirect on successful authentication
+    let destination = loginRes?.home_page || session.login?.data?.home_page;
+    if (destination) {
+      if (destination.startsWith("/")) destination = destination.slice(1);
+      if (destination === "donor-portal" || destination === "donor_portal") {
+        window.location.href = "/donor-portal";
+        return;
+      }
+      if (destination === "desk" || destination === "app") {
+        window.location.href = "/app";
+        return;
+      }
+    }
+
+    try {
+      const routeRes = await fetch("/api/method/ngo.api.donor_portal.auth.get_portal_route");
+      const json = await routeRes.json();
+      const route = json?.message?.route;
+      if (route) {
+        if (route.includes("donor")) {
+          window.location.href = "/donor-portal";
+          return;
+        }
+        if (route === "/app") {
+          window.location.href = "/app";
+          return;
+        }
+      }
+    } catch (routeErr) {
+      console.warn("Role redirect fallback:", routeErr);
     }
   } catch (err) {
     const rawError = String(err.message || session.login.error || err || "");

@@ -7,3 +7,4 @@
 ngo.patches.v1_0.setup_ngo_expense_accounts
 ngo.patches.v1_0.cleanup_user_customizations
 ngo.patches.v1_0.cleanup_user_docperms
+ngo.patches.v1_0.setup_donor_portal_schema

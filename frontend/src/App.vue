@@ -1,12 +1,11 @@
 <template>
   <div>
-    <router-view v-if="!settings.loading" />
+    <router-view />
   </div>
 </template>
 
 <script setup>
 import { createResource } from 'frappe-ui'
-import { onMounted } from 'vue'
 
 const settings = createResource({
   url: 'ngo.api.volunteer.get_portal_settings',
