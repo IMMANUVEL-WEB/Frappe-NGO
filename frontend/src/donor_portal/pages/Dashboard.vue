@@ -24,11 +24,11 @@
           <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden mb-1.5">
             <div 
               class="bg-[#00875A] h-1.5 rounded-full transition-all duration-700"
-              :style="{ width: `${Math.min(kpis.percent_given_committed, 100)}%` }"
+              :style="{ width: `${Math.min(kpis.percent_given_committed || 0, 100)}%` }"
             ></div>
           </div>
           <div class="text-right text-[11px] text-slate-400 font-medium">
-            {{ kpis.percent_given_committed }}% committed
+            {{ kpis.percent_given_committed || 0 }}% committed
           </div>
         </div>
       </div>
@@ -50,18 +50,18 @@
             </div>
           </div>
           <div class="text-xs text-slate-400 font-medium">
-            {{ kpis.percent_spent_given }}% of funds received
+            {{ kpis.percent_spent_given || 0 }}% of funds received
           </div>
         </div>
         <div class="mt-4 pt-3 border-t border-slate-50">
           <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden mb-1.5">
             <div 
               class="bg-blue-600 h-1.5 rounded-full transition-all duration-700"
-              :style="{ width: `${Math.min(kpis.percent_spent_given, 100)}%` }"
+              :style="{ width: `${Math.min(kpis.percent_spent_given || 0, 100)}%` }"
             ></div>
           </div>
           <div class="text-right text-[11px] text-slate-400 font-medium">
-            {{ kpis.percent_spent_given }}% utilized
+            {{ kpis.percent_spent_given || 0 }}% utilized
           </div>
         </div>
       </div>
@@ -89,7 +89,8 @@
         <div class="mt-4 pt-3 border-t border-slate-50">
           <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden mb-1.5">
             <div 
-              class="bg-amber-400 h-1.5 rounded-full transition-all duration-700 w-[40%]"
+              class="bg-amber-400 h-1.5 rounded-full transition-all duration-700"
+              :style="{ width: `${kpis.total_committed > 0 ? Math.min((kpis.balance_available / kpis.total_committed) * 100, 100) : 0}%` }"
             ></div>
           </div>
           <div class="text-right text-[11px] text-slate-400 font-medium">
@@ -110,20 +111,20 @@
             <div>
               <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Active Grants</span>
               <div class="text-xl md:text-2xl font-black text-slate-900 tracking-tight">
-                {{ kpis.active_grants_count }}
+                {{ kpis.active_grants_count || 0 }}
               </div>
             </div>
           </div>
           <div class="text-xs text-slate-400 font-medium">
-            {{ kpis.expiring_soon_count }} expiring within 90 days
+            {{ kpis.expiring_soon_count || 0 }} expiring within 90 days
           </div>
         </div>
         <div class="mt-4 pt-3 border-t border-slate-50">
-          <div class="flex items-center text-[11px] text-purple-700 font-medium bg-purple-50 px-2 py-1 rounded-lg">
-            <svg class="w-3.5 h-3.5 mr-1 text-purple-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          <div class="text-[11px] text-purple-700 font-medium flex items-center space-x-1.5">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <span>{{ kpis.expiring_soon_count }} expiring within 90 days</span>
+            <span>{{ kpis.expiring_soon_count || 0 }} expiring within 90 days</span>
           </div>
         </div>
       </div>
@@ -134,11 +135,11 @@
           <div class="flex items-center space-x-3 mb-2.5">
             <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center border border-teal-100/60">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
               </svg>
             </div>
             <div>
-              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Purchase Amount</span>
+              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Purchase</span>
               <div class="text-xl md:text-2xl font-black text-slate-900 tracking-tight">
                 {{ formatCurrencyDisplay(kpis.total_purchase_amount) }}
               </div>
@@ -160,8 +161,8 @@
     <!-- ROW 2: VISUALIZATIONS -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
       <!-- Given vs Spent by Month (Lakh) (7 cols) -->
-      <div class="lg:col-span-7 bg-white rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
+      <div class="lg:col-span-7 bg-white rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between min-h-[340px]">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
           <div class="flex items-center space-x-2">
             <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
@@ -182,31 +183,45 @@
         </div>
 
         <!-- Custom Visual Vertical Bar Chart -->
-        <div class="h-60 relative flex flex-col justify-end">
-          <!-- Background Grid Lines -->
-          <div class="absolute inset-x-6 inset-y-2 flex flex-col justify-between pointer-events-none text-[10px] text-slate-400 font-medium">
-            <div class="border-b border-slate-100 pb-1">50</div>
-            <div class="border-b border-slate-100 pb-1">40</div>
-            <div class="border-b border-slate-100 pb-1">30</div>
-            <div class="border-b border-slate-100 pb-1">20</div>
-            <div class="border-b border-slate-100 pb-1">10</div>
-            <div class="border-b border-slate-200 pb-1">0</div>
+        <div class="h-64 relative flex flex-col justify-end pt-6">
+          <!-- Background Grid Lines with Dynamic Y-Axis scale -->
+          <div class="absolute inset-x-8 inset-y-4 flex flex-col justify-between pointer-events-none text-[10px] text-slate-400 font-medium">
+            <div v-for="tick in yAxisTicks" :key="tick" class="border-b border-slate-100 pb-1">
+              {{ tick }}
+            </div>
           </div>
 
-          <!-- Bars Container -->
-          <div class="relative h-full mx-10 flex items-end justify-between z-10">
+          <!-- Bars Container (Side-by-side grouped bars) -->
+          <div class="relative h-48 ml-8 mr-4 flex items-end justify-between z-10 gap-1.5 sm:gap-3">
             <div 
               v-for="(item, idx) in monthlySeries" 
               :key="idx" 
-              class="flex flex-col items-center flex-1"
+              class="flex flex-col items-center flex-1 h-full justify-end group relative"
             >
-              <!-- Dual stacked or side-by-side bars -->
-              <div class="relative w-7 bg-blue-500 rounded-t-sm transition-all duration-500 hover:brightness-105 flex flex-col justify-end"
-                   :style="{ height: `${(item.given / 50) * 100}%` }">
-                <!-- Spent portion inside or bottom bar -->
-                <div class="w-full bg-amber-400 rounded-t-sm"
-                     :style="{ height: `${(item.spent / item.given) * 100}%` }"></div>
+              <!-- Hover Tooltip -->
+              <div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] rounded-lg py-1 px-2.5 pointer-events-none opacity-0 group-hover:opacity-100 transition shadow-xl whitespace-nowrap z-30">
+                <span class="font-bold text-blue-300">Given: ₹{{ item.given }} L</span>
+                <span class="mx-1.5 text-slate-500">|</span>
+                <span class="font-bold text-amber-300">Spent: ₹{{ item.spent }} L</span>
               </div>
+
+              <!-- Pair of Bars -->
+              <div class="flex items-end gap-1 sm:gap-1.5 h-full w-full justify-center">
+                <!-- Bar 1: Given (Blue) -->
+                <div 
+                  class="w-2.5 sm:w-3.5 bg-blue-500 rounded-t transition-all duration-500 hover:brightness-110 shadow-xs"
+                  :style="{ height: `${getBarHeight(item.given)}%` }"
+                  :title="`Given: ₹${item.given} Lakh`"
+                ></div>
+
+                <!-- Bar 2: Spent (Amber) -->
+                <div 
+                  class="w-2.5 sm:w-3.5 bg-amber-400 rounded-t transition-all duration-500 hover:brightness-110 shadow-xs"
+                  :style="{ height: `${getBarHeight(item.spent)}%` }"
+                  :title="`Spent: ₹${item.spent} Lakh`"
+                ></div>
+              </div>
+
               <span class="text-[11px] text-slate-500 font-medium mt-2">{{ item.month }}</span>
             </div>
           </div>
@@ -227,24 +242,36 @@
 
           <!-- Horizontal Stacked Progress Bar -->
           <div class="w-full h-3.5 bg-slate-100 rounded-full overflow-hidden flex mb-2.5">
-            <div class="bg-cyan-500 h-full w-[32%]" title="CapEx"></div>
-            <div class="bg-emerald-500 h-full w-[55%]" title="OpEx"></div>
-            <div class="bg-amber-400 h-full w-[13%]" title="Admin"></div>
+            <div 
+              class="bg-cyan-500 h-full transition-all duration-500" 
+              :style="{ width: `${spendByCategory.capex?.percent || 0}%` }"
+              :title="`CapEx: ${spendByCategory.capex?.percent || 0}%`"
+            ></div>
+            <div 
+              class="bg-emerald-500 h-full transition-all duration-500" 
+              :style="{ width: `${spendByCategory.opex?.percent || 0}%` }"
+              :title="`OpEx: ${spendByCategory.opex?.percent || 0}%`"
+            ></div>
+            <div 
+              class="bg-amber-400 h-full transition-all duration-500" 
+              :style="{ width: `${spendByCategory.admin?.percent || 0}%` }"
+              :title="`Admin: ${spendByCategory.admin?.percent || 0}%`"
+            ></div>
           </div>
 
           <!-- Category Legend -->
           <div class="flex flex-wrap items-center gap-x-3.5 gap-y-1 text-xs text-slate-600">
             <div class="flex items-center space-x-1.5">
               <span class="w-2.5 h-2.5 rounded-sm bg-cyan-500"></span>
-              <span>CapEx 32% (₹36.00 L)</span>
+              <span>CapEx {{ spendByCategory.capex?.percent || 0 }}% (₹{{ spendByCategory.capex?.amount || 0 }} L)</span>
             </div>
             <div class="flex items-center space-x-1.5">
               <span class="w-2.5 h-2.5 rounded-sm bg-emerald-500"></span>
-              <span>OpEx 55% (₹62.00 L)</span>
+              <span>OpEx {{ spendByCategory.opex?.percent || 0 }}% (₹{{ spendByCategory.opex?.amount || 0 }} L)</span>
             </div>
             <div class="flex items-center space-x-1.5">
               <span class="w-2.5 h-2.5 rounded-sm bg-amber-400"></span>
-              <span>Admin 13% (₹14.40 L)</span>
+              <span>Admin {{ spendByCategory.admin?.percent || 0 }}% (₹{{ spendByCategory.admin?.amount || 0 }} L)</span>
             </div>
           </div>
         </div>
@@ -258,20 +285,23 @@
             <h2 class="text-sm font-bold text-slate-900 tracking-tight">Spend by project</h2>
           </div>
 
-          <div class="space-y-3">
+          <div v-if="projectSpendList.length" class="space-y-3">
             <div v-for="(p, idx) in projectSpendList" :key="idx" class="text-xs">
               <div class="flex justify-between items-center mb-1">
-                <span class="font-medium text-slate-700 truncate pr-2">{{ p.name }}</span>
-                <span class="font-bold text-slate-900 shrink-0">₹{{ p.amount }} L</span>
+                <span class="font-medium text-slate-700 truncate pr-2">{{ p.project_name || p.project_id || p.name }}</span>
+                <span class="font-bold text-slate-900 shrink-0">₹{{ p.amount_lakh || p.amount }} L</span>
               </div>
               <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
                 <div 
                   class="h-1.5 rounded-full transition-all duration-500"
-                  :class="p.barColor"
-                  :style="{ width: `${p.percent}%` }"
+                  :class="getBarColor(idx)"
+                  :style="{ width: `${Math.min(p.percent || 0, 100)}%` }"
                 ></div>
               </div>
             </div>
+          </div>
+          <div v-else class="text-xs text-slate-400 py-3 text-center">
+            No project spend recorded yet.
           </div>
         </div>
       </div>
@@ -291,117 +321,148 @@
         </router-link>
       </div>
 
-      <!-- Proposal Card Matching Image 1 -->
-      <div class="border border-slate-100 rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-slate-50/50 hover:bg-white hover:shadow-sm transition">
-        <!-- Left Thumbnail & Details -->
-        <div class="flex items-center space-x-4">
-          <div class="w-20 h-16 rounded-xl overflow-hidden shrink-0 bg-slate-200 border border-slate-200/80">
-            <img 
-              src="https://images.unsplash.com/photo-1541252260730-0412e8e2108e?w=200&auto=format&fit=crop&q=60" 
-              alt="Safe Drinking Water" 
-              class="w-full h-full object-cover"
-            />
+      <div v-if="pendingProposals.length" class="space-y-3">
+        <div 
+          v-for="prop in pendingProposals" 
+          :key="prop.name"
+          class="border border-slate-100 rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-slate-50/50 hover:bg-white hover:shadow-sm transition"
+        >
+          <!-- Left Details -->
+          <div class="flex items-center space-x-4">
+            <div class="w-12 h-12 rounded-xl bg-emerald-100/70 text-emerald-800 flex items-center justify-center font-bold text-sm shrink-0 border border-emerald-200/60">
+              {{ (prop.sector || 'P').substring(0, 2).toUpperCase() }}
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-xs font-mono text-slate-400 font-semibold">{{ prop.code }}</span>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                  {{ prop.state || 'Pending Review' }}
+                </span>
+              </div>
+              <h3 class="text-sm font-bold text-slate-900 mt-0.5">
+                {{ prop.title }}
+              </h3>
+              <p class="text-xs text-slate-500 mt-0.5">
+                Sector: {{ prop.sector }} &bull; CapEx: ₹{{ prop.capex_lakh }} L &bull; OpEx: ₹{{ prop.opex_lakh }} L &bull; Admin: ₹{{ prop.admin_lakh }} L
+              </p>
+              <div class="flex items-center space-x-3 mt-3">
+                <button 
+                  type="button" 
+                  @click="handleDecision(prop.name, 'approve')"
+                  class="flex items-center space-x-1 px-3 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-xs transition"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                  </svg>
+                  <span>Approve</span>
+                </button>
+                <button 
+                  type="button" 
+                  @click="handleDecision(prop.name, 'reject')"
+                  class="flex items-center space-x-1 px-3 py-1 border border-rose-300 text-rose-600 hover:bg-rose-50 rounded-lg text-xs font-semibold transition"
+                >
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                  <span>Reject</span>
+                </button>
+              </div>
+            </div>
           </div>
-          <div>
-            <h3 class="text-sm font-bold text-slate-900">Safe Drinking Water, Phase 2</h3>
-            <div class="text-[11px] text-slate-500 font-medium mt-0.5">
-              PP-2026-016 &middot; WASH &middot; Bihar
-            </div>
-            <div class="text-[11px] text-slate-500 mt-0.5">
-              CapEx ₹18.00 L &middot; OpEx ₹13.00 L &middot; Admin ₹4.00 L
-            </div>
-            <!-- Action Buttons -->
-            <div class="flex items-center space-x-2 mt-2">
-              <button 
-                type="button" 
-                @click="handleDecision('Approved')"
-                class="flex items-center space-x-1 px-3 py-1 bg-[#00875A] hover:bg-[#00744D] text-white rounded-lg text-xs font-semibold shadow-xs transition"
-              >
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                </svg>
-                <span>Approve</span>
-              </button>
-              <button 
-                type="button" 
-                @click="handleDecision('Rejected')"
-                class="flex items-center space-x-1 px-3 py-1 border border-rose-300 text-rose-600 hover:bg-rose-50 rounded-lg text-xs font-semibold transition"
-              >
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
-                <span>Reject</span>
-              </button>
-            </div>
-          </div>
-        </div>
 
-        <!-- Right Budget Info Badge -->
-        <div class="text-left md:text-right shrink-0 bg-white md:bg-transparent p-3 md:p-0 rounded-xl border md:border-0 border-slate-100">
-          <div class="text-lg font-black text-slate-900">
-            ₹35.00 L
-          </div>
-          <div class="text-xs text-slate-400 font-medium">
-            12 months
+          <!-- Right Budget Info Badge -->
+          <div class="text-left md:text-right shrink-0 bg-white md:bg-transparent p-3 md:p-0 rounded-xl border md:border-0 border-slate-100">
+            <div class="text-lg font-black text-slate-900">
+              ₹{{ prop.total_budget_lakh }} L
+            </div>
+            <div class="text-xs text-slate-400 font-medium">
+              {{ prop.duration_months }} months
+            </div>
           </div>
         </div>
+      </div>
+
+      <div v-else class="text-center py-8 text-xs text-slate-400 font-medium bg-slate-50/50 rounded-2xl border border-slate-100">
+        No project proposals currently awaiting decision.
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref, computed, onMounted } from "vue"
+import { donorApi } from "../api"
+
+const loading = ref(true)
 
 const kpis = ref({
-	total_given: 18500000,
-	total_committed: 35000000,
-	percent_given_committed: 53,
-	total_spent: 11200000,
-	percent_spent_given: 61,
-	balance_available: 7260000,
-	committed_balance: 13800000,
-	active_grants_count: 3,
-	expiring_soon_count: 1,
-	total_purchase_amount: 4350000,
+	total_given: 0,
+	total_committed: 0,
+	percent_given_committed: 0,
+	total_spent: 0,
+	percent_spent_given: 0,
+	balance_available: 0,
+	committed_balance: 0,
+	active_grants_count: 0,
+	expiring_soon_count: 0,
+	total_purchase_amount: 0,
 })
 
 const monthlySeries = ref([
-	{ month: "Apr", given: 46, spent: 14 },
-	{ month: "May", given: 36, spent: 23 },
-	{ month: "Jun", given: 42, spent: 16 },
-	{ month: "Jul", given: 41, spent: 19 },
-	{ month: "Aug", given: 39, spent: 17 },
-	{ month: "Sep", given: 41, spent: 18 },
-	{ month: "Oct", given: 38, spent: 16 },
+	{ month: "Apr", given: 0, spent: 0 },
+	{ month: "May", given: 0, spent: 0 },
+	{ month: "Jun", given: 0, spent: 0 },
+	{ month: "Jul", given: 0, spent: 0 },
+	{ month: "Aug", given: 0, spent: 0 },
+	{ month: "Sep", given: 0, spent: 0 },
+	{ month: "Oct", given: 0, spent: 0 },
 ])
 
-const projectSpendList = ref([
-	{
-		name: "Flood Relief Assam",
-		amount: "48.00",
-		percent: 90,
-		barColor: "bg-blue-600",
-	},
-	{
-		name: "School Kits Odisha",
-		amount: "33.00",
-		percent: 65,
-		barColor: "bg-teal-500",
-	},
-	{
-		name: "Livelihood Tamil Nadu",
-		amount: "22.00",
-		percent: 45,
-		barColor: "bg-amber-400",
-	},
-	{
-		name: "Clean Water Bihar",
-		amount: "9.40",
-		percent: 20,
-		barColor: "bg-purple-600",
-	},
-])
+const spendByCategory = ref({
+	capex: { amount: 0, percent: 0 },
+	opex: { amount: 0, percent: 0 },
+	admin: { amount: 0, percent: 0 },
+})
+
+const projectSpendList = ref([])
+const pendingProposals = ref([])
+
+const barColors = ["bg-blue-600", "bg-teal-500", "bg-amber-400", "bg-purple-600", "bg-rose-500"]
+function getBarColor(idx) {
+	return barColors[idx % barColors.length]
+}
+
+const maxChartVal = computed(() => {
+	const vals = (monthlySeries.value || []).flatMap((m) => [
+		Number(m.given) || 0,
+		Number(m.spent) || 0,
+	])
+	const max = Math.max(...vals, 0)
+	if (max <= 0) return 10
+	if (max <= 10) return 10
+	if (max <= 25) return 25
+	if (max <= 50) return 50
+	return Math.ceil(max * 1.15)
+})
+
+const yAxisTicks = computed(() => {
+	const max = maxChartVal.value
+	return [
+		max,
+		Math.round(max * 0.75),
+		Math.round(max * 0.5),
+		Math.round(max * 0.25),
+		0,
+	]
+})
+
+function getBarHeight(val) {
+	const num = Number(val) || 0
+	if (num <= 0) return 0
+	const max = maxChartVal.value
+	const pct = (num / max) * 100
+	return Math.max(Math.min(pct, 100), 2)
+}
 
 function formatCurrencyDisplay(val) {
 	if (!val || val === 0) return "₹0"
@@ -414,7 +475,49 @@ function formatCurrencyDisplay(val) {
 	return `₹${Number(val).toLocaleString("en-IN")}`
 }
 
-function handleDecision(type) {
-	alert(`Proposal decision recorded: ${type}`)
+async function loadDashboard() {
+	loading.value = true
+	try {
+		const res = await donorApi.getDashboard()
+		if (res) {
+			if (res.kpis) kpis.value = res.kpis
+			if (res.charts?.monthly_series?.length) {
+				monthlySeries.value = res.charts.monthly_series
+			}
+			if (res.charts?.spend_by_category) {
+				spendByCategory.value = res.charts.spend_by_category
+			}
+			if (res.charts?.spend_by_project) {
+				projectSpendList.value = res.charts.spend_by_project
+			}
+			if (res.pending_proposals) {
+				pendingProposals.value = res.pending_proposals
+			}
+		}
+	} catch (err) {
+		console.error("Failed to load dashboard data:", err)
+	} finally {
+		loading.value = false
+	}
 }
+
+async function handleDecision(proposalName, action) {
+	try {
+		if (action === "approve") {
+			await donorApi.approveProposal(proposalName)
+			alert("Proposal approved successfully.")
+		} else {
+			const reason = prompt("Enter rejection reason (optional):")
+			await donorApi.rejectProposal(proposalName, reason)
+			alert("Proposal rejected.")
+		}
+		await loadDashboard()
+	} catch (e) {
+		alert(e?.message || `Failed to ${action} proposal.`)
+	}
+}
+
+onMounted(() => {
+	loadDashboard()
+})
 </script>

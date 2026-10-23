@@ -61,6 +61,7 @@ export const donorApi = {
 	getTransactions: (params) =>
 		call("ngo.api.donor_portal.finance.get_transactions", params),
 	getProjects: () => call("ngo.api.donor_portal.projects.get_projects"),
+	getProposals: () => call("ngo.api.donor_portal.projects.get_proposals"),
 	getProjectDetail: (project) =>
 		call("ngo.api.donor_portal.projects.get_project_detail", { project }),
 	approveProposal: (proposal) =>

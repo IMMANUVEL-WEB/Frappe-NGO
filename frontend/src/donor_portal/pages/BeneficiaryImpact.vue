@@ -7,7 +7,7 @@
         <div class="flex items-start justify-between">
           <div>
             <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Beneficiaries</span>
-            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">28,450</div>
+            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">{{ Number(impactData.total_beneficiaries || 0).toLocaleString() }}</div>
             <div class="text-xs text-slate-400 font-medium mt-1">Direct community impact</div>
           </div>
           <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
@@ -26,7 +26,7 @@
         <div class="flex items-start justify-between">
           <div>
             <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Services Delivered</span>
-            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">41,200</div>
+            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">{{ Number(impactData.services_delivered || 0).toLocaleString() }}</div>
             <div class="text-xs text-slate-400 font-medium mt-1">Medical, food, educational aid</div>
           </div>
           <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
@@ -40,13 +40,13 @@
         </div>
       </div>
 
-      <!-- 3. Active Districts -->
+      <!-- 3. Active Districts / Territories -->
       <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between hover:shadow-md transition">
         <div class="flex items-start justify-between">
           <div>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Active Districts</span>
-            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">18</div>
-            <div class="text-xs text-slate-400 font-medium mt-1">Across 6 states</div>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Active Territories</span>
+            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">{{ districtList.length }}</div>
+            <div class="text-xs text-slate-400 font-medium mt-1">Outreach locations</div>
           </div>
           <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -81,18 +81,29 @@
 
     <!-- Middle Section: Breakdown Cards -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      <!-- Sector Impact Distribution (7 cols) -->
+      <!-- Sector / Service Impact Distribution (7 cols) -->
       <div class="lg:col-span-7 bg-white rounded-2xl p-5 border border-slate-100 shadow-xs">
         <div class="flex items-center space-x-2 mb-4">
           <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
-          <h3 class="text-sm font-bold text-slate-900 tracking-tight">Impact Reach by Sector</h3>
+          <h3 class="text-sm font-bold text-slate-900 tracking-tight">Impact Reach by Aid / Service Type</h3>
         </div>
 
-        <div class="space-y-3.5">
-          <div v-for="item in sectorImpact" :key="item.sector" class="space-y-1 text-xs">
+        <div v-if="loading" class="py-12 text-center text-xs text-slate-400">
+          Loading impact metrics...
+        </div>
+
+        <div v-else-if="serviceImpactList.length === 0" class="py-12 text-center text-xs text-slate-400">
+          No service delivery records found yet.
+        </div>
+
+        <div v-else class="space-y-4">
+          <div v-for="item in serviceImpactList" :key="item.service_type" class="space-y-1 text-xs">
             <div class="flex justify-between items-center">
-              <span class="font-semibold text-slate-800">{{ item.sector }}</span>
-              <span class="font-bold text-slate-900">{{ item.count.toLocaleString() }} beneficiaries <span class="text-slate-400 font-normal">({{ item.percent }}%)</span></span>
+              <span class="font-semibold text-slate-800">{{ item.service_type }}</span>
+              <span class="font-bold text-slate-900">
+                {{ item.count.toLocaleString() }} deliveries
+                <span class="text-slate-400 font-normal">({{ item.percent }}%)</span>
+              </span>
             </div>
             <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
               <div 
@@ -113,9 +124,17 @@
             <h3 class="text-sm font-bold text-slate-900 tracking-tight">Territory Outreach</h3>
           </div>
 
-          <div class="space-y-2.5 text-xs">
+          <div v-if="loading" class="py-12 text-center text-xs text-slate-400">
+            Loading territories...
+          </div>
+
+          <div v-else-if="districtList.length === 0" class="py-12 text-center text-xs text-slate-400">
+            No regional distribution records yet.
+          </div>
+
+          <div v-else class="space-y-2.5 text-xs">
             <div 
-              v-for="dist in districtImpact" 
+              v-for="dist in districtList" 
               :key="dist.name"
               class="p-2.5 rounded-xl bg-slate-50 flex items-center justify-between"
             >
@@ -134,54 +153,93 @@
         </div>
       </div>
     </div>
+
+    <!-- Aid Items Breakdown Table -->
+    <div v-if="impactData.aid_items && impactData.aid_items.length > 0" class="bg-white rounded-2xl border border-slate-100 shadow-xs overflow-hidden">
+      <div class="p-4 border-b border-slate-100 flex items-center space-x-2">
+        <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+        <h3 class="text-sm font-bold text-slate-900 tracking-tight">Detailed Aid Deliveries</h3>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-slate-50/75 border-b border-slate-100 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+            <tr>
+              <th class="py-3 px-4">#</th>
+              <th class="py-3 px-4">Service / Aid Type</th>
+              <th class="py-3 px-4">Units Disbursed</th>
+              <th class="py-3 px-4">Total Amount (₹)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-700">
+            <tr v-for="(item, idx) in impactData.aid_items" :key="idx" class="hover:bg-slate-50/60">
+              <td class="py-3 px-4 text-slate-400">{{ idx + 1 }}</td>
+              <td class="py-3 px-4 font-semibold text-slate-900">{{ item.service_type }}</td>
+              <td class="py-3 px-4">{{ item.units }} units</td>
+              <td class="py-3 px-4 font-semibold text-emerald-600">₹{{ Number(item.amount || 0).toLocaleString('en-IN') }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { computed, onMounted, ref } from "vue"
+import { donorApi } from "../api"
 
-const sectorImpact = ref([
-	{
-		sector: "Health & Nutrition",
-		count: 9800,
-		percent: 34,
-		barColor: "bg-rose-500",
-	},
-	{
-		sector: "Education & Youth Empowerment",
-		count: 7200,
-		percent: 25,
-		barColor: "bg-purple-600",
-	},
-	{
-		sector: "WASH (Water, Sanitation & Hygiene)",
-		count: 5400,
-		percent: 19,
-		barColor: "bg-blue-600",
-	},
-	{
-		sector: "Livelihood & Women Self Help",
-		count: 3800,
-		percent: 14,
-		barColor: "bg-emerald-500",
-	},
-	{
-		sector: "Disaster Emergency Relief",
-		count: 2250,
-		percent: 8,
-		barColor: "bg-amber-400",
-	},
-])
+const loading = ref(true)
+const impactData = ref({
+  total_beneficiaries: 0,
+  services_delivered: 0,
+  by_service_type: [],
+  by_district: [],
+  aid_items: []
+})
 
-const districtImpact = ref([
-	{ name: "Patna & Gaya (Bihar)", count: 7850, dotColor: "bg-blue-500" },
-	{ name: "Varanasi (Uttar Pradesh)", count: 6200, dotColor: "bg-emerald-500" },
-	{
-		name: "Madurai & Chennai (Tamil Nadu)",
-		count: 5400,
-		dotColor: "bg-rose-500",
-	},
-	{ name: "Koraput (Odisha)", count: 4600, dotColor: "bg-purple-500" },
-	{ name: "Guwahati & Cachar (Assam)", count: 4400, dotColor: "bg-amber-500" },
-])
+onMounted(async () => {
+  try {
+    const res = await donorApi.getImpact()
+    if (res) {
+      impactData.value = res
+    }
+  } catch (err) {
+    console.error("Failed to load impact metrics:", err)
+  } finally {
+    loading.value = false
+  }
+})
+
+// Service Impact List
+const serviceImpactList = computed(() => {
+  const items = impactData.value.by_service_type || []
+  let total = 0
+  items.forEach(i => { total += Number(i.count || 0) })
+
+  const colors = ["bg-rose-500", "bg-purple-600", "bg-blue-600", "bg-emerald-500", "bg-amber-400"]
+
+  return items.map((item, idx) => {
+    const cnt = Number(item.count || 0)
+    return {
+      service_type: item.service_type || "General Support",
+      count: cnt,
+      percent: total > 0 ? Math.round((cnt / total) * 100) : 0,
+      barColor: colors[idx % colors.length]
+    }
+  })
+})
+
+// District List
+const districtList = computed(() => {
+  const items = impactData.value.by_district || []
+  const colors = ["bg-blue-500", "bg-emerald-500", "bg-rose-500", "bg-purple-500", "bg-amber-500"]
+
+  return items.map((item, idx) => {
+    return {
+      name: item.territory || "National / Regional Outreach",
+      count: Number(item.beneficiary_count || 0),
+      dotColor: colors[idx % colors.length]
+    }
+  })
+})
 </script>

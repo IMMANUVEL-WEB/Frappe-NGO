@@ -7,7 +7,7 @@
         <div class="flex items-start justify-between">
           <div>
             <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Funds Received</span>
-            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">₹72.60 L</div>
+            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">₹{{ stats.totalReceivedFormatted }}</div>
             <div class="text-xs text-slate-400 font-medium mt-1">Across all grants</div>
           </div>
           <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
@@ -29,8 +29,8 @@
         <div class="flex items-start justify-between">
           <div>
             <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Utilized</span>
-            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">₹48.32 L</div>
-            <div class="text-xs text-slate-400 font-medium mt-1">66.5% of total received</div>
+            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">₹{{ stats.totalSpentFormatted }}</div>
+            <div class="text-xs text-slate-400 font-medium mt-1">{{ stats.utilizationPercent }}% of total received</div>
           </div>
           <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -40,9 +40,12 @@
         </div>
         <div class="mt-4 flex items-center justify-between">
           <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-            <div class="bg-blue-600 h-1.5 rounded-full w-[66.5%]"></div>
+            <div 
+              class="bg-blue-600 h-1.5 rounded-full transition-all duration-500" 
+              :style="{ width: `${stats.utilizationPercent}%` }"
+            ></div>
           </div>
-          <span class="text-[10px] font-semibold text-slate-400 ml-2">66.5%</span>
+          <span class="text-[10px] font-semibold text-slate-400 ml-2">{{ stats.utilizationPercent }}%</span>
         </div>
       </div>
 
@@ -51,8 +54,8 @@
         <div class="flex items-start justify-between">
           <div>
             <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Remaining Balance</span>
-            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">₹24.28 L</div>
-            <div class="text-xs text-slate-400 font-medium mt-1">33.5% of total received</div>
+            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">₹{{ stats.remainingBalanceFormatted }}</div>
+            <div class="text-xs text-slate-400 font-medium mt-1">{{ stats.balancePercent }}% liquid unspent</div>
           </div>
           <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -62,9 +65,12 @@
         </div>
         <div class="mt-4 flex items-center justify-between">
           <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-            <div class="bg-amber-400 h-1.5 rounded-full w-[33.5%]"></div>
+            <div 
+              class="bg-amber-400 h-1.5 rounded-full transition-all duration-500" 
+              :style="{ width: `${stats.balancePercent}%` }"
+            ></div>
           </div>
-          <span class="text-[10px] font-semibold text-slate-400 ml-2">33.5%</span>
+          <span class="text-[10px] font-semibold text-slate-400 ml-2">{{ stats.balancePercent }}%</span>
         </div>
       </div>
 
@@ -73,8 +79,8 @@
         <div class="flex items-start justify-between">
           <div>
             <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Active Grants</span>
-            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">3</div>
-            <div class="text-xs text-slate-400 font-medium mt-1">Out of 6 total grants</div>
+            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">{{ stats.activeCount }}</div>
+            <div class="text-xs text-slate-400 font-medium mt-1">Out of {{ grants.length }} total grants</div>
           </div>
           <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,19 +90,22 @@
         </div>
         <div class="mt-4 flex items-center justify-between">
           <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-            <div class="bg-purple-500 h-1.5 rounded-full w-[50%]"></div>
+            <div 
+              class="bg-purple-500 h-1.5 rounded-full transition-all duration-500" 
+              :style="{ width: `${stats.activePercent}%` }"
+            ></div>
           </div>
-          <span class="text-[10px] font-semibold text-slate-400 ml-2">50%</span>
+          <span class="text-[10px] font-semibold text-slate-400 ml-2">{{ stats.activePercent }}%</span>
         </div>
       </div>
 
-      <!-- 5. Avg. Utilization Time -->
+      <!-- 5. Committed Budget -->
       <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between hover:shadow-md transition">
         <div class="flex items-start justify-between">
           <div>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Avg. Utilization Time</span>
-            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">8.5 months</div>
-            <div class="text-xs text-slate-400 font-medium mt-1">From start date</div>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Committed Budget</span>
+            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">₹{{ stats.totalAmountFormatted }}</div>
+            <div class="text-xs text-slate-400 font-medium mt-1">Total grant sanctioned</div>
           </div>
           <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,188 +115,105 @@
         </div>
         <div class="mt-4 flex items-center justify-between">
           <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-            <div class="bg-teal-500 h-1.5 rounded-full w-[85%]"></div>
+            <div class="bg-teal-500 h-1.5 rounded-full w-full"></div>
           </div>
-          <span class="text-[10px] font-semibold text-slate-400 ml-2">85%</span>
+          <span class="text-[10px] font-semibold text-slate-400 ml-2">100%</span>
         </div>
       </div>
     </div>
 
     <!-- Middle Charts Row (2 Cards) -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-      <!-- Left Card: Fund Utilization Trend (7 cols) -->
-      <div class="lg:col-span-7 bg-white rounded-2xl p-5 border border-slate-100 shadow-xs">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+      <!-- Left Card: Monthly Trend (7 cols) -->
+      <div class="lg:col-span-7 bg-white rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
           <div class="flex items-center space-x-2">
             <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
-            <h3 class="text-sm font-bold text-slate-900 tracking-tight">Fund Utilization Trend</h3>
+            <h3 class="text-sm font-bold text-slate-900 tracking-tight">Fund Utilization Trend (Lakh)</h3>
           </div>
 
           <div class="flex items-center space-x-3 text-xs">
-            <div class="flex items-center space-x-3">
-              <span class="flex items-center gap-1.5 text-slate-600">
-                <span class="w-2.5 h-2.5 rounded bg-blue-600"></span> Funds Received
-              </span>
-              <span class="flex items-center gap-1.5 text-slate-600">
-                <span class="w-2.5 h-2.5 rounded bg-emerald-500"></span> Funds Utilized
-              </span>
-              <span class="flex items-center gap-1.5 text-slate-600">
-                <span class="w-2 h-2 rounded-full bg-amber-400"></span> Utilization %
-              </span>
-            </div>
-
-            <select class="px-2.5 py-1 text-xs rounded-lg border border-slate-200 bg-white text-slate-700 font-medium">
-              <option>Apr 2026 - Oct 2026</option>
-              <option>Q1 2026 - Q2 2026</option>
-              <option>Year 2026</option>
-            </select>
+            <span class="flex items-center gap-1.5 text-slate-600">
+              <span class="w-2.5 h-2.5 rounded bg-blue-600"></span> Funds Given
+            </span>
+            <span class="flex items-center gap-1.5 text-slate-600">
+              <span class="w-2.5 h-2.5 rounded bg-amber-400"></span> Funds Spent
+            </span>
           </div>
         </div>
 
-        <!-- Custom Visual Dual-Axis Chart -->
-        <div class="relative h-64 pt-4 pb-2">
-          <!-- Background Grid Lines & Left Labels -->
-          <div class="absolute inset-x-8 inset-y-4 flex flex-col justify-between pointer-events-none text-[10px] text-slate-400 font-medium">
-            <div class="border-b border-slate-100 pb-1 flex justify-between"><span>50L</span><span>100%</span></div>
-            <div class="border-b border-slate-100 pb-1 flex justify-between"><span>40L</span><span>80%</span></div>
-            <div class="border-b border-slate-100 pb-1 flex justify-between"><span>30L</span><span>60%</span></div>
-            <div class="border-b border-slate-100 pb-1 flex justify-between"><span>20L</span><span>40%</span></div>
-            <div class="border-b border-slate-100 pb-1 flex justify-between"><span>10L</span><span>20%</span></div>
-            <div class="border-b border-slate-200 pb-1 flex justify-between"><span>0L</span><span>0%</span></div>
+        <!-- Monthly Dynamic Bars -->
+        <div class="relative h-60 pt-4 pb-2">
+          <!-- Background Grid Lines -->
+          <div class="absolute inset-x-4 inset-y-4 flex flex-col justify-between pointer-events-none text-[10px] text-slate-400 font-medium">
+            <div v-for="tick in chartTicks" :key="tick" class="border-b border-slate-100 pb-1 flex justify-between">
+              <span>{{ tick }}L</span>
+            </div>
           </div>
 
-          <!-- Bars and Line Container -->
-          <div class="relative h-full mx-10 flex items-end justify-between z-10">
-            <!-- SVG Line for Utilization % Overlay -->
-            <svg class="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
-              <polyline
-                fill="none"
-                stroke="#F59E0B"
-                stroke-width="2.5"
-                points="25,120 75,135 125,115 175,90 225,80 275,70 325,75"
-              />
-              <circle cx="25" cy="120" r="4" fill="#F59E0B" />
-              <circle cx="75" cy="135" r="4" fill="#F59E0B" />
-              <circle cx="125" cy="115" r="4" fill="#F59E0B" />
-              <circle cx="175" cy="90" r="4" fill="#F59E0B" />
-              <circle cx="225" cy="80" r="4" fill="#F59E0B" />
-              <circle cx="275" cy="70" r="4" fill="#F59E0B" />
-              <circle cx="325" cy="75" r="4" fill="#F59E0B" />
-            </svg>
-
-            <!-- Month 1: Apr -->
-            <div class="flex flex-col items-center">
-              <div class="flex items-end space-x-1.5 h-48">
-                <div class="w-3.5 bg-blue-600 rounded-t-sm h-[40%] transition-all"></div>
-                <div class="w-3.5 bg-emerald-500 rounded-t-sm h-[46%] transition-all"></div>
+          <!-- Bars Container -->
+          <div class="relative h-full mx-6 flex items-end justify-around z-10">
+            <div 
+              v-for="item in monthlyChartData" 
+              :key="item.month" 
+              class="flex flex-col items-center group relative h-full justify-end"
+            >
+              <!-- Bar Pair -->
+              <div class="flex items-end space-x-1.5 h-44">
+                <!-- Given Bar (Blue) -->
+                <div 
+                  class="w-3.5 bg-blue-600 rounded-t-sm transition-all duration-300 hover:brightness-110"
+                  :style="{ height: getBarHeight(item.given) }"
+                  :title="`${item.month} Given: ₹${item.given}L`"
+                ></div>
+                <!-- Spent Bar (Amber) -->
+                <div 
+                  class="w-3.5 bg-amber-400 rounded-t-sm transition-all duration-300 hover:brightness-110"
+                  :style="{ height: getBarHeight(item.spent) }"
+                  :title="`${item.month} Spent: ₹${item.spent}L`"
+                ></div>
               </div>
-              <span class="text-[11px] text-slate-500 font-medium mt-2">Apr</span>
-            </div>
-
-            <!-- Month 2: May -->
-            <div class="flex flex-col items-center">
-              <div class="flex items-end space-x-1.5 h-48">
-                <div class="w-3.5 bg-blue-600 rounded-t-sm h-[52%] transition-all"></div>
-                <div class="w-3.5 bg-emerald-500 rounded-t-sm h-[56%] transition-all"></div>
-              </div>
-              <span class="text-[11px] text-slate-500 font-medium mt-2">May</span>
-            </div>
-
-            <!-- Month 3: Jun -->
-            <div class="flex flex-col items-center">
-              <div class="flex items-end space-x-1.5 h-48">
-                <div class="w-3.5 bg-blue-600 rounded-t-sm h-[68%] transition-all"></div>
-                <div class="w-3.5 bg-emerald-500 rounded-t-sm h-[60%] transition-all"></div>
-              </div>
-              <span class="text-[11px] text-slate-500 font-medium mt-2">Jun</span>
-            </div>
-
-            <!-- Month 4: Jul -->
-            <div class="flex flex-col items-center">
-              <div class="flex items-end space-x-1.5 h-48">
-                <div class="w-3.5 bg-blue-600 rounded-t-sm h-[78%] transition-all"></div>
-                <div class="w-3.5 bg-emerald-500 rounded-t-sm h-[70%] transition-all"></div>
-              </div>
-              <span class="text-[11px] text-slate-500 font-medium mt-2">Jul</span>
-            </div>
-
-            <!-- Month 5: Aug -->
-            <div class="flex flex-col items-center">
-              <div class="flex items-end space-x-1.5 h-48">
-                <div class="w-3.5 bg-blue-600 rounded-t-sm h-[82%] transition-all"></div>
-                <div class="w-3.5 bg-emerald-500 rounded-t-sm h-[78%] transition-all"></div>
-              </div>
-              <span class="text-[11px] text-slate-500 font-medium mt-2">Aug</span>
-            </div>
-
-            <!-- Month 6: Sep -->
-            <div class="flex flex-col items-center">
-              <div class="flex items-end space-x-1.5 h-48">
-                <div class="w-3.5 bg-blue-600 rounded-t-sm h-[90%] transition-all"></div>
-                <div class="w-3.5 bg-emerald-500 rounded-t-sm h-[86%] transition-all"></div>
-              </div>
-              <span class="text-[11px] text-slate-500 font-medium mt-2">Sep</span>
-            </div>
-
-            <!-- Month 7: Oct -->
-            <div class="flex flex-col items-center">
-              <div class="flex items-end space-x-1.5 h-48">
-                <div class="w-3.5 bg-blue-600 rounded-t-sm h-[96%] transition-all"></div>
-                <div class="w-3.5 bg-emerald-500 rounded-t-sm h-[92%] transition-all"></div>
-              </div>
-              <span class="text-[11px] text-slate-500 font-medium mt-2">Oct</span>
+              <span class="text-[11px] text-slate-500 font-medium mt-2">{{ item.month }}</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Right Card: Utilization by Project (5 cols) -->
+      <!-- Right Card: Spend by Category / Breakdown (5 cols) -->
       <div class="lg:col-span-5 bg-white rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between">
         <div>
           <div class="flex items-center space-x-2 mb-4">
             <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
-            <h3 class="text-sm font-bold text-slate-900 tracking-tight">Utilization by Project</h3>
+            <h3 class="text-sm font-bold text-slate-900 tracking-tight">Expenditure Breakdown</h3>
           </div>
 
-          <div class="flex items-center justify-center my-2">
-            <!-- Donut Chart -->
-            <div class="relative w-36 h-36 flex items-center justify-center">
-              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                <circle cx="18" cy="18" r="14" fill="none" stroke="#2563EB" stroke-width="5" stroke-dasharray="32 68" stroke-dashoffset="0" />
-                <circle cx="18" cy="18" r="14" fill="none" stroke="#059669" stroke-width="5" stroke-dasharray="24 76" stroke-dashoffset="-32" />
-                <circle cx="18" cy="18" r="14" fill="none" stroke="#F59E0B" stroke-width="5" stroke-dasharray="18 82" stroke-dashoffset="-56" />
-                <circle cx="18" cy="18" r="14" fill="none" stroke="#8B5CF6" stroke-width="5" stroke-dasharray="14 86" stroke-dashoffset="-74" />
-                <circle cx="18" cy="18" r="14" fill="none" stroke="#10B981" stroke-width="5" stroke-dasharray="12 88" stroke-dashoffset="-88" />
-              </svg>
-              <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <span class="text-xs font-black text-slate-900 leading-tight">₹48.32 L</span>
-                <span class="text-[9px] text-slate-400 font-medium">Utilized</span>
-              </div>
-            </div>
+          <!-- Total Center Box -->
+          <div class="p-4 rounded-xl bg-slate-50 text-center my-3 border border-slate-100">
+            <span class="text-xs text-slate-500 font-medium">Total Expenditure Recorded</span>
+            <div class="text-2xl font-black text-slate-900 mt-1">₹{{ stats.totalSpentFormatted }}</div>
           </div>
         </div>
 
-        <!-- Legend Table -->
-        <div class="space-y-2 mt-4 text-xs">
-          <div class="flex items-center justify-between text-slate-700">
-            <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span> Clean Water Access Initiative</span>
-            <span class="font-semibold text-slate-900">₹15.40 L <span class="text-slate-400 font-normal">32%</span></span>
-          </div>
-          <div class="flex items-center justify-between text-slate-700">
-            <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span> Education for Rural Children</span>
-            <span class="font-semibold text-slate-900">₹11.58 L <span class="text-slate-400 font-normal">24%</span></span>
-          </div>
-          <div class="flex items-center justify-between text-slate-700">
-            <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Health & Wellness Program</span>
-            <span class="font-semibold text-slate-900">₹8.69 L <span class="text-slate-400 font-normal">18%</span></span>
-          </div>
-          <div class="flex items-center justify-between text-slate-700">
-            <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span> Livelihood Support for Women</span>
-            <span class="font-semibold text-slate-900">₹6.76 L <span class="text-slate-400 font-normal">14%</span></span>
-          </div>
-          <div class="flex items-center justify-between text-slate-700">
-            <span class="flex items-center gap-2"><span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span> Disaster Relief Response</span>
-            <span class="font-semibold text-slate-900">₹5.89 L <span class="text-slate-400 font-normal">12%</span></span>
+        <!-- Category Items -->
+        <div class="space-y-3 mt-2 text-xs">
+          <div v-for="cat in spendCategories" :key="cat.label" class="space-y-1">
+            <div class="flex items-center justify-between text-slate-700">
+              <span class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full" :class="cat.dotColor"></span>
+                <span class="font-medium text-slate-800">{{ cat.label }}</span>
+              </span>
+              <span class="font-semibold text-slate-900">
+                ₹{{ formatRupee(cat.amount) }}
+                <span class="text-slate-400 font-normal ml-1">({{ cat.percent }}%)</span>
+              </span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+              <div 
+                class="h-1.5 rounded-full transition-all duration-500" 
+                :class="cat.barColor" 
+                :style="{ width: `${cat.percent}%` }"
+              ></div>
+            </div>
           </div>
         </div>
       </div>
@@ -298,31 +224,14 @@
       <div class="p-4 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div class="flex items-center space-x-2">
           <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
-          <h3 class="text-sm font-bold text-slate-900 tracking-tight">Fund Utilization Details</h3>
+          <h3 class="text-sm font-bold text-slate-900 tracking-tight">Fund Utilization by Grant</h3>
         </div>
 
         <!-- Filters -->
         <div class="flex flex-wrap items-center gap-2">
           <select v-model="selectedSector" class="px-3 py-1.5 text-xs rounded-xl border border-slate-200 bg-white text-slate-700">
             <option value="">All Sectors</option>
-            <option value="WASH">WASH</option>
-            <option value="Education">Education</option>
-            <option value="Health">Health</option>
-            <option value="Livelihoods">Livelihoods</option>
-            <option value="Disaster Relief">Disaster Relief</option>
-          </select>
-
-          <select v-model="selectedGeography" class="px-3 py-1.5 text-xs rounded-xl border border-slate-200 bg-white text-slate-700">
-            <option value="">All Geographies</option>
-            <option value="Bihar">Bihar</option>
-            <option value="Uttar Pradesh">Uttar Pradesh</option>
-            <option value="Tamil Nadu">Tamil Nadu</option>
-            <option value="Odisha">Odisha</option>
-            <option value="Assam">Assam</option>
-          </select>
-
-          <select class="px-3 py-1.5 text-xs rounded-xl border border-slate-200 bg-white text-slate-700">
-            <option>All Grants</option>
+            <option v-for="sec in uniqueSectors" :key="sec" :value="sec">{{ sec }}</option>
           </select>
 
           <div class="relative">
@@ -339,7 +248,21 @@
         </div>
       </div>
 
-      <div class="overflow-x-auto">
+      <!-- Loading State -->
+      <div v-if="loading" class="py-16 text-center text-slate-400 text-xs font-medium">
+        Loading utilization data...
+      </div>
+
+      <!-- Empty State -->
+      <div v-else-if="filteredGrants.length === 0" class="py-16 text-center text-slate-400">
+        <svg class="w-10 h-10 mx-auto mb-2 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        <p class="text-sm font-semibold text-slate-600">No grant records found</p>
+        <p class="text-xs text-slate-400 mt-1">No utilization records matching the filter criteria.</p>
+      </div>
+
+      <div v-else class="overflow-x-auto">
         <table class="w-full text-left text-xs">
           <thead class="bg-slate-50/75 border-b border-slate-100 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
             <tr>
@@ -347,9 +270,9 @@
               <th class="py-3.5 px-4">Grant Name</th>
               <th class="py-3.5 px-4">Project / Initiative</th>
               <th class="py-3.5 px-3">Sector</th>
-              <th class="py-3.5 px-3">Geography</th>
-              <th class="py-3.5 px-4">Total Grant Amount</th>
-              <th class="py-3.5 px-4">Utilized Amount</th>
+              <th class="py-3.5 px-4">Total Sanctioned</th>
+              <th class="py-3.5 px-4">Disbursed</th>
+              <th class="py-3.5 px-4">Utilized</th>
               <th class="py-3.5 px-4">Remaining Balance</th>
               <th class="py-3.5 px-4">Utilization %</th>
               <th class="py-3.5 px-3">Status</th>
@@ -358,36 +281,33 @@
           </thead>
           <tbody class="divide-y divide-slate-100 text-slate-700">
             <tr 
-              v-for="(row, idx) in filteredRows" 
-              :key="row.code"
+              v-for="(row, idx) in filteredGrants" 
+              :key="row.name"
               class="hover:bg-slate-50/60 transition group"
             >
               <td class="py-3.5 px-4 text-slate-400 font-medium">{{ idx + 1 }}</td>
               <td class="py-3.5 px-4">
-                <div class="font-semibold text-slate-900">{{ row.name }}</div>
-                <div class="text-[11px] text-slate-400 font-mono">{{ row.code }}</div>
+                <div class="font-semibold text-slate-900">{{ row.grant_title || row.grant_id || row.name }}</div>
+                <div class="text-[11px] text-slate-400 font-mono">{{ row.grant_id || row.name }}</div>
               </td>
-              <td class="py-3.5 px-4 text-slate-600 font-medium">{{ row.project }}</td>
+              <td class="py-3.5 px-4 text-slate-600 font-medium">{{ row.linked_project || 'General Support' }}</td>
               <td class="py-3.5 px-3">
-                <span 
-                  class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium"
-                  :class="getSectorClass(row.sector)"
-                >
-                  <component :is="getSectorIcon(row.sector)" class="w-3 h-3" />
-                  {{ row.sector }}
+                <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-slate-100 text-slate-700">
+                  {{ row.sector || 'General' }}
                 </span>
               </td>
-              <td class="py-3.5 px-3 text-slate-600">{{ row.geography }}</td>
-              <td class="py-3.5 px-4 font-semibold text-slate-900">{{ row.totalAmount }}</td>
-              <td class="py-3.5 px-4 font-semibold text-slate-900">{{ row.utilizedAmount }}</td>
-              <td class="py-3.5 px-4 font-semibold text-slate-900">{{ row.balance }}</td>
+              <td class="py-3.5 px-4 font-semibold text-slate-900">{{ formatRupee(row.total_amount) }}</td>
+              <td class="py-3.5 px-4 font-semibold text-slate-900">{{ formatRupee(row.received) }}</td>
+              <td class="py-3.5 px-4 font-semibold text-slate-900">{{ formatRupee(row.spent) }}</td>
+              <td class="py-3.5 px-4 font-semibold text-emerald-600">{{ formatRupee(row.balance) }}</td>
               <td class="py-3.5 px-4">
                 <div class="flex items-center space-x-2">
-                  <span class="text-xs font-semibold text-slate-700 w-8">{{ row.utilizationPercent }}%</span>
+                  <span class="text-xs font-semibold text-slate-700 w-8">{{ Math.round(row.utilization_percent || 0) }}%</span>
                   <div class="w-16 bg-slate-100 rounded-full h-1.5 overflow-hidden">
                     <div 
-                      class="bg-emerald-500 h-1.5 rounded-full"
-                      :style="{ width: `${row.utilizationPercent}%` }"
+                      class="h-1.5 rounded-full"
+                      :class="(row.utilization_percent || 0) >= 100 ? 'bg-emerald-500' : 'bg-blue-600'"
+                      :style="{ width: `${Math.min(100, row.utilization_percent || 0)}%` }"
                     ></div>
                   </div>
                 </div>
@@ -395,228 +315,191 @@
               <td class="py-3.5 px-3">
                 <span 
                   class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
-                  :class="row.status === 'Active' ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' : 'bg-amber-50 text-amber-700 border border-amber-200'"
+                  :class="{
+                    'bg-emerald-50 text-emerald-700 border border-emerald-100': row.status === 'Active',
+                    'bg-amber-50 text-amber-700 border border-amber-200': row.status === 'Pending Approval' || row.status === 'Draft',
+                    'bg-purple-50 text-purple-700 border border-purple-200': row.status === 'Completed'
+                  }"
                 >
-                  {{ row.status }}
+                  {{ row.status || 'Active' }}
                 </span>
               </td>
               <td class="py-3.5 px-4 text-right">
-                <div class="flex items-center justify-end space-x-1.5">
-                  <button type="button" class="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-emerald-600">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                    </svg>
-                  </button>
-                  <button type="button" class="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                    </svg>
-                  </button>
-                </div>
+                <router-link 
+                  :to="`/donor-portal/grants/${row.name || row.grant_id}`"
+                  class="inline-flex items-center gap-1 text-xs font-medium text-emerald-600 hover:text-emerald-700"
+                >
+                  View Details
+                </router-link>
               </td>
             </tr>
           </tbody>
         </table>
-      </div>
-
-      <!-- Pagination -->
-      <div class="px-5 py-3.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-        <div>
-          Showing 1 - {{ filteredRows.length }} of {{ filteredRows.length }} grants
-        </div>
-        <div class="flex items-center space-x-1.5">
-          <button class="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center opacity-40 cursor-not-allowed">&lt;</button>
-          <button class="w-7 h-7 rounded-lg bg-[#00875A] text-white flex items-center justify-center font-semibold">1</button>
-          <button class="w-7 h-7 rounded-lg border border-slate-200 flex items-center justify-center opacity-40 cursor-not-allowed">&gt;</button>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed, h, ref } from "vue"
+import { computed, onMounted, ref } from "vue"
+import { donorApi } from "../api"
 
+const loading = ref(true)
 const searchQuery = ref("")
 const selectedSector = ref("")
-const selectedGeography = ref("")
 
-const utilizationRows = ref([
-	{
-		name: "Clean Water Access Initiative",
-		code: "GI-2026-001",
-		project: "Clean Water Access Initiative",
-		sector: "WASH",
-		geography: "Bihar",
-		totalAmount: "₹22,00,000",
-		utilizedAmount: "₹15,40,000",
-		balance: "₹6,60,000",
-		utilizationPercent: 70,
-		status: "Active",
-	},
-	{
-		name: "Education for Rural Children",
-		code: "GI-2026-002",
-		project: "Quality Education for Rural Children",
-		sector: "Education",
-		geography: "Uttar Pradesh",
-		totalAmount: "₹18,00,000",
-		utilizedAmount: "₹11,58,000",
-		balance: "₹6,42,000",
-		utilizationPercent: 64,
-		status: "Active",
-	},
-	{
-		name: "Health & Wellness Program",
-		code: "GI-2026-003",
-		project: "Community Health & Wellness Program",
-		sector: "Health",
-		geography: "Tamil Nadu",
-		totalAmount: "₹25,00,000",
-		utilizedAmount: "₹8,69,000",
-		balance: "₹16,31,000",
-		utilizationPercent: 35,
-		status: "Active",
-	},
-	{
-		name: "Livelihood Support for Women",
-		code: "GI-2026-004",
-		project: "Livelihood Support for Women",
-		sector: "Livelihoods",
-		geography: "Odisha",
-		totalAmount: "₹12,00,000",
-		utilizedAmount: "₹6,76,000",
-		balance: "₹5,24,000",
-		utilizationPercent: 56,
-		status: "Pending",
-	},
-	{
-		name: "Disaster Relief Response",
-		code: "GI-2026-005",
-		project: "Disaster Relief Response",
-		sector: "Disaster Relief",
-		geography: "Assam",
-		totalAmount: "₹15,00,000",
-		utilizedAmount: "₹5,89,000",
-		balance: "₹9,11,000",
-		utilizationPercent: 39,
-		status: "Active",
-	},
-])
+const grants = ref([])
+const spendBreakdown = ref(null)
+const monthlyChartData = ref([])
 
-const filteredRows = computed(() => {
-	return utilizationRows.value.filter((r) => {
-		const matchSearch =
-			!searchQuery.value ||
-			r.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-			r.code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-			r.project.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-			r.sector.toLowerCase().includes(searchQuery.value.toLowerCase())
-		const matchSector =
-			!selectedSector.value || r.sector === selectedSector.value
-		const matchGeo =
-			!selectedGeography.value || r.geography === selectedGeography.value
-		return matchSearch && matchSector && matchGeo
-	})
+onMounted(async () => {
+  try {
+    const [grantsRes, spendRes, dashRes] = await Promise.all([
+      donorApi.getGrants(),
+      donorApi.getSpendBreakdown(),
+      donorApi.getDashboard().catch(() => null)
+    ])
+
+    if (Array.isArray(grantsRes)) {
+      grants.value = grantsRes
+    }
+
+    if (spendRes) {
+      spendBreakdown.value = spendRes
+    }
+
+    if (dashRes && dashRes.charts && Array.isArray(dashRes.charts.given_vs_spent)) {
+      monthlyChartData.value = dashRes.charts.given_vs_spent
+    } else {
+      // Default 6 months
+      monthlyChartData.value = [
+        { month: "May", given: 0, spent: 0 },
+        { month: "Jun", given: 0, spent: 0 },
+        { month: "Jul", given: 0, spent: 0 },
+        { month: "Aug", given: 0, spent: 0 },
+        { month: "Sep", given: 0, spent: 0 },
+        { month: "Oct", given: 0, spent: 0 },
+      ]
+    }
+  } catch (err) {
+    console.error("Failed to fetch fund utilization data:", err)
+  } finally {
+    loading.value = false
+  }
 })
 
-function getSectorClass(sector) {
-	switch (sector) {
-		case "Health":
-			return "bg-rose-50 text-rose-600"
-		case "Education":
-			return "bg-purple-50 text-purple-600"
-		case "WASH":
-			return "bg-sky-50 text-sky-600"
-		case "Livelihoods":
-			return "bg-emerald-50 text-emerald-600"
-		case "Disaster Relief":
-			return "bg-amber-50 text-amber-700"
-		default:
-			return "bg-slate-100 text-slate-700"
-	}
+// Stats calculation
+const stats = computed(() => {
+  let totalSanctioned = 0
+  let totalReceived = 0
+  let totalSpent = 0
+  let active = 0
+
+  grants.value.forEach(g => {
+    totalSanctioned += Number(g.total_amount || 0)
+    totalReceived += Number(g.received || 0)
+    totalSpent += Number(g.spent || 0)
+    if (g.status === "Active") active++
+  })
+
+  // Fallback to spendBreakdown if available
+  if (spendBreakdown.value && spendBreakdown.value.total_spent > totalSpent) {
+    totalSpent = spendBreakdown.value.total_spent
+  }
+
+  const remaining = Math.max(0, totalReceived - totalSpent)
+  const utilPercent = totalReceived > 0 ? Math.min(100, Math.round((totalSpent / totalReceived) * 100)) : 0
+  const balPercent = totalReceived > 0 ? Math.max(0, 100 - utilPercent) : 0
+
+  return {
+    totalAmountFormatted: formatLakhCr(totalSanctioned),
+    totalReceivedFormatted: formatLakhCr(totalReceived),
+    totalSpentFormatted: formatLakhCr(totalSpent),
+    remainingBalanceFormatted: formatLakhCr(remaining),
+    utilizationPercent: utilPercent,
+    balancePercent: balPercent,
+    activeCount: active,
+    activePercent: grants.value.length > 0 ? Math.round((active / grants.value.length) * 100) : 0
+  }
+})
+
+// Spend Categories Breakdown
+const spendCategories = computed(() => {
+  const sb = spendBreakdown.value || {}
+  const goods = Number(sb.goods || 0)
+  const services = Number(sb.services_salaries || 0)
+  const cash = Number(sb.cash_assistance || 0)
+  const admin = Number(sb.admin || 0)
+  const total = goods + services + cash + admin
+
+  const calcPercent = (val) => total > 0 ? Math.round((val / total) * 100) : 0
+
+  return [
+    { label: "Goods & Direct Relief Kits", amount: goods, percent: calcPercent(goods), dotColor: "bg-blue-600", barColor: "bg-blue-600" },
+    { label: "Services & Field Operations", amount: services, percent: calcPercent(services), dotColor: "bg-emerald-500", barColor: "bg-emerald-500" },
+    { label: "Direct Cash / Beneficiary Aid", amount: cash, percent: calcPercent(cash), dotColor: "bg-purple-600", barColor: "bg-purple-600" },
+    { label: "Admin & Statutory Audits", amount: admin, percent: calcPercent(admin), dotColor: "bg-amber-400", barColor: "bg-amber-400" },
+  ]
+})
+
+// Chart Ticks & Scale
+const maxChartValue = computed(() => {
+  let max = 10
+  monthlyChartData.value.forEach(item => {
+    if (item.given > max) max = item.given
+    if (item.spent > max) max = item.spent
+  })
+  return Math.ceil(max / 10) * 10
+})
+
+const chartTicks = computed(() => {
+  const max = maxChartValue.value
+  const step = max / 4
+  return [max, Math.round(step * 3), Math.round(step * 2), Math.round(step), 0]
+})
+
+function getBarHeight(val) {
+  const num = Number(val || 0)
+  if (num <= 0) return "4px"
+  const pct = Math.min(100, Math.max(6, Math.round((num / maxChartValue.value) * 100)))
+  return `${pct}%`
 }
 
-function getSectorIcon(sector) {
-	return {
-		render() {
-			if (sector === "Health") {
-				return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
-					h("path", {
-						"fill-rule": "evenodd",
-						d: "M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z",
-						"clip-rule": "evenodd",
-					}),
-				])
-			}
-			if (sector === "Education") {
-				return h(
-					"svg",
-					{
-						fill: "none",
-						stroke: "currentColor",
-						"stroke-width": "2",
-						viewBox: "0 0 24 24",
-					},
-					[
-						h("path", {
-							"stroke-linecap": "round",
-							"stroke-linejoin": "round",
-							d: "M12 14l9-5-9-5-9 5 9 5z",
-						}),
-						h("path", {
-							"stroke-linecap": "round",
-							"stroke-linejoin": "round",
-							d: "M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z",
-						}),
-					],
-				)
-			}
-			if (sector === "WASH") {
-				return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
-					h("path", {
-						"fill-rule": "evenodd",
-						d: "M10 2a1 1 0 01.832.445l4.83 7.245A6 6 0 114.338 9.69L9.168 2.445A1 1 0 0110 2z",
-						"clip-rule": "evenodd",
-					}),
-				])
-			}
-			if (sector === "Livelihoods") {
-				return h(
-					"svg",
-					{
-						fill: "none",
-						stroke: "currentColor",
-						"stroke-width": "2",
-						viewBox: "0 0 24 24",
-					},
-					[
-						h("path", {
-							"stroke-linecap": "round",
-							"stroke-linejoin": "round",
-							d: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z",
-						}),
-					],
-				)
-			}
-			if (sector === "Disaster Relief") {
-				return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
-					h("path", {
-						"fill-rule": "evenodd",
-						d: "M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z",
-						"clip-rule": "evenodd",
-					}),
-				])
-			}
-			return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
-				h("path", { d: "M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" }),
-				h("path", {
-					"fill-rule": "evenodd",
-					d: "M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9z",
-				}),
-			])
-		},
-	}
+// Formatting helpers
+function formatLakhCr(val) {
+  if (!val || val === 0) return "0.00"
+  if (val >= 10000000) {
+    return `${(val / 10000000).toFixed(2)} Cr`
+  }
+  return `${(val / 100000).toFixed(2)} L`
 }
+
+function formatRupee(val) {
+  if (!val && val !== 0) return "0"
+  return Number(val).toLocaleString("en-IN", { maximumFractionDigits: 0 })
+}
+
+// Unique sectors for filter dropdown
+const uniqueSectors = computed(() => {
+  const set = new Set()
+  grants.value.forEach(g => {
+    if (g.sector) set.add(g.sector)
+  })
+  return Array.from(set)
+})
+
+// Filtered grants
+const filteredGrants = computed(() => {
+  return grants.value.filter(g => {
+    const title = (g.grant_title || g.grant_id || g.name || "").toLowerCase()
+    const code = (g.grant_id || g.name || "").toLowerCase()
+    const proj = (g.linked_project || "").toLowerCase()
+    const q = searchQuery.value.toLowerCase().trim()
+
+    const matchesSearch = !q || title.includes(q) || code.includes(q) || proj.includes(q)
+    const matchesSector = !selectedSector.value || g.sector === selectedSector.value
+
+    return matchesSearch && matchesSector
+  })
+})
 </script>

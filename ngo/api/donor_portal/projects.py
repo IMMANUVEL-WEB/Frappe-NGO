@@ -159,3 +159,54 @@ def reject_proposal(proposal, reason=None):
 		prop.save(ignore_permissions=True)
 		frappe.db.commit()
 		return {"success": True, "message": _("Proposal marked as rejected.")}
+
+
+@frappe.whitelist()
+def get_proposals():
+	"""
+	Returns all project proposals created for or submitted to the current donor.
+	"""
+	donor = get_current_donor(allow_admin_preview=True)
+
+	proposals = frappe.get_all(
+		"Project Proposal",
+		filters={"donor_profile": donor},
+		fields=[
+			"name", "proposal_title", "proposal_code", "sector", "total_budget",
+			"proposed_start_date", "proposed_end_date", "workflow_state",
+			"creation", "docstatus"
+		],
+		order_by="creation desc"
+	)
+
+	result = []
+	for p in proposals:
+		items = frappe.get_all("Budget Item", filters={"parent": p.name}, fields=["category", "amount"])
+		c_capex = sum(flt(i.amount) for i in items if i.category == "CapEx")
+		c_opex = sum(flt(i.amount) for i in items if i.category == "OpEx")
+		c_admin = sum(flt(i.amount) for i in items if i.category == "Admin")
+
+		months = 12
+		if p.proposed_start_date and p.proposed_end_date:
+			d1 = getdate(p.proposed_start_date)
+			d2 = getdate(p.proposed_end_date)
+			months = max(round((d2 - d1).days / 30), 1)
+
+		result.append({
+			"name": p.name,
+			"title": p.proposal_title or p.name,
+			"code": p.proposal_code or p.name,
+			"sector": p.sector or "Community Development",
+			"total_budget": flt(p.total_budget),
+			"budget_lakh": round(flt(p.total_budget) / 100000.0, 2),
+			"duration_months": months,
+			"capex_lakh": round(c_capex / 100000.0, 2),
+			"opex_lakh": round(c_opex / 100000.0, 2),
+			"admin_lakh": round(c_admin / 100000.0, 2),
+			"start_date": p.proposed_start_date,
+			"end_date": p.proposed_end_date,
+			"status": p.workflow_state or ("Approved" if p.docstatus == 1 else "Pending"),
+			"created_at": p.creation
+		})
+
+	return result

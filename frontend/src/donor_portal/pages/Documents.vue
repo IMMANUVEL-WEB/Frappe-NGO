@@ -7,7 +7,7 @@
         <div class="flex items-start justify-between">
           <div>
             <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Documents</span>
-            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">12</div>
+            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">{{ docs.length }}</div>
             <div class="text-xs text-slate-400 font-medium mt-1">Verified files available</div>
           </div>
           <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
@@ -25,9 +25,9 @@
       <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between hover:shadow-md transition">
         <div class="flex items-start justify-between">
           <div>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Grant Agreements</span>
-            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">6</div>
-            <div class="text-xs text-slate-400 font-medium mt-1">Signed MoUs & annexures</div>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Grant Documents</span>
+            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">{{ stats.grantDocs }}</div>
+            <div class="text-xs text-slate-400 font-medium mt-1">Grant agreements & orders</div>
           </div>
           <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -36,17 +36,20 @@
           </div>
         </div>
         <div class="mt-4 w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-          <div class="bg-blue-600 h-1.5 rounded-full w-[50%]"></div>
+          <div 
+            class="bg-blue-600 h-1.5 rounded-full transition-all duration-500" 
+            :style="{ width: `${stats.grantDocsPercent}%` }"
+          ></div>
         </div>
       </div>
 
-      <!-- 3. Utilization Certificates -->
+      <!-- 3. Proposals & Projects -->
       <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between hover:shadow-md transition">
         <div class="flex items-start justify-between">
           <div>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">UC Certificates</span>
-            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">4</div>
-            <div class="text-xs text-slate-400 font-medium mt-1">CA verified expenditure</div>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Proposal & Project Files</span>
+            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">{{ stats.proposalDocs }}</div>
+            <div class="text-xs text-slate-400 font-medium mt-1">Proposal dossiers & designs</div>
           </div>
           <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -55,17 +58,20 @@
           </div>
         </div>
         <div class="mt-4 w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-          <div class="bg-amber-400 h-1.5 rounded-full w-[33%]"></div>
+          <div 
+            class="bg-amber-400 h-1.5 rounded-full transition-all duration-500" 
+            :style="{ width: `${stats.proposalDocsPercent}%` }"
+          ></div>
         </div>
       </div>
 
-      <!-- 4. Audit Reports -->
+      <!-- 4. Compliance & Certificates -->
       <div class="bg-white rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between hover:shadow-md transition">
         <div class="flex items-start justify-between">
           <div>
-            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Audit Reports</span>
-            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">2</div>
-            <div class="text-xs text-slate-400 font-medium mt-1">FCRA & Statutory audits</div>
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Compliance & Reports</span>
+            <div class="text-2xl font-black text-slate-900 mt-1 tracking-tight">{{ stats.complianceDocs }}</div>
+            <div class="text-xs text-slate-400 font-medium mt-1">Audit & compliance certificates</div>
           </div>
           <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -74,7 +80,10 @@
           </div>
         </div>
         <div class="mt-4 w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
-          <div class="bg-purple-500 h-1.5 rounded-full w-[17%]"></div>
+          <div 
+            class="bg-purple-500 h-1.5 rounded-full transition-all duration-500" 
+            :style="{ width: `${stats.complianceDocsPercent}%` }"
+          ></div>
         </div>
       </div>
     </div>
@@ -89,68 +98,79 @@
           <input 
             type="text" 
             v-model="searchQuery" 
-            placeholder="Search documents by title or grant..." 
+            placeholder="Search documents by file name or record..." 
             class="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 bg-slate-50/50"
           />
         </div>
 
         <select v-model="selectedType" class="px-3 py-2 text-xs rounded-xl border border-slate-200 bg-white text-slate-700">
           <option value="">All Document Types</option>
-          <option value="Grant Agreement">Grant Agreement</option>
-          <option value="Utilisation Certificate">Utilisation Certificate</option>
-          <option value="Audit Report">Audit Report</option>
+          <option v-for="t in uniqueTypes" :key="t" :value="t">{{ t }}</option>
         </select>
       </div>
     </div>
 
     <!-- Documents Table Card -->
     <div class="bg-white rounded-2xl border border-slate-100 shadow-xs overflow-hidden">
-      <div class="overflow-x-auto">
+      <!-- Loading State -->
+      <div v-if="loading" class="py-16 text-center text-slate-400 text-xs font-medium">
+        Loading documents...
+      </div>
+
+      <!-- Empty State -->
+      <div v-else-if="filteredDocs.length === 0" class="py-16 text-center text-slate-400">
+        <svg class="w-10 h-10 mx-auto mb-2 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+        </svg>
+        <p class="text-sm font-semibold text-slate-600">No documents found</p>
+        <p class="text-xs text-slate-400 mt-1">There are no shared documents linked to your profile matching the query.</p>
+      </div>
+
+      <div v-else class="overflow-x-auto">
         <table class="w-full text-left text-xs">
           <thead class="bg-slate-50/75 border-b border-slate-100 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
             <tr>
               <th class="py-3.5 px-4">#</th>
-              <th class="py-3.5 px-4">Document Title</th>
-              <th class="py-3.5 px-4">Type</th>
-              <th class="py-3.5 px-4">Linked Grant / Initiative</th>
+              <th class="py-3.5 px-4">Document / File Name</th>
+              <th class="py-3.5 px-4">Type / Source</th>
+              <th class="py-3.5 px-4">Linked Record</th>
               <th class="py-3.5 px-3">Date</th>
-              <th class="py-3.5 px-3">Format</th>
+              <th class="py-3.5 px-3">Size</th>
               <th class="py-3.5 px-4 text-right">Download</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100 text-slate-700">
             <tr 
               v-for="(doc, idx) in filteredDocs" 
-              :key="idx"
+              :key="doc.name || idx"
               class="hover:bg-slate-50/60 transition group"
             >
               <td class="py-3.5 px-4 text-slate-400 font-medium">{{ idx + 1 }}</td>
               <td class="py-3.5 px-4">
-                <div class="font-semibold text-slate-900">{{ doc.title }}</div>
-                <div class="text-[11px] text-slate-400 font-mono">{{ doc.code }}</div>
+                <div class="font-semibold text-slate-900">{{ doc.file_name || doc.name }}</div>
+                <div class="text-[11px] text-slate-400 font-mono">{{ doc.name }}</div>
               </td>
               <td class="py-3.5 px-4">
                 <span 
                   class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
                   :class="{
-                    'bg-blue-50 text-blue-700 border border-blue-100': doc.type === 'Grant Agreement',
-                    'bg-amber-50 text-amber-700 border border-amber-200': doc.type === 'Utilisation Certificate',
-                    'bg-purple-50 text-purple-700 border border-purple-200': doc.type === 'Audit Report'
+                    'bg-blue-50 text-blue-700 border border-blue-100': doc.attached_to_doctype === 'Donor Grant',
+                    'bg-amber-50 text-amber-700 border border-amber-200': doc.attached_to_doctype === 'Project Proposal',
+                    'bg-purple-50 text-purple-700 border border-purple-200': doc.attached_to_doctype === 'Project' || doc.is_compliance
                   }"
                 >
-                  {{ doc.type }}
+                  {{ doc.attached_to_doctype || 'Document' }}
                 </span>
               </td>
-              <td class="py-3.5 px-4 text-slate-600 font-medium">{{ doc.linked }}</td>
-              <td class="py-3.5 px-3 text-slate-500 whitespace-nowrap">{{ doc.date }}</td>
-              <td class="py-3.5 px-3">
-                <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-mono text-[10px] font-bold uppercase">PDF</span>
-              </td>
+              <td class="py-3.5 px-4 text-slate-600 font-medium">{{ doc.attached_to_name || '-' }}</td>
+              <td class="py-3.5 px-3 text-slate-500 whitespace-nowrap">{{ formatDate(doc.creation) }}</td>
+              <td class="py-3.5 px-3 text-slate-500 font-mono">{{ formatFileSize(doc.file_size) }}</td>
               <td class="py-3.5 px-4 text-right">
                 <a 
-                  :href="doc.url" 
+                  :href="doc.file_url" 
+                  target="_blank"
                   download
-                  class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-slate-700 text-xs font-semibold transition"
+                  class="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 hover:text-emerald-600 transition"
                 >
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
@@ -162,82 +182,90 @@
           </tbody>
         </table>
       </div>
-
-      <!-- Footer -->
-      <div class="px-5 py-3.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-        <div>Showing 1 - {{ filteredDocs.length }} of {{ filteredDocs.length }} documents</div>
-        <div class="text-[11px] text-slate-400">All documents are digitally cryptographically signed.</div>
-      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { computed, ref } from "vue"
+import { computed, onMounted, ref } from "vue"
+import { donorApi } from "../api"
 
+const loading = ref(true)
 const searchQuery = ref("")
 const selectedType = ref("")
 
-const docs = ref([
-	{
-		title: "Clean Water Access Initiative MoU 2026",
-		code: "MOU-GI-2026-001",
-		type: "Grant Agreement",
-		linked: "Clean Water Access Initiative",
-		date: "05 Oct 2026",
-		url: "#",
-	},
-	{
-		title: "Education for Rural Children Grant Deed",
-		code: "MOU-GI-2026-002",
-		type: "Grant Agreement",
-		linked: "Quality Education for Rural Children",
-		date: "12 Sep 2026",
-		url: "#",
-	},
-	{
-		title: "Q3 2026 Utilisation Certificate (CA Signed)",
-		code: "UC-Q3-2026-WASH",
-		type: "Utilisation Certificate",
-		linked: "Clean Water Access Initiative",
-		date: "01 Oct 2026",
-		url: "#",
-	},
-	{
-		title: "Health & Wellness MoU & CapEx Schedule",
-		code: "MOU-GI-2026-003",
-		type: "Grant Agreement",
-		linked: "Community Health & Wellness Program",
-		date: "12 Oct 2026",
-		url: "#",
-	},
-	{
-		title: "Disaster Emergency Grant Sanction Order",
-		code: "SAN-GI-2026-004",
-		type: "Grant Agreement",
-		linked: "Disaster Relief Response",
-		date: "20 Sep 2026",
-		url: "#",
-	},
-	{
-		title: "FY 2025-26 Annual Statutory Audit Statement",
-		code: "AUD-STAT-2026",
-		type: "Audit Report",
-		linked: "All Active Initiatives",
-		date: "15 Aug 2026",
-		url: "#",
-	},
-])
+const docs = ref([])
 
-const filteredDocs = computed(() => {
-	return docs.value.filter((d) => {
-		const matchSearch =
-			!searchQuery.value ||
-			d.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-			d.code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-			d.linked.toLowerCase().includes(searchQuery.value.toLowerCase())
-		const matchType = !selectedType.value || d.type === selectedType.value
-		return matchSearch && matchType
-	})
+onMounted(async () => {
+  try {
+    const res = await donorApi.getDocuments()
+    if (Array.isArray(res)) {
+      docs.value = res
+    }
+  } catch (err) {
+    console.error("Failed to load documents:", err)
+  } finally {
+    loading.value = false
+  }
 })
+
+// Unique Types
+const uniqueTypes = computed(() => {
+  const set = new Set()
+  docs.value.forEach(d => {
+    if (d.attached_to_doctype) set.add(d.attached_to_doctype)
+  })
+  return Array.from(set)
+})
+
+// Stats
+const stats = computed(() => {
+  const total = docs.value.length
+  let grantDocs = 0
+  let proposalDocs = 0
+  let complianceDocs = 0
+
+  docs.value.forEach(d => {
+    const dt = d.attached_to_doctype
+    if (dt === "Donor Grant") grantDocs++
+    else if (dt === "Project Proposal" || dt === "Project") proposalDocs++
+    else complianceDocs++
+  })
+
+  return {
+    grantDocs,
+    grantDocsPercent: total > 0 ? Math.round((grantDocs / total) * 100) : 0,
+    proposalDocs,
+    proposalDocsPercent: total > 0 ? Math.round((proposalDocs / total) * 100) : 0,
+    complianceDocs,
+    complianceDocsPercent: total > 0 ? Math.round((complianceDocs / total) * 100) : 0,
+  }
+})
+
+// Filtered Docs
+const filteredDocs = computed(() => {
+  return docs.value.filter(doc => {
+    const fn = (doc.file_name || "").toLowerCase()
+    const rec = (doc.attached_to_name || "").toLowerCase()
+    const q = searchQuery.value.toLowerCase().trim()
+
+    const matchesSearch = !q || fn.includes(q) || rec.includes(q)
+    const matchesType = !selectedType.value || doc.attached_to_doctype === selectedType.value
+
+    return matchesSearch && matchesType
+  })
+})
+
+function formatDate(val) {
+  if (!val) return "-"
+  return String(val).split(" ")[0]
+}
+
+function formatFileSize(bytes) {
+  if (!bytes) return "-"
+  const b = Number(bytes)
+  if (b < 1024) return b + " B"
+  if (b < 1024 * 1024) return (b / 1024).toFixed(1) + " KB"
+  return (b / (1024 * 1024)).toFixed(1) + " MB"
+}
 </script>
