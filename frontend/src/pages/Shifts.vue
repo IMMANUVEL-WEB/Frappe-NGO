@@ -5,7 +5,7 @@
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <!-- Breadcrumb -->
-          <nav class="flex items-center gap-1.5 text-xs text-gray-400 font-medium mb-1">
+          <nav class="flex items-center gap-1.5 text-xs text-black-400 font-medium mb-1">
             <router-link to="/" class="hover:text-emerald-700 transition-colors flex items-center gap-1">
               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -13,26 +13,26 @@
               </svg>
             </router-link>
             <span>&rsaquo;</span>
-            <span class="text-gray-600">My Shifts</span>
+            <span class="text-black-600">My Shifts</span>
           </nav>
 
-          <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-black-900 tracking-tight">
             My Shifts
           </h1>
-          <p class="text-gray-500 text-sm mt-0.5">
+          <p class="text-black-500 text-sm mt-0.5">
             Your scheduled and past volunteering shifts.
           </p>
         </div>
 
         <!-- Segmented Toggle (Upcoming | Past) -->
-        <div class="bg-gray-100 p-1 rounded-xl inline-flex self-start sm:self-auto border border-gray-200/60 shadow-inner">
+        <div class="bg-black-100 p-1 rounded-xl inline-flex self-start sm:self-auto border border-black-200/60 shadow-inner">
           <button
             @click="activeView = 'upcoming'"
             class="px-5 py-2 text-xs font-bold rounded-lg transition-all"
             :class="[
               activeView === 'upcoming'
                 ? 'bg-[#064e3b] text-white shadow-sm'
-                : 'text-gray-600 hover:text-gray-900',
+                : 'text-black-600 hover:text-black-900',
             ]"
           >
             Upcoming ({{ upcomingShiftsList.length }})
@@ -43,7 +43,7 @@
             :class="[
               activeView === 'past'
                 ? 'bg-[#064e3b] text-white shadow-sm'
-                : 'text-gray-600 hover:text-gray-900',
+                : 'text-black-600 hover:text-black-900',
             ]"
           >
             Past ({{ pastShiftsList.length }})
@@ -54,7 +54,7 @@
       <!-- 4 Stat Summary Cards (Real Volunteer Data) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <!-- Total Shifts -->
-        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex items-start justify-between">
+        <div class="bg-white rounded-2xl p-5 border border-black-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex items-start justify-between">
           <div class="flex items-start gap-4">
             <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 border border-emerald-100/60">
               <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -65,11 +65,11 @@
               </svg>
             </div>
             <div>
-              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Shifts</p>
-              <h3 class="text-2xl font-black text-gray-900 mt-0.5">
+              <p class="text-xs font-semibold text-black-500 uppercase tracking-wider">Total Shifts</p>
+              <h3 class="text-2xl font-black text-black-900 mt-0.5">
                 {{ totalShiftsCount }}
               </h3>
-              <p class="text-xs text-gray-400 mt-0.5">All time shifts</p>
+              <p class="text-xs text-black-400 mt-0.5">All time shifts</p>
             </div>
           </div>
           <div class="text-emerald-500 opacity-60">
@@ -80,7 +80,7 @@
         </div>
 
         <!-- Upcoming Shifts -->
-        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex items-start justify-between">
+        <div class="bg-white rounded-2xl p-5 border border-black-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex items-start justify-between">
           <div class="flex items-start gap-4">
             <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0 border border-blue-100/60">
               <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -89,11 +89,11 @@
               </svg>
             </div>
             <div>
-              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Upcoming Shifts</p>
-              <h3 class="text-2xl font-black text-gray-900 mt-0.5">
+              <p class="text-xs font-semibold text-black-500 uppercase tracking-wider">Upcoming Shifts</p>
+              <h3 class="text-2xl font-black text-black-900 mt-0.5">
                 {{ upcomingShiftsList.length }}
               </h3>
-              <p class="text-xs text-gray-400 mt-0.5">Scheduled</p>
+              <p class="text-xs text-black-400 mt-0.5">Scheduled</p>
             </div>
           </div>
           <div class="text-blue-500 opacity-60">
@@ -104,7 +104,7 @@
         </div>
 
         <!-- Completed Shifts -->
-        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex items-start justify-between">
+        <div class="bg-white rounded-2xl p-5 border border-black-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex items-start justify-between">
           <div class="flex items-start gap-4">
             <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0 border border-amber-100/60">
               <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -113,11 +113,11 @@
               </svg>
             </div>
             <div>
-              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Completed Shifts</p>
-              <h3 class="text-2xl font-black text-gray-900 mt-0.5">
+              <p class="text-xs font-semibold text-black-500 uppercase tracking-wider">Completed Shifts</p>
+              <h3 class="text-2xl font-black text-black-900 mt-0.5">
                 {{ completedShiftsCount }}
               </h3>
-              <p class="text-xs text-gray-400 mt-0.5">Successfully completed</p>
+              <p class="text-xs text-black-400 mt-0.5">Successfully completed</p>
             </div>
           </div>
           <div class="text-amber-500 opacity-60">
@@ -128,7 +128,7 @@
         </div>
 
         <!-- Total Hours -->
-        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex items-start justify-between">
+        <div class="bg-white rounded-2xl p-5 border border-black-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex items-start justify-between">
           <div class="flex items-start gap-4">
             <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center flex-shrink-0 border border-purple-100/60">
               <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -139,11 +139,11 @@
               </svg>
             </div>
             <div>
-              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Hours</p>
-              <h3 class="text-2xl font-black text-gray-900 mt-0.5">
+              <p class="text-xs font-semibold text-black-500 uppercase tracking-wider">Total Hours</p>
+              <h3 class="text-2xl font-black text-black-900 mt-0.5">
                 {{ totalShiftsHours }} hrs
               </h3>
-              <p class="text-xs text-gray-400 mt-0.5">Across shifts</p>
+              <p class="text-xs text-black-400 mt-0.5">Across shifts</p>
             </div>
           </div>
           <div class="text-purple-500 opacity-60">
@@ -159,22 +159,22 @@
         <!-- Section Header -->
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-gray-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="w-5 h-5 text-black-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
               <line x1="16" y1="2" x2="16" y2="6"></line>
               <line x1="8" y1="2" x2="8" y2="6"></line>
               <line x1="3" y1="10" x2="21" y2="10"></line>
             </svg>
-            <h2 class="text-lg font-bold text-gray-900">Upcoming Shifts</h2>
+            <h2 class="text-lg font-bold text-black-900">Upcoming Shifts</h2>
           </div>
         </div>
 
         <!-- Empty state when no upcoming shifts -->
         <div
           v-if="upcomingShiftsList.length === 0"
-          class="bg-white rounded-2xl p-10 text-center border border-gray-100 shadow-sm"
+          class="bg-white rounded-2xl p-10 text-center border border-black-100 shadow-sm"
         >
-          <div class="w-14 h-14 bg-gray-50 text-gray-400 rounded-full flex items-center justify-center mx-auto mb-3">
+          <div class="w-14 h-14 bg-black-50 text-black-400 rounded-full flex items-center justify-center mx-auto mb-3">
             <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
               <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -182,8 +182,8 @@
               <line x1="3" y1="10" x2="21" y2="10"></line>
             </svg>
           </div>
-          <h3 class="text-base font-bold text-gray-900 mb-1">No upcoming shifts scheduled</h3>
-          <p class="text-xs text-gray-500 max-w-sm mx-auto">
+          <h3 class="text-base font-bold text-black-900 mb-1">No upcoming shifts scheduled</h3>
+          <p class="text-xs text-black-500 max-w-sm mx-auto">
             You do not have any upcoming volunteer shifts. Join available opportunities to schedule a shift.
           </p>
           <div class="mt-4">
@@ -201,7 +201,7 @@
           <div
             v-for="shift in upcomingShiftsList"
             :key="shift.name"
-            class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-all flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-6"
+            class="bg-white rounded-2xl border border-black-100 p-5 shadow-sm hover:shadow-md transition-all flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-6"
           >
             <!-- Left: Date Box & Details -->
             <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 flex-1">
@@ -228,7 +228,7 @@
 
               <!-- Center Info -->
               <div class="space-y-1.5 flex-1 min-w-0">
-                <h3 class="text-base sm:text-lg font-bold text-gray-900 leading-snug line-clamp-1">
+                <h3 class="text-base sm:text-lg font-bold text-black-900 leading-snug line-clamp-1">
                   {{ shift.opportunity_title }}
                 </h3>
 
@@ -241,8 +241,8 @@
                 </div>
 
                 <!-- Location -->
-                <div v-if="shift.location" class="flex items-center gap-1.5 text-xs text-gray-500 font-medium">
-                  <svg class="w-3.5 h-3.5 text-gray-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <div v-if="shift.location" class="flex items-center gap-1.5 text-xs text-black-500 font-medium">
+                  <svg class="w-3.5 h-3.5 text-black-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                     <circle cx="12" cy="10" r="3"></circle>
                   </svg>
@@ -250,9 +250,9 @@
                 </div>
 
                 <!-- Time -->
-                <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-gray-500 font-medium pt-0.5">
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-black-500 font-medium pt-0.5">
                   <div class="flex items-center gap-1">
-                    <svg class="w-3.5 h-3.5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <svg class="w-3.5 h-3.5 text-black-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                       <circle cx="12" cy="12" r="10"></circle>
                       <polyline points="12 6 12 12 16 14"></polyline>
                     </svg>
@@ -295,27 +295,27 @@
         <!-- Section Header -->
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-gray-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="w-5 h-5 text-black-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"></circle>
               <polyline points="12 6 12 12 16 14"></polyline>
             </svg>
-            <h2 class="text-lg font-bold text-gray-900">Past Shifts</h2>
+            <h2 class="text-lg font-bold text-black-900">Past Shifts</h2>
           </div>
         </div>
 
         <!-- Empty state when no past shifts -->
         <div
           v-if="pastShiftsList.length === 0"
-          class="bg-white rounded-2xl p-10 text-center border border-gray-100 shadow-sm"
+          class="bg-white rounded-2xl p-10 text-center border border-black-100 shadow-sm"
         >
-          <div class="w-14 h-14 bg-gray-50 text-gray-400 rounded-full flex items-center justify-center mx-auto mb-3">
+          <div class="w-14 h-14 bg-black-50 text-black-400 rounded-full flex items-center justify-center mx-auto mb-3">
             <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"></circle>
               <polyline points="12 6 12 12 16 14"></polyline>
             </svg>
           </div>
-          <h3 class="text-base font-bold text-gray-900 mb-1">No past shifts recorded</h3>
-          <p class="text-xs text-gray-500 max-w-sm mx-auto">
+          <h3 class="text-base font-bold text-black-900 mb-1">No past shifts recorded</h3>
+          <p class="text-xs text-black-500 max-w-sm mx-auto">
             Your completed shifts will appear here once attended.
           </p>
         </div>
@@ -325,18 +325,18 @@
           <div
             v-for="shift in pastShiftsList"
             :key="shift.name"
-            class="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm hover:shadow-md transition-all flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-6"
+            class="bg-white rounded-2xl border border-black-100 p-5 shadow-sm hover:shadow-md transition-all flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-6"
           >
             <!-- Left: Date Box & Details -->
             <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 flex-1">
-              <div class="w-20 h-24 rounded-2xl bg-gray-100 text-gray-800 flex flex-col items-center justify-center p-2 text-center flex-shrink-0 shadow-inner border border-gray-200">
-                <span class="text-[11px] font-extrabold tracking-wider text-gray-500 uppercase leading-none">
+              <div class="w-20 h-24 rounded-2xl bg-black-100 text-black-800 flex flex-col items-center justify-center p-2 text-center flex-shrink-0 shadow-inner border border-black-200">
+                <span class="text-[11px] font-extrabold tracking-wider text-black-500 uppercase leading-none">
                   {{ getMonthName(shift.shift_date) }}
                 </span>
-                <span class="text-2xl font-black text-gray-900 leading-tight my-0.5">
+                <span class="text-2xl font-black text-black-900 leading-tight my-0.5">
                   {{ getDayNumber(shift.shift_date) }}
                 </span>
-                <span class="text-[10px] font-bold tracking-wider text-gray-400 uppercase leading-none">
+                <span class="text-[10px] font-bold tracking-wider text-black-400 uppercase leading-none">
                   {{ getWeekday(shift.shift_date) }}
                 </span>
               </div>
@@ -349,7 +349,7 @@
 
               <!-- Center Info -->
               <div class="space-y-1.5 flex-1 min-w-0">
-                <h3 class="text-base sm:text-lg font-bold text-gray-900 leading-snug line-clamp-1">
+                <h3 class="text-base sm:text-lg font-bold text-black-900 leading-snug line-clamp-1">
                   {{ shift.opportunity_title }}
                 </h3>
 
@@ -362,8 +362,8 @@
                 </div>
 
                 <!-- Location -->
-                <div v-if="shift.location" class="flex items-center gap-1.5 text-xs text-gray-500 font-medium">
-                  <svg class="w-3.5 h-3.5 text-gray-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <div v-if="shift.location" class="flex items-center gap-1.5 text-xs text-black-500 font-medium">
+                  <svg class="w-3.5 h-3.5 text-black-400 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                     <circle cx="12" cy="10" r="3"></circle>
                   </svg>
@@ -371,8 +371,8 @@
                 </div>
 
                 <!-- Time -->
-                <div class="flex items-center gap-1 text-xs text-gray-500 font-medium pt-0.5">
-                  <svg class="w-3.5 h-3.5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <div class="flex items-center gap-1 text-xs text-black-500 font-medium pt-0.5">
+                  <svg class="w-3.5 h-3.5 text-black-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
                   </svg>
@@ -401,7 +401,7 @@
       <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative">
         <button
           @click="selectedShift = null"
-          class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 p-1.5 rounded-full hover:bg-gray-100"
+          class="absolute top-5 right-5 text-black-400 hover:text-black-600 p-1.5 rounded-full hover:bg-black-100"
         >
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -413,25 +413,25 @@
           {{ selectedShift.participant_status || selectedShift.status || "Scheduled" }}
         </span>
 
-        <h3 class="text-xl font-bold text-gray-900 mb-2">
+        <h3 class="text-xl font-bold text-black-900 mb-2">
           {{ selectedShift.opportunity_title }}
         </h3>
         <p class="text-xs font-semibold text-blue-600 mb-4 flex items-center gap-1">
           📁 {{ selectedShift.project_name || selectedShift.project }}
         </p>
 
-        <div class="space-y-3 text-sm text-gray-600 bg-gray-50/80 p-4 rounded-2xl mb-6">
+        <div class="space-y-3 text-sm text-black-600 bg-black-50/80 p-4 rounded-2xl mb-6">
           <div class="flex justify-between">
-            <span class="font-medium text-gray-500">Date:</span>
-            <span class="font-bold text-gray-800">{{ formatDate(selectedShift.shift_date) }}</span>
+            <span class="font-medium text-black-500">Date:</span>
+            <span class="font-bold text-black-800">{{ formatDate(selectedShift.shift_date) }}</span>
           </div>
           <div class="flex justify-between">
-            <span class="font-medium text-gray-500">Time:</span>
-            <span class="font-bold text-gray-800">{{ formatTimeRange(selectedShift.start_time, selectedShift.end_time) }}</span>
+            <span class="font-medium text-black-500">Time:</span>
+            <span class="font-bold text-black-800">{{ formatTimeRange(selectedShift.start_time, selectedShift.end_time) }}</span>
           </div>
           <div v-if="selectedShift.location" class="flex justify-between">
-            <span class="font-medium text-gray-500">Location:</span>
-            <span class="font-bold text-gray-800">{{ selectedShift.location }}</span>
+            <span class="font-medium text-black-500">Location:</span>
+            <span class="font-bold text-black-800">{{ selectedShift.location }}</span>
           </div>
         </div>
 
@@ -449,16 +449,16 @@
 </template>
 
 <script setup>
-import volunteersPlanting from "@/assets/volunteers_planting.jpg"
 import volunteerTutoring from "@/assets/volunteer_tutoring.jpg"
+import volunteersPlanting from "@/assets/volunteers_planting.jpg"
 
 const handleImgError = (e) => {
-  e.target.onerror = null
-  e.target.src = volunteersPlanting
+	e.target.onerror = null
+	e.target.src = volunteersPlanting
 }
 
 import { createResource } from "frappe-ui"
-import { ref, computed } from "vue"
+import { computed, ref } from "vue"
 import VolunteerLayout from "../components/VolunteerLayout.vue"
 
 const activeView = ref("all")
@@ -466,90 +466,90 @@ const selectedShift = ref(null)
 
 // Real backend upcoming shifts
 const upcomingResource = createResource({
-  url: "ngo.api.volunteer.my_shifts",
-  params: { period: "upcoming" },
-  auto: true,
+	url: "ngo.api.volunteer.my_shifts",
+	params: { period: "upcoming" },
+	auto: true,
 })
 
 // Real backend past shifts
 const pastResource = createResource({
-  url: "ngo.api.volunteer.my_shifts",
-  params: { period: "past" },
-  auto: true,
+	url: "ngo.api.volunteer.my_shifts",
+	params: { period: "past" },
+	auto: true,
 })
 
 // Real upcoming shifts list
 const upcomingShiftsList = computed(() => {
-  if (upcomingResource.data && Array.isArray(upcomingResource.data)) {
-    return upcomingResource.data.map((s) => ({
-      ...s,
-      image: volunteerTutoring,
-    }))
-  }
-  return []
+	if (upcomingResource.data && Array.isArray(upcomingResource.data)) {
+		return upcomingResource.data.map((s) => ({
+			...s,
+			image: volunteerTutoring,
+		}))
+	}
+	return []
 })
 
 // Real past shifts list
 const pastShiftsList = computed(() => {
-  if (pastResource.data && Array.isArray(pastResource.data)) {
-    return pastResource.data.map((s) => ({
-      ...s,
-      image: volunteersPlanting,
-    }))
-  }
-  return []
+	if (pastResource.data && Array.isArray(pastResource.data)) {
+		return pastResource.data.map((s) => ({
+			...s,
+			image: volunteersPlanting,
+		}))
+	}
+	return []
 })
 
 const totalShiftsCount = computed(() => {
-  return upcomingShiftsList.value.length + pastShiftsList.value.length
+	return upcomingShiftsList.value.length + pastShiftsList.value.length
 })
 
 const completedShiftsCount = computed(() => {
-  return pastShiftsList.value.filter(
-    (s) => s.participant_status === "Present" || s.status === "Completed"
-  ).length
+	return pastShiftsList.value.filter(
+		(s) => s.participant_status === "Present" || s.status === "Completed",
+	).length
 })
 
 const totalShiftsHours = computed(() => {
-  // Approximate duration or sum from past records
-  return completedShiftsCount.value * 3
+	// Approximate duration or sum from past records
+	return completedShiftsCount.value * 3
 })
 
 function getMonthName(dateStr) {
-  if (!dateStr) return "DATE"
-  const d = new Date(dateStr)
-  return d.toLocaleDateString("en-US", { month: "short" }).toUpperCase()
+	if (!dateStr) return "DATE"
+	const d = new Date(dateStr)
+	return d.toLocaleDateString("en-US", { month: "short" }).toUpperCase()
 }
 
 function getDayNumber(dateStr) {
-  if (!dateStr) return "-"
-  const d = new Date(dateStr)
-  return d.getDate()
+	if (!dateStr) return "-"
+	const d = new Date(dateStr)
+	return d.getDate()
 }
 
 function getWeekday(dateStr) {
-  if (!dateStr) return "-"
-  const d = new Date(dateStr)
-  return d.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase()
+	if (!dateStr) return "-"
+	const d = new Date(dateStr)
+	return d.toLocaleDateString("en-US", { weekday: "short" }).toUpperCase()
 }
 
 function formatDate(dateStr) {
-  if (!dateStr) return "-"
-  const d = new Date(dateStr)
-  return d.toLocaleDateString("en-US", {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  })
+	if (!dateStr) return "-"
+	const d = new Date(dateStr)
+	return d.toLocaleDateString("en-US", {
+		weekday: "short",
+		month: "short",
+		day: "numeric",
+		year: "numeric",
+	})
 }
 
 function formatTimeRange(start, end) {
-  if (!start && !end) return "Time TBA"
-  return `${start || ''} – ${end || ''}`
+	if (!start && !end) return "Time TBA"
+	return `${start || ""} – ${end || ""}`
 }
 
 function openShiftDetails(shift) {
-  selectedShift.value = shift
+	selectedShift.value = shift
 }
 </script>

@@ -448,7 +448,7 @@
 </template>
 
 <script setup>
-import { ref, computed, h } from "vue"
+import { computed, h, ref } from "vue"
 
 const searchQuery = ref("")
 const selectedSector = ref("")
@@ -458,192 +458,287 @@ const currentPage = ref(1)
 const pageSize = 5
 
 const overviewProjects = ref([
-  { name: "Clean Water Access Initiative", progress: 70, completed: 50, inProgress: 20 },
-  { name: "Education for Rural Children", progress: 64, completed: 45, inProgress: 19 },
-  { name: "Health & Wellness Program", progress: 35, completed: 20, inProgress: 15, atRisk: 10 },
-  { name: "Livelihood Support for Women", progress: 56, completed: 35, inProgress: 21 },
-  { name: "Disaster Relief Response", progress: 39, completed: 20, inProgress: 19, delayed: 15 }
+	{
+		name: "Clean Water Access Initiative",
+		progress: 70,
+		completed: 50,
+		inProgress: 20,
+	},
+	{
+		name: "Education for Rural Children",
+		progress: 64,
+		completed: 45,
+		inProgress: 19,
+	},
+	{
+		name: "Health & Wellness Program",
+		progress: 35,
+		completed: 20,
+		inProgress: 15,
+		atRisk: 10,
+	},
+	{
+		name: "Livelihood Support for Women",
+		progress: 56,
+		completed: 35,
+		inProgress: 21,
+	},
+	{
+		name: "Disaster Relief Response",
+		progress: 39,
+		completed: 20,
+		inProgress: 19,
+		delayed: 15,
+	},
 ])
 
 const projectsList = ref([
-  {
-    name: "Clean Water Access Initiative",
-    code: "GI-2026-001",
-    sector: "WASH",
-    geography: "Bihar",
-    startDate: "05 Oct 2026",
-    endDate: "30 Jun 2027",
-    progress: 70,
-    status: "On Track",
-    thumbnail: "https://images.unsplash.com/photo-1541252260730-0412e8e2108e?w=100&auto=format&fit=crop&q=60"
-  },
-  {
-    name: "Education for Rural Children",
-    code: "GI-2026-002",
-    sector: "Education",
-    geography: "Uttar Pradesh",
-    startDate: "12 Sep 2026",
-    endDate: "31 Mar 2027",
-    progress: 64,
-    status: "On Track",
-    thumbnail: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=100&auto=format&fit=crop&q=60"
-  },
-  {
-    name: "Health & Wellness Program",
-    code: "GI-2026-003",
-    sector: "Health",
-    geography: "Tamil Nadu",
-    startDate: "12 Oct 2026",
-    endDate: "30 Sep 2027",
-    progress: 35,
-    status: "At Risk",
-    thumbnail: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=100&auto=format&fit=crop&q=60"
-  },
-  {
-    name: "Livelihood Support for Women",
-    code: "GI-2026-004",
-    sector: "Livelihoods",
-    geography: "Odisha",
-    startDate: "28 Sep 2026",
-    endDate: "31 Mar 2027",
-    progress: 56,
-    status: "On Track",
-    thumbnail: "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=100&auto=format&fit=crop&q=60"
-  },
-  {
-    name: "Disaster Relief Response",
-    code: "GI-2026-005",
-    sector: "Disaster Relief",
-    geography: "Assam",
-    startDate: "20 Sep 2026",
-    endDate: "31 Dec 2026",
-    progress: 39,
-    status: "Delayed",
-    thumbnail: "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=100&auto=format&fit=crop&q=60"
-  },
-  {
-    name: "School Digital Infrastructure",
-    code: "GI-2026-006",
-    sector: "Education",
-    geography: "Jharkhand",
-    startDate: "01 Sep 2026",
-    endDate: "28 Feb 2027",
-    progress: 80,
-    status: "On Track",
-    thumbnail: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=100&auto=format&fit=crop&q=60"
-  },
-  {
-    name: "Community Sanitation Drive",
-    code: "GI-2026-007",
-    sector: "WASH",
-    geography: "Bihar",
-    startDate: "15 Aug 2026",
-    endDate: "15 Jan 2027",
-    progress: 75,
-    status: "On Track",
-    thumbnail: "https://images.unsplash.com/photo-1541252260730-0412e8e2108e?w=100&auto=format&fit=crop&q=60"
-  },
-  {
-    name: "Maternal Health Support",
-    code: "GI-2026-008",
-    sector: "Health",
-    geography: "Karnataka",
-    startDate: "01 Aug 2026",
-    endDate: "31 Dec 2026",
-    progress: 60,
-    status: "On Track",
-    thumbnail: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=100&auto=format&fit=crop&q=60"
-  },
-  {
-    name: "Artisan Empowerment Unit",
-    code: "GI-2026-009",
-    sector: "Livelihoods",
-    geography: "Odisha",
-    startDate: "10 Jul 2026",
-    endDate: "30 Dec 2026",
-    progress: 40,
-    status: "At Risk",
-    thumbnail: "https://images.unsplash.com/photo-1593113598332-cd288d649433?w=100&auto=format&fit=crop&q=60"
-  },
-  {
-    name: "Civic Awareness Seminars",
-    code: "GI-2026-010",
-    sector: "Governance",
-    geography: "Maharashtra",
-    startDate: "01 Jun 2026",
-    endDate: "30 Nov 2026",
-    progress: 90,
-    status: "On Track",
-    thumbnail: "https://images.unsplash.com/photo-1577495508048-b635879837f1?w=100&auto=format&fit=crop&q=60"
-  }
+	{
+		name: "Clean Water Access Initiative",
+		code: "GI-2026-001",
+		sector: "WASH",
+		geography: "Bihar",
+		startDate: "05 Oct 2026",
+		endDate: "30 Jun 2027",
+		progress: 70,
+		status: "On Track",
+		thumbnail:
+			"https://images.unsplash.com/photo-1541252260730-0412e8e2108e?w=100&auto=format&fit=crop&q=60",
+	},
+	{
+		name: "Education for Rural Children",
+		code: "GI-2026-002",
+		sector: "Education",
+		geography: "Uttar Pradesh",
+		startDate: "12 Sep 2026",
+		endDate: "31 Mar 2027",
+		progress: 64,
+		status: "On Track",
+		thumbnail:
+			"https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=100&auto=format&fit=crop&q=60",
+	},
+	{
+		name: "Health & Wellness Program",
+		code: "GI-2026-003",
+		sector: "Health",
+		geography: "Tamil Nadu",
+		startDate: "12 Oct 2026",
+		endDate: "30 Sep 2027",
+		progress: 35,
+		status: "At Risk",
+		thumbnail:
+			"https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=100&auto=format&fit=crop&q=60",
+	},
+	{
+		name: "Livelihood Support for Women",
+		code: "GI-2026-004",
+		sector: "Livelihoods",
+		geography: "Odisha",
+		startDate: "28 Sep 2026",
+		endDate: "31 Mar 2027",
+		progress: 56,
+		status: "On Track",
+		thumbnail:
+			"https://images.unsplash.com/photo-1593113598332-cd288d649433?w=100&auto=format&fit=crop&q=60",
+	},
+	{
+		name: "Disaster Relief Response",
+		code: "GI-2026-005",
+		sector: "Disaster Relief",
+		geography: "Assam",
+		startDate: "20 Sep 2026",
+		endDate: "31 Dec 2026",
+		progress: 39,
+		status: "Delayed",
+		thumbnail:
+			"https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?w=100&auto=format&fit=crop&q=60",
+	},
+	{
+		name: "School Digital Infrastructure",
+		code: "GI-2026-006",
+		sector: "Education",
+		geography: "Jharkhand",
+		startDate: "01 Sep 2026",
+		endDate: "28 Feb 2027",
+		progress: 80,
+		status: "On Track",
+		thumbnail:
+			"https://images.unsplash.com/photo-1509062522246-3755977927d7?w=100&auto=format&fit=crop&q=60",
+	},
+	{
+		name: "Community Sanitation Drive",
+		code: "GI-2026-007",
+		sector: "WASH",
+		geography: "Bihar",
+		startDate: "15 Aug 2026",
+		endDate: "15 Jan 2027",
+		progress: 75,
+		status: "On Track",
+		thumbnail:
+			"https://images.unsplash.com/photo-1541252260730-0412e8e2108e?w=100&auto=format&fit=crop&q=60",
+	},
+	{
+		name: "Maternal Health Support",
+		code: "GI-2026-008",
+		sector: "Health",
+		geography: "Karnataka",
+		startDate: "01 Aug 2026",
+		endDate: "31 Dec 2026",
+		progress: 60,
+		status: "On Track",
+		thumbnail:
+			"https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=100&auto=format&fit=crop&q=60",
+	},
+	{
+		name: "Artisan Empowerment Unit",
+		code: "GI-2026-009",
+		sector: "Livelihoods",
+		geography: "Odisha",
+		startDate: "10 Jul 2026",
+		endDate: "30 Dec 2026",
+		progress: 40,
+		status: "At Risk",
+		thumbnail:
+			"https://images.unsplash.com/photo-1593113598332-cd288d649433?w=100&auto=format&fit=crop&q=60",
+	},
+	{
+		name: "Civic Awareness Seminars",
+		code: "GI-2026-010",
+		sector: "Governance",
+		geography: "Maharashtra",
+		startDate: "01 Jun 2026",
+		endDate: "30 Nov 2026",
+		progress: 90,
+		status: "On Track",
+		thumbnail:
+			"https://images.unsplash.com/photo-1577495508048-b635879837f1?w=100&auto=format&fit=crop&q=60",
+	},
 ])
 
 const filteredProjects = computed(() => {
-  return projectsList.value.filter(p => {
-    const matchSearch = !searchQuery.value || 
-      p.name.toLowerCase().includes(searchQuery.value.toLowerCase()) || 
-      p.code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      p.sector.toLowerCase().includes(searchQuery.value.toLowerCase())
-    const matchSector = !selectedSector.value || p.sector === selectedSector.value
-    const matchGeo = !selectedGeography.value || p.geography === selectedGeography.value
-    const matchStatus = !selectedStatus.value || p.status === selectedStatus.value
-    return matchSearch && matchSector && matchGeo && matchStatus
-  })
+	return projectsList.value.filter((p) => {
+		const matchSearch =
+			!searchQuery.value ||
+			p.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+			p.code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+			p.sector.toLowerCase().includes(searchQuery.value.toLowerCase())
+		const matchSector =
+			!selectedSector.value || p.sector === selectedSector.value
+		const matchGeo =
+			!selectedGeography.value || p.geography === selectedGeography.value
+		const matchStatus =
+			!selectedStatus.value || p.status === selectedStatus.value
+		return matchSearch && matchSector && matchGeo && matchStatus
+	})
 })
 
-const totalPages = computed(() => Math.ceil(filteredProjects.value.length / pageSize) || 1)
+const totalPages = computed(
+	() => Math.ceil(filteredProjects.value.length / pageSize) || 1,
+)
 
 const paginatedProjects = computed(() => {
-  const start = (currentPage.value - 1) * pageSize
-  return filteredProjects.value.slice(start, start + pageSize)
+	const start = (currentPage.value - 1) * pageSize
+	return filteredProjects.value.slice(start, start + pageSize)
 })
 
 function getSectorClass(sector) {
-  switch (sector) {
-    case 'Health': return 'bg-rose-50 text-rose-600'
-    case 'Education': return 'bg-purple-50 text-purple-600'
-    case 'WASH': return 'bg-sky-50 text-sky-600'
-    case 'Livelihoods': return 'bg-emerald-50 text-emerald-600'
-    case 'Disaster Relief': return 'bg-amber-50 text-amber-700'
-    case 'Governance': return 'bg-indigo-50 text-indigo-600'
-    default: return 'bg-slate-100 text-slate-700'
-  }
+	switch (sector) {
+		case "Health":
+			return "bg-rose-50 text-rose-600"
+		case "Education":
+			return "bg-purple-50 text-purple-600"
+		case "WASH":
+			return "bg-sky-50 text-sky-600"
+		case "Livelihoods":
+			return "bg-emerald-50 text-emerald-600"
+		case "Disaster Relief":
+			return "bg-amber-50 text-amber-700"
+		case "Governance":
+			return "bg-indigo-50 text-indigo-600"
+		default:
+			return "bg-slate-100 text-slate-700"
+	}
 }
 
 function getSectorIcon(sector) {
-  return {
-    render() {
-      if (sector === 'Health') {
-        return h('svg', { fill: 'currentColor', viewBox: '0 0 20 20' }, [
-          h('path', { 'fill-rule': 'evenodd', d: 'M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z', 'clip-rule': 'evenodd' })
-        ])
-      }
-      if (sector === 'Education') {
-        return h('svg', { fill: 'none', stroke: 'currentColor', 'stroke-width': '2', viewBox: '0 0 24 24' }, [
-          h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M12 14l9-5-9-5-9 5 9 5z' }),
-          h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z' })
-        ])
-      }
-      if (sector === 'WASH') {
-        return h('svg', { fill: 'currentColor', viewBox: '0 0 20 20' }, [
-          h('path', { 'fill-rule': 'evenodd', d: 'M10 2a1 1 0 01.832.445l4.83 7.245A6 6 0 114.338 9.69L9.168 2.445A1 1 0 0110 2z', 'clip-rule': 'evenodd' })
-        ])
-      }
-      if (sector === 'Livelihoods') {
-        return h('svg', { fill: 'none', stroke: 'currentColor', 'stroke-width': '2', viewBox: '0 0 24 24' }, [
-          h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' })
-        ])
-      }
-      if (sector === 'Disaster Relief') {
-        return h('svg', { fill: 'currentColor', viewBox: '0 0 20 20' }, [
-          h('path', { 'fill-rule': 'evenodd', d: 'M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z', 'clip-rule': 'evenodd' })
-        ])
-      }
-      return h('svg', { fill: 'currentColor', viewBox: '0 0 20 20' }, [
-        h('path', { d: 'M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z' }),
-        h('path', { 'fill-rule': 'evenodd', d: 'M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9z' })
-      ])
-    }
-  }
+	return {
+		render() {
+			if (sector === "Health") {
+				return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
+					h("path", {
+						"fill-rule": "evenodd",
+						d: "M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z",
+						"clip-rule": "evenodd",
+					}),
+				])
+			}
+			if (sector === "Education") {
+				return h(
+					"svg",
+					{
+						fill: "none",
+						stroke: "currentColor",
+						"stroke-width": "2",
+						viewBox: "0 0 24 24",
+					},
+					[
+						h("path", {
+							"stroke-linecap": "round",
+							"stroke-linejoin": "round",
+							d: "M12 14l9-5-9-5-9 5 9 5z",
+						}),
+						h("path", {
+							"stroke-linecap": "round",
+							"stroke-linejoin": "round",
+							d: "M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z",
+						}),
+					],
+				)
+			}
+			if (sector === "WASH") {
+				return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
+					h("path", {
+						"fill-rule": "evenodd",
+						d: "M10 2a1 1 0 01.832.445l4.83 7.245A6 6 0 114.338 9.69L9.168 2.445A1 1 0 0110 2z",
+						"clip-rule": "evenodd",
+					}),
+				])
+			}
+			if (sector === "Livelihoods") {
+				return h(
+					"svg",
+					{
+						fill: "none",
+						stroke: "currentColor",
+						"stroke-width": "2",
+						viewBox: "0 0 24 24",
+					},
+					[
+						h("path", {
+							"stroke-linecap": "round",
+							"stroke-linejoin": "round",
+							d: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z",
+						}),
+					],
+				)
+			}
+			if (sector === "Disaster Relief") {
+				return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
+					h("path", {
+						"fill-rule": "evenodd",
+						d: "M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z",
+						"clip-rule": "evenodd",
+					}),
+				])
+			}
+			return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
+				h("path", { d: "M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" }),
+				h("path", {
+					"fill-rule": "evenodd",
+					d: "M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9z",
+				}),
+			])
+		},
+	}
 }
 </script>

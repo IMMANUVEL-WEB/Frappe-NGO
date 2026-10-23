@@ -17,65 +17,38 @@
   "login_portal_subtitle",
   "login_logo",
   "header_col_break",
-  "login_status_badge",
-  "login_support_label",
-  "login_support_url",
-  "login_enable_language_selector",
   "hero_section",
   "login_hero_badge",
   "login_hero_title",
   "login_hero_description",
-  "stats_section",
-  "login_stat1_value",
-  "login_stat1_label",
-  "stat_col1",
-  "login_stat2_value",
-  "login_stat2_label",
-  "stat_col2",
-  "login_stat3_value",
-  "login_stat3_label",
-  "testimonial_section",
-  "login_testimonial_stars",
-  "login_testimonial_quote",
-  "testimonial_col",
-  "login_testimonial_author",
-  "login_testimonial_role",
-  "login_testimonial_avatar_initials",
-  "login_testimonial_avatar_image",
+  "login_hero_image",
   "form_section",
   "login_form_title",
   "login_form_subtitle",
-  "sso_section",
-  "login_show_google_login",
-  "login_google_label",
-  "login_google_url",
-  "sso_col",
-  "login_show_sso_login",
-  "login_sso_label",
-  "login_sso_url",
   "fields_section",
-  "login_divider_text",
   "login_email_label",
   "login_email_placeholder",
   "login_password_label",
   "login_forgot_password_label",
   "login_forgot_password_url",
   "login_remember_me_label",
-  "login_security_badge_label",
   "login_submit_button_label",
   "login_apply_button_label",
   "login_apply_button_url",
-  "badge_security_section",
-  "login_show_badge_scan",
-  "login_badge_scan_text",
-  "login_badge_scan_link_label",
-  "login_badge_scan_url",
-  "security_col",
-  "login_encryption_note",
-  "login_powered_by_note",
   "footer_section",
   "login_footer_copyright",
-  "login_footer_links"
+  "login_footer_links",
+  "apply_page_tab",
+  "apply_hero_section",
+  "apply_hero_badge",
+  "apply_hero_title",
+  "apply_hero_description",
+  "apply_hero_image",
+  "apply_form_section",
+  "apply_form_title",
+  "apply_form_subtitle",
+  "apply_submit_button_label",
+  "apply_login_button_label"
  ],
  "fields": [
   {
@@ -139,36 +112,12 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "Systems Operational",
-   "fieldname": "login_status_badge",
-   "fieldtype": "Data",
-   "label": "Status Badge Text"
-  },
-  {
-   "default": "Field Support & FAQ",
-   "fieldname": "login_support_label",
-   "fieldtype": "Data",
-   "label": "Support Link Label"
-  },
-  {
-   "default": "#",
-   "fieldname": "login_support_url",
-   "fieldtype": "Data",
-   "label": "Support Link URL"
-  },
-  {
-   "default": "1",
-   "fieldname": "login_enable_language_selector",
-   "fieldtype": "Check",
-   "label": "Enable Language Selector"
-  },
-  {
    "fieldname": "hero_section",
    "fieldtype": "Section Break",
    "label": "Hero Banner (Left Panel)"
   },
   {
-   "default": "GLOBAL VOLUNTEER COMMUNITY",
+   "default": "GLOBAL NGO COMMUNITY",
    "fieldname": "login_hero_badge",
    "fieldtype": "Data",
    "label": "Hero Badge Tag"
@@ -180,103 +129,15 @@
    "label": "Hero Headline"
   },
   {
-   "default": "Sign in to claim regional volunteer shifts, track community outcomes, and manage verified field contributions in real time.",
+   "default": "Support your community as a volunteer or donor, discover meaningful opportunities, and track your impact.",
    "fieldname": "login_hero_description",
    "fieldtype": "Small Text",
    "label": "Hero Description"
   },
   {
-   "fieldname": "stats_section",
-   "fieldtype": "Section Break",
-   "label": "Hero Statistics"
-  },
-  {
-   "default": "120k+",
-   "fieldname": "login_stat1_value",
-   "fieldtype": "Data",
-   "label": "Stat 1 Value"
-  },
-  {
-   "default": "HOURS LOGGED",
-   "fieldname": "login_stat1_label",
-   "fieldtype": "Data",
-   "label": "Stat 1 Label"
-  },
-  {
-   "fieldname": "stat_col1",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "48",
-   "fieldname": "login_stat2_value",
-   "fieldtype": "Data",
-   "label": "Stat 2 Value"
-  },
-  {
-   "default": "CHAPTERS",
-   "fieldname": "login_stat2_label",
-   "fieldtype": "Data",
-   "label": "Stat 2 Label"
-  },
-  {
-   "fieldname": "stat_col2",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "99.8%",
-   "fieldname": "login_stat3_value",
-   "fieldtype": "Data",
-   "label": "Stat 3 Value"
-  },
-  {
-   "default": "VERIFIED",
-   "fieldname": "login_stat3_label",
-   "fieldtype": "Data",
-   "label": "Stat 3 Label"
-  },
-  {
-   "fieldname": "testimonial_section",
-   "fieldtype": "Section Break",
-   "label": "Testimonial Card"
-  },
-  {
-   "default": "5",
-   "fieldname": "login_testimonial_stars",
-   "fieldtype": "Int",
-   "label": "Rating Stars (1-5)"
-  },
-  {
-   "default": "\"Every hour deployed across local food distributions and emergency shelters directly shifts the needle for our neighborhood families.\"",
-   "fieldname": "login_testimonial_quote",
-   "fieldtype": "Small Text",
-   "label": "Testimonial Quote"
-  },
-  {
-   "fieldname": "testimonial_col",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "Elena Cruz",
-   "fieldname": "login_testimonial_author",
-   "fieldtype": "Data",
-   "label": "Author Name"
-  },
-  {
-   "default": "Pacific Chapter Deployment Lead",
-   "fieldname": "login_testimonial_role",
-   "fieldtype": "Data",
-   "label": "Author Role / Chapter"
-  },
-  {
-   "default": "EC",
-   "fieldname": "login_testimonial_avatar_initials",
-   "fieldtype": "Data",
-   "label": "Avatar Initials"
-  },
-  {
-   "fieldname": "login_testimonial_avatar_image",
+   "fieldname": "login_hero_image",
    "fieldtype": "Attach Image",
-   "label": "Avatar Image"
+   "label": "Hero Banner Image"
   },
   {
    "fieldname": "form_section",
@@ -296,60 +157,9 @@
    "label": "Form Subtitle"
   },
   {
-   "fieldname": "sso_section",
-   "fieldtype": "Section Break",
-   "label": "Social & SSO Login Buttons"
-  },
-  {
-   "default": "1",
-   "fieldname": "login_show_google_login",
-   "fieldtype": "Check",
-   "label": "Show Google Login"
-  },
-  {
-   "default": "Google Account",
-   "fieldname": "login_google_label",
-   "fieldtype": "Data",
-   "label": "Google Button Label"
-  },
-  {
-   "default": "#",
-   "fieldname": "login_google_url",
-   "fieldtype": "Data",
-   "label": "Google Sign In URL"
-  },
-  {
-   "fieldname": "sso_col",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "1",
-   "fieldname": "login_show_sso_login",
-   "fieldtype": "Check",
-   "label": "Show SSO Login"
-  },
-  {
-   "default": "NGO SSO Portal",
-   "fieldname": "login_sso_label",
-   "fieldtype": "Data",
-   "label": "SSO Button Label"
-  },
-  {
-   "default": "#",
-   "fieldname": "login_sso_url",
-   "fieldtype": "Data",
-   "label": "SSO Portal URL"
-  },
-  {
    "fieldname": "fields_section",
    "fieldtype": "Section Break",
    "label": "Form Fields & Actions"
-  },
-  {
-   "default": "OR SIGN IN WITH EMAIL",
-   "fieldname": "login_divider_text",
-   "fieldtype": "Data",
-   "label": "Divider Text"
   },
   {
    "default": "VOLUNTEER EMAIL ADDRESS",
@@ -388,12 +198,6 @@
    "label": "Remember Me Label"
   },
   {
-   "default": "Frappe Guard",
-   "fieldname": "login_security_badge_label",
-   "fieldtype": "Data",
-   "label": "Security Badge Label"
-  },
-  {
    "default": "Sign In to Dashboard",
    "fieldname": "login_submit_button_label",
    "fieldtype": "Data",
@@ -412,51 +216,6 @@
    "label": "Apply Button URL"
   },
   {
-   "fieldname": "badge_security_section",
-   "fieldtype": "Section Break",
-   "label": "Badge Scan & Security Notes"
-  },
-  {
-   "default": "1",
-   "fieldname": "login_show_badge_scan",
-   "fieldtype": "Check",
-   "label": "Show Badge Scan Option"
-  },
-  {
-   "default": "At a physical deployment hub?",
-   "fieldname": "login_badge_scan_text",
-   "fieldtype": "Data",
-   "label": "Badge Scan Text"
-  },
-  {
-   "default": "Scan Volunteer Badge",
-   "fieldname": "login_badge_scan_link_label",
-   "fieldtype": "Data",
-   "label": "Badge Scan Link Label"
-  },
-  {
-   "default": "#",
-   "fieldname": "login_badge_scan_url",
-   "fieldtype": "Data",
-   "label": "Badge Scan URL"
-  },
-  {
-   "fieldname": "security_col",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "Protected by 256-bit encryption",
-   "fieldname": "login_encryption_note",
-   "fieldtype": "Data",
-   "label": "Encryption Note"
-  },
-  {
-   "default": "Secure connection powered by Frappe Framework",
-   "fieldname": "login_powered_by_note",
-   "fieldtype": "Data",
-   "label": "Powered By Note"
-  },
-  {
    "fieldname": "footer_section",
    "fieldtype": "Section Break",
    "label": "Footer"
@@ -472,6 +231,68 @@
    "fieldname": "login_footer_links",
    "fieldtype": "Small Text",
    "label": "Footer Links"
+  },
+  {
+   "fieldname": "apply_page_tab",
+   "fieldtype": "Tab Break",
+   "label": "Apply Page"
+  },
+  {
+   "fieldname": "apply_hero_section",
+   "fieldtype": "Section Break",
+   "label": "Apply Hero Banner (Left Panel)"
+  },
+  {
+   "default": "VOLUNTEER ENROLLMENT",
+   "fieldname": "apply_hero_badge",
+   "fieldtype": "Data",
+   "label": "Hero Badge Tag"
+  },
+  {
+   "default": "Step Forward. Create Lasting Impact.",
+   "fieldname": "apply_hero_title",
+   "fieldtype": "Small Text",
+   "label": "Hero Headline"
+  },
+  {
+   "default": "Join our dedicated volunteer community. Whether tutoring students, planting saplings, or coordinating local relief drives, your time drives tangible community change.",
+   "fieldname": "apply_hero_description",
+   "fieldtype": "Small Text",
+   "label": "Hero Description"
+  },
+  {
+   "fieldname": "apply_hero_image",
+   "fieldtype": "Attach Image",
+   "label": "Apply Hero Banner Image"
+  },
+  {
+   "fieldname": "apply_form_section",
+   "fieldtype": "Section Break",
+   "label": "Apply Form (Right Panel)"
+  },
+  {
+   "default": "Apply to be a Volunteer",
+   "fieldname": "apply_form_title",
+   "fieldtype": "Data",
+   "label": "Form Title"
+  },
+  {
+   "default": "Fields marked with an asterisk (*) are mandatory.",
+   "fieldname": "apply_form_subtitle",
+   "fieldtype": "Small Text",
+   "label": "Form Subtitle"
+  },
+  {
+   "default": "Submit Application",
+   "fieldname": "apply_submit_button_label",
+   "fieldtype": "Data",
+   "label": "Submit Button Label"
+  },
+  {
+   "default": "Already registered? Sign In to Dashboard",
+   "fieldname": "apply_login_button_label",
+   "fieldtype": "Data",
+   "label": "Sign In Link Label"
   }
  ],
  "grid_page_length": 50,

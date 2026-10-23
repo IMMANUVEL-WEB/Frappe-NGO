@@ -354,47 +354,67 @@
 import { ref } from "vue"
 
 const kpis = ref({
-  total_given: 18500000,
-  total_committed: 35000000,
-  percent_given_committed: 53,
-  total_spent: 11200000,
-  percent_spent_given: 61,
-  balance_available: 7260000,
-  committed_balance: 13800000,
-  active_grants_count: 3,
-  expiring_soon_count: 1,
-  total_purchase_amount: 4350000
+	total_given: 18500000,
+	total_committed: 35000000,
+	percent_given_committed: 53,
+	total_spent: 11200000,
+	percent_spent_given: 61,
+	balance_available: 7260000,
+	committed_balance: 13800000,
+	active_grants_count: 3,
+	expiring_soon_count: 1,
+	total_purchase_amount: 4350000,
 })
 
 const monthlySeries = ref([
-  { month: "Apr", given: 46, spent: 14 },
-  { month: "May", given: 36, spent: 23 },
-  { month: "Jun", given: 42, spent: 16 },
-  { month: "Jul", given: 41, spent: 19 },
-  { month: "Aug", given: 39, spent: 17 },
-  { month: "Sep", given: 41, spent: 18 },
-  { month: "Oct", given: 38, spent: 16 }
+	{ month: "Apr", given: 46, spent: 14 },
+	{ month: "May", given: 36, spent: 23 },
+	{ month: "Jun", given: 42, spent: 16 },
+	{ month: "Jul", given: 41, spent: 19 },
+	{ month: "Aug", given: 39, spent: 17 },
+	{ month: "Sep", given: 41, spent: 18 },
+	{ month: "Oct", given: 38, spent: 16 },
 ])
 
 const projectSpendList = ref([
-  { name: "Flood Relief Assam", amount: "48.00", percent: 90, barColor: "bg-blue-600" },
-  { name: "School Kits Odisha", amount: "33.00", percent: 65, barColor: "bg-teal-500" },
-  { name: "Livelihood Tamil Nadu", amount: "22.00", percent: 45, barColor: "bg-amber-400" },
-  { name: "Clean Water Bihar", amount: "9.40", percent: 20, barColor: "bg-purple-600" }
+	{
+		name: "Flood Relief Assam",
+		amount: "48.00",
+		percent: 90,
+		barColor: "bg-blue-600",
+	},
+	{
+		name: "School Kits Odisha",
+		amount: "33.00",
+		percent: 65,
+		barColor: "bg-teal-500",
+	},
+	{
+		name: "Livelihood Tamil Nadu",
+		amount: "22.00",
+		percent: 45,
+		barColor: "bg-amber-400",
+	},
+	{
+		name: "Clean Water Bihar",
+		amount: "9.40",
+		percent: 20,
+		barColor: "bg-purple-600",
+	},
 ])
 
 function formatCurrencyDisplay(val) {
-  if (!val || val === 0) return "₹0"
-  if (val >= 10000000) {
-    return `₹${(val / 10000000).toFixed(2)} Cr`
-  }
-  if (val >= 100000) {
-    return `₹${(val / 100000).toFixed(2)} L`
-  }
-  return `₹${Number(val).toLocaleString("en-IN")}`
+	if (!val || val === 0) return "₹0"
+	if (val >= 10000000) {
+		return `₹${(val / 10000000).toFixed(2)} Cr`
+	}
+	if (val >= 100000) {
+		return `₹${(val / 100000).toFixed(2)} L`
+	}
+	return `₹${Number(val).toLocaleString("en-IN")}`
 }
 
 function handleDecision(type) {
-  alert(`Proposal decision recorded: ${type}`)
+	alert(`Proposal decision recorded: ${type}`)
 }
 </script>

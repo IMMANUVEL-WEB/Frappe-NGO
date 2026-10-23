@@ -414,7 +414,7 @@
 </template>
 
 <script setup>
-import { ref, computed, h } from "vue"
+import { computed, h, ref } from "vue"
 
 const searchQuery = ref("")
 const selectedSector = ref("")
@@ -425,100 +425,259 @@ const currentPage = ref(1)
 const pageSize = 8
 
 const proposalsData = ref([
-  { title: "Community Health & Wellness Program", code: "CP-0014", sector: "Health", geography: "Tamil Nadu", status: "Approved", submittedOn: "12 Oct 2026" },
-  { title: "Quality Education for Rural Children", code: "CP-0013", sector: "Education", geography: "Rural Areas", status: "Approved", submittedOn: "08 Oct 2026" },
-  { title: "Clean Water Access Initiative", code: "CP-0012", sector: "WASH", geography: "Bihar", status: "Under Review", submittedOn: "05 Oct 2026" },
-  { title: "Livelihood Support for Women", code: "CP-0011", sector: "Livelihoods", geography: "Odisha", status: "Approved", submittedOn: "28 Sep 2026" },
-  { title: "Disaster Relief Response", code: "CP-0010", sector: "Disaster Relief", geography: "Assam", status: "Under Review", submittedOn: "20 Sep 2026" },
-  { title: "Governance & Community Participation", code: "CP-0009", sector: "Governance", geography: "Maharashtra", status: "Rejected", submittedOn: "15 Sep 2026" },
-  { title: "Healthcare Infrastructure Support", code: "CP-0008", sector: "Health", geography: "Karnataka", status: "Approved", submittedOn: "10 Sep 2026" },
-  { title: "School Infrastructure Development", code: "CP-0007", sector: "Education", geography: "Jharkhand", status: "Approved", submittedOn: "02 Sep 2026" },
-  { title: "Emergency Flood Relief Phase 1", code: "CP-0006", sector: "Disaster Relief", geography: "Assam", status: "Approved", submittedOn: "20 Aug 2026" },
-  { title: "Rural Sanitation Facility", code: "CP-0005", sector: "WASH", geography: "Bihar", status: "Approved", submittedOn: "14 Aug 2026" },
-  { title: "Tribal Youth Skill Center", code: "CP-0004", sector: "Livelihoods", geography: "Odisha", status: "Approved", submittedOn: "01 Aug 2026" },
-  { title: "Mobile Clinic Outreach", code: "CP-0003", sector: "Health", geography: "Tamil Nadu", status: "Approved", submittedOn: "18 Jul 2026" },
-  { title: "Girl Child Digital Literacy", code: "CP-0002", sector: "Education", geography: "Uttar Pradesh", status: "Under Review", submittedOn: "10 Jul 2026" },
-  { title: "Panchayat Civic Training", code: "CP-0001", sector: "Governance", geography: "Maharashtra", status: "Approved", submittedOn: "25 Jun 2026" }
+	{
+		title: "Community Health & Wellness Program",
+		code: "CP-0014",
+		sector: "Health",
+		geography: "Tamil Nadu",
+		status: "Approved",
+		submittedOn: "12 Oct 2026",
+	},
+	{
+		title: "Quality Education for Rural Children",
+		code: "CP-0013",
+		sector: "Education",
+		geography: "Rural Areas",
+		status: "Approved",
+		submittedOn: "08 Oct 2026",
+	},
+	{
+		title: "Clean Water Access Initiative",
+		code: "CP-0012",
+		sector: "WASH",
+		geography: "Bihar",
+		status: "Under Review",
+		submittedOn: "05 Oct 2026",
+	},
+	{
+		title: "Livelihood Support for Women",
+		code: "CP-0011",
+		sector: "Livelihoods",
+		geography: "Odisha",
+		status: "Approved",
+		submittedOn: "28 Sep 2026",
+	},
+	{
+		title: "Disaster Relief Response",
+		code: "CP-0010",
+		sector: "Disaster Relief",
+		geography: "Assam",
+		status: "Under Review",
+		submittedOn: "20 Sep 2026",
+	},
+	{
+		title: "Governance & Community Participation",
+		code: "CP-0009",
+		sector: "Governance",
+		geography: "Maharashtra",
+		status: "Rejected",
+		submittedOn: "15 Sep 2026",
+	},
+	{
+		title: "Healthcare Infrastructure Support",
+		code: "CP-0008",
+		sector: "Health",
+		geography: "Karnataka",
+		status: "Approved",
+		submittedOn: "10 Sep 2026",
+	},
+	{
+		title: "School Infrastructure Development",
+		code: "CP-0007",
+		sector: "Education",
+		geography: "Jharkhand",
+		status: "Approved",
+		submittedOn: "02 Sep 2026",
+	},
+	{
+		title: "Emergency Flood Relief Phase 1",
+		code: "CP-0006",
+		sector: "Disaster Relief",
+		geography: "Assam",
+		status: "Approved",
+		submittedOn: "20 Aug 2026",
+	},
+	{
+		title: "Rural Sanitation Facility",
+		code: "CP-0005",
+		sector: "WASH",
+		geography: "Bihar",
+		status: "Approved",
+		submittedOn: "14 Aug 2026",
+	},
+	{
+		title: "Tribal Youth Skill Center",
+		code: "CP-0004",
+		sector: "Livelihoods",
+		geography: "Odisha",
+		status: "Approved",
+		submittedOn: "01 Aug 2026",
+	},
+	{
+		title: "Mobile Clinic Outreach",
+		code: "CP-0003",
+		sector: "Health",
+		geography: "Tamil Nadu",
+		status: "Approved",
+		submittedOn: "18 Jul 2026",
+	},
+	{
+		title: "Girl Child Digital Literacy",
+		code: "CP-0002",
+		sector: "Education",
+		geography: "Uttar Pradesh",
+		status: "Under Review",
+		submittedOn: "10 Jul 2026",
+	},
+	{
+		title: "Panchayat Civic Training",
+		code: "CP-0001",
+		sector: "Governance",
+		geography: "Maharashtra",
+		status: "Approved",
+		submittedOn: "25 Jun 2026",
+	},
 ])
 
 const filteredProposals = computed(() => {
-  return proposalsData.value.filter(p => {
-    const matchSearch = !searchQuery.value || 
-      p.title.toLowerCase().includes(searchQuery.value.toLowerCase()) || 
-      p.code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      p.sector.toLowerCase().includes(searchQuery.value.toLowerCase())
-    const matchSector = !selectedSector.value || p.sector === selectedSector.value
-    const matchStatus = !selectedStatus.value || p.status === selectedStatus.value
-    const matchGeo = !selectedGeography.value || p.geography === selectedGeography.value
-    return matchSearch && matchSector && matchStatus && matchGeo
-  })
+	return proposalsData.value.filter((p) => {
+		const matchSearch =
+			!searchQuery.value ||
+			p.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+			p.code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+			p.sector.toLowerCase().includes(searchQuery.value.toLowerCase())
+		const matchSector =
+			!selectedSector.value || p.sector === selectedSector.value
+		const matchStatus =
+			!selectedStatus.value || p.status === selectedStatus.value
+		const matchGeo =
+			!selectedGeography.value || p.geography === selectedGeography.value
+		return matchSearch && matchSector && matchStatus && matchGeo
+	})
 })
 
-const totalPages = computed(() => Math.ceil(filteredProposals.value.length / pageSize) || 1)
+const totalPages = computed(
+	() => Math.ceil(filteredProposals.value.length / pageSize) || 1,
+)
 
 const paginatedProposals = computed(() => {
-  const start = (currentPage.value - 1) * pageSize
-  return filteredProposals.value.slice(start, start + pageSize)
+	const start = (currentPage.value - 1) * pageSize
+	return filteredProposals.value.slice(start, start + pageSize)
 })
 
 function getSectorClass(sector) {
-  switch (sector) {
-    case 'Health': return 'bg-rose-50 text-rose-600'
-    case 'Education': return 'bg-purple-50 text-purple-600'
-    case 'WASH': return 'bg-sky-50 text-sky-600'
-    case 'Livelihoods': return 'bg-emerald-50 text-emerald-600'
-    case 'Disaster Relief': return 'bg-amber-50 text-amber-700'
-    case 'Governance': return 'bg-indigo-50 text-indigo-600'
-    default: return 'bg-slate-100 text-slate-700'
-  }
+	switch (sector) {
+		case "Health":
+			return "bg-rose-50 text-rose-600"
+		case "Education":
+			return "bg-purple-50 text-purple-600"
+		case "WASH":
+			return "bg-sky-50 text-sky-600"
+		case "Livelihoods":
+			return "bg-emerald-50 text-emerald-600"
+		case "Disaster Relief":
+			return "bg-amber-50 text-amber-700"
+		case "Governance":
+			return "bg-indigo-50 text-indigo-600"
+		default:
+			return "bg-slate-100 text-slate-700"
+	}
 }
 
 function getSectorIcon(sector) {
-  // SVG Icon definitions
-  return {
-    render() {
-      if (sector === 'Health') {
-        return h('svg', { fill: 'currentColor', viewBox: '0 0 20 20' }, [
-          h('path', { 'fill-rule': 'evenodd', d: 'M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z', 'clip-rule': 'evenodd' })
-        ])
-      }
-      if (sector === 'Education') {
-        return h('svg', { fill: 'none', stroke: 'currentColor', 'stroke-width': '2', viewBox: '0 0 24 24' }, [
-          h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M12 14l9-5-9-5-9 5 9 5z' }),
-          h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z' })
-        ])
-      }
-      if (sector === 'WASH') {
-        return h('svg', { fill: 'currentColor', viewBox: '0 0 20 20' }, [
-          h('path', { 'fill-rule': 'evenodd', d: 'M10 2a1 1 0 01.832.445l4.83 7.245A6 6 0 114.338 9.69L9.168 2.445A1 1 0 0110 2z', 'clip-rule': 'evenodd' })
-        ])
-      }
-      if (sector === 'Livelihoods') {
-        return h('svg', { fill: 'none', stroke: 'currentColor', 'stroke-width': '2', viewBox: '0 0 24 24' }, [
-          h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' })
-        ])
-      }
-      if (sector === 'Disaster Relief') {
-        return h('svg', { fill: 'currentColor', viewBox: '0 0 20 20' }, [
-          h('path', { 'fill-rule': 'evenodd', d: 'M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z', 'clip-rule': 'evenodd' })
-        ])
-      }
-      // Governance
-      return h('svg', { fill: 'currentColor', viewBox: '0 0 20 20' }, [
-        h('path', { d: 'M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z' }),
-        h('path', { 'fill-rule': 'evenodd', d: 'M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z', 'clip-rule': 'evenodd' })
-      ])
-    }
-  }
+	// SVG Icon definitions
+	return {
+		render() {
+			if (sector === "Health") {
+				return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
+					h("path", {
+						"fill-rule": "evenodd",
+						d: "M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z",
+						"clip-rule": "evenodd",
+					}),
+				])
+			}
+			if (sector === "Education") {
+				return h(
+					"svg",
+					{
+						fill: "none",
+						stroke: "currentColor",
+						"stroke-width": "2",
+						viewBox: "0 0 24 24",
+					},
+					[
+						h("path", {
+							"stroke-linecap": "round",
+							"stroke-linejoin": "round",
+							d: "M12 14l9-5-9-5-9 5 9 5z",
+						}),
+						h("path", {
+							"stroke-linecap": "round",
+							"stroke-linejoin": "round",
+							d: "M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z",
+						}),
+					],
+				)
+			}
+			if (sector === "WASH") {
+				return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
+					h("path", {
+						"fill-rule": "evenodd",
+						d: "M10 2a1 1 0 01.832.445l4.83 7.245A6 6 0 114.338 9.69L9.168 2.445A1 1 0 0110 2z",
+						"clip-rule": "evenodd",
+					}),
+				])
+			}
+			if (sector === "Livelihoods") {
+				return h(
+					"svg",
+					{
+						fill: "none",
+						stroke: "currentColor",
+						"stroke-width": "2",
+						viewBox: "0 0 24 24",
+					},
+					[
+						h("path", {
+							"stroke-linecap": "round",
+							"stroke-linejoin": "round",
+							d: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z",
+						}),
+					],
+				)
+			}
+			if (sector === "Disaster Relief") {
+				return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
+					h("path", {
+						"fill-rule": "evenodd",
+						d: "M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z",
+						"clip-rule": "evenodd",
+					}),
+				])
+			}
+			// Governance
+			return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
+				h("path", { d: "M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" }),
+				h("path", {
+					"fill-rule": "evenodd",
+					d: "M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z",
+					"clip-rule": "evenodd",
+				}),
+			])
+		},
+	}
 }
 
 function viewDetails(row) {
-  alert(`Proposal Details for ${row.code} - ${row.title}\nStatus: ${row.status}\nGeography: ${row.geography}`)
-  activeActionRow.value = null
+	alert(
+		`Proposal Details for ${row.code} - ${row.title}\nStatus: ${row.status}\nGeography: ${row.geography}`,
+	)
+	activeActionRow.value = null
 }
 
 function quickDecision(row, action) {
-  row.status = action === 'Approve' ? 'Approved' : 'Rejected'
-  activeActionRow.value = null
+	row.status = action === "Approve" ? "Approved" : "Rejected"
+	activeActionRow.value = null
 }
 </script>

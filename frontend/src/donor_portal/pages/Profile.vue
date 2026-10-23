@@ -86,7 +86,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue"
+import { onMounted, ref } from "vue"
 import { donorApi } from "../api"
 
 const loading = ref(true)
@@ -96,26 +96,30 @@ const inquirySubject = ref("")
 const inquiryMessage = ref("")
 
 onMounted(async () => {
-  try {
-    const res = await donorApi.getProfile()
-    if (res) profile.value = res
-  } catch (e) {
-    console.error("Failed to load profile:", e)
-  } finally {
-    loading.value = false
-  }
+	try {
+		const res = await donorApi.getProfile()
+		if (res) profile.value = res
+	} catch (e) {
+		console.error("Failed to load profile:", e)
+	} finally {
+		loading.value = false
+	}
 })
 
 async function submitQuery() {
-  if (!inquirySubject.value || !inquiryMessage.value) return alert("Please fill both subject and message.")
-  try {
-    const res = await donorApi.submitQuery({ subject: inquirySubject.value, message: inquiryMessage.value })
-    alert(res.message || "Inquiry sent successfully.")
-    showInquiry.value = false
-    inquirySubject.value = ""
-    inquiryMessage.value = ""
-  } catch (e) {
-    alert(e.message || "Failed to submit inquiry.")
-  }
+	if (!inquirySubject.value || !inquiryMessage.value)
+		return alert("Please fill both subject and message.")
+	try {
+		const res = await donorApi.submitQuery({
+			subject: inquirySubject.value,
+			message: inquiryMessage.value,
+		})
+		alert(res.message || "Inquiry sent successfully.")
+		showInquiry.value = false
+		inquirySubject.value = ""
+		inquiryMessage.value = ""
+	} catch (e) {
+		alert(e.message || "Failed to submit inquiry.")
+	}
 }
 </script>

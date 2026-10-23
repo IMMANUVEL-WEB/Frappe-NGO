@@ -436,133 +436,187 @@
 </template>
 
 <script setup>
-import { ref, computed, h } from "vue"
+import { computed, h, ref } from "vue"
 
 const searchQuery = ref("")
 const selectedSector = ref("")
 const selectedGeography = ref("")
 
 const utilizationRows = ref([
-  {
-    name: "Clean Water Access Initiative",
-    code: "GI-2026-001",
-    project: "Clean Water Access Initiative",
-    sector: "WASH",
-    geography: "Bihar",
-    totalAmount: "₹22,00,000",
-    utilizedAmount: "₹15,40,000",
-    balance: "₹6,60,000",
-    utilizationPercent: 70,
-    status: "Active"
-  },
-  {
-    name: "Education for Rural Children",
-    code: "GI-2026-002",
-    project: "Quality Education for Rural Children",
-    sector: "Education",
-    geography: "Uttar Pradesh",
-    totalAmount: "₹18,00,000",
-    utilizedAmount: "₹11,58,000",
-    balance: "₹6,42,000",
-    utilizationPercent: 64,
-    status: "Active"
-  },
-  {
-    name: "Health & Wellness Program",
-    code: "GI-2026-003",
-    project: "Community Health & Wellness Program",
-    sector: "Health",
-    geography: "Tamil Nadu",
-    totalAmount: "₹25,00,000",
-    utilizedAmount: "₹8,69,000",
-    balance: "₹16,31,000",
-    utilizationPercent: 35,
-    status: "Active"
-  },
-  {
-    name: "Livelihood Support for Women",
-    code: "GI-2026-004",
-    project: "Livelihood Support for Women",
-    sector: "Livelihoods",
-    geography: "Odisha",
-    totalAmount: "₹12,00,000",
-    utilizedAmount: "₹6,76,000",
-    balance: "₹5,24,000",
-    utilizationPercent: 56,
-    status: "Pending"
-  },
-  {
-    name: "Disaster Relief Response",
-    code: "GI-2026-005",
-    project: "Disaster Relief Response",
-    sector: "Disaster Relief",
-    geography: "Assam",
-    totalAmount: "₹15,00,000",
-    utilizedAmount: "₹5,89,000",
-    balance: "₹9,11,000",
-    utilizationPercent: 39,
-    status: "Active"
-  }
+	{
+		name: "Clean Water Access Initiative",
+		code: "GI-2026-001",
+		project: "Clean Water Access Initiative",
+		sector: "WASH",
+		geography: "Bihar",
+		totalAmount: "₹22,00,000",
+		utilizedAmount: "₹15,40,000",
+		balance: "₹6,60,000",
+		utilizationPercent: 70,
+		status: "Active",
+	},
+	{
+		name: "Education for Rural Children",
+		code: "GI-2026-002",
+		project: "Quality Education for Rural Children",
+		sector: "Education",
+		geography: "Uttar Pradesh",
+		totalAmount: "₹18,00,000",
+		utilizedAmount: "₹11,58,000",
+		balance: "₹6,42,000",
+		utilizationPercent: 64,
+		status: "Active",
+	},
+	{
+		name: "Health & Wellness Program",
+		code: "GI-2026-003",
+		project: "Community Health & Wellness Program",
+		sector: "Health",
+		geography: "Tamil Nadu",
+		totalAmount: "₹25,00,000",
+		utilizedAmount: "₹8,69,000",
+		balance: "₹16,31,000",
+		utilizationPercent: 35,
+		status: "Active",
+	},
+	{
+		name: "Livelihood Support for Women",
+		code: "GI-2026-004",
+		project: "Livelihood Support for Women",
+		sector: "Livelihoods",
+		geography: "Odisha",
+		totalAmount: "₹12,00,000",
+		utilizedAmount: "₹6,76,000",
+		balance: "₹5,24,000",
+		utilizationPercent: 56,
+		status: "Pending",
+	},
+	{
+		name: "Disaster Relief Response",
+		code: "GI-2026-005",
+		project: "Disaster Relief Response",
+		sector: "Disaster Relief",
+		geography: "Assam",
+		totalAmount: "₹15,00,000",
+		utilizedAmount: "₹5,89,000",
+		balance: "₹9,11,000",
+		utilizationPercent: 39,
+		status: "Active",
+	},
 ])
 
 const filteredRows = computed(() => {
-  return utilizationRows.value.filter(r => {
-    const matchSearch = !searchQuery.value || 
-      r.name.toLowerCase().includes(searchQuery.value.toLowerCase()) || 
-      r.code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      r.project.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      r.sector.toLowerCase().includes(searchQuery.value.toLowerCase())
-    const matchSector = !selectedSector.value || r.sector === selectedSector.value
-    const matchGeo = !selectedGeography.value || r.geography === selectedGeography.value
-    return matchSearch && matchSector && matchGeo
-  })
+	return utilizationRows.value.filter((r) => {
+		const matchSearch =
+			!searchQuery.value ||
+			r.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+			r.code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+			r.project.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+			r.sector.toLowerCase().includes(searchQuery.value.toLowerCase())
+		const matchSector =
+			!selectedSector.value || r.sector === selectedSector.value
+		const matchGeo =
+			!selectedGeography.value || r.geography === selectedGeography.value
+		return matchSearch && matchSector && matchGeo
+	})
 })
 
 function getSectorClass(sector) {
-  switch (sector) {
-    case 'Health': return 'bg-rose-50 text-rose-600'
-    case 'Education': return 'bg-purple-50 text-purple-600'
-    case 'WASH': return 'bg-sky-50 text-sky-600'
-    case 'Livelihoods': return 'bg-emerald-50 text-emerald-600'
-    case 'Disaster Relief': return 'bg-amber-50 text-amber-700'
-    default: return 'bg-slate-100 text-slate-700'
-  }
+	switch (sector) {
+		case "Health":
+			return "bg-rose-50 text-rose-600"
+		case "Education":
+			return "bg-purple-50 text-purple-600"
+		case "WASH":
+			return "bg-sky-50 text-sky-600"
+		case "Livelihoods":
+			return "bg-emerald-50 text-emerald-600"
+		case "Disaster Relief":
+			return "bg-amber-50 text-amber-700"
+		default:
+			return "bg-slate-100 text-slate-700"
+	}
 }
 
 function getSectorIcon(sector) {
-  return {
-    render() {
-      if (sector === 'Health') {
-        return h('svg', { fill: 'currentColor', viewBox: '0 0 20 20' }, [
-          h('path', { 'fill-rule': 'evenodd', d: 'M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z', 'clip-rule': 'evenodd' })
-        ])
-      }
-      if (sector === 'Education') {
-        return h('svg', { fill: 'none', stroke: 'currentColor', 'stroke-width': '2', viewBox: '0 0 24 24' }, [
-          h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M12 14l9-5-9-5-9 5 9 5z' }),
-          h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z' })
-        ])
-      }
-      if (sector === 'WASH') {
-        return h('svg', { fill: 'currentColor', viewBox: '0 0 20 20' }, [
-          h('path', { 'fill-rule': 'evenodd', d: 'M10 2a1 1 0 01.832.445l4.83 7.245A6 6 0 114.338 9.69L9.168 2.445A1 1 0 0110 2z', 'clip-rule': 'evenodd' })
-        ])
-      }
-      if (sector === 'Livelihoods') {
-        return h('svg', { fill: 'none', stroke: 'currentColor', 'stroke-width': '2', viewBox: '0 0 24 24' }, [
-          h('path', { 'stroke-linecap': 'round', 'stroke-linejoin': 'round', d: 'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z' })
-        ])
-      }
-      if (sector === 'Disaster Relief') {
-        return h('svg', { fill: 'currentColor', viewBox: '0 0 20 20' }, [
-          h('path', { 'fill-rule': 'evenodd', d: 'M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z', 'clip-rule': 'evenodd' })
-        ])
-      }
-      return h('svg', { fill: 'currentColor', viewBox: '0 0 20 20' }, [
-        h('path', { d: 'M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z' }),
-        h('path', { 'fill-rule': 'evenodd', d: 'M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9z' })
-      ])
-    }
-  }
+	return {
+		render() {
+			if (sector === "Health") {
+				return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
+					h("path", {
+						"fill-rule": "evenodd",
+						d: "M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z",
+						"clip-rule": "evenodd",
+					}),
+				])
+			}
+			if (sector === "Education") {
+				return h(
+					"svg",
+					{
+						fill: "none",
+						stroke: "currentColor",
+						"stroke-width": "2",
+						viewBox: "0 0 24 24",
+					},
+					[
+						h("path", {
+							"stroke-linecap": "round",
+							"stroke-linejoin": "round",
+							d: "M12 14l9-5-9-5-9 5 9 5z",
+						}),
+						h("path", {
+							"stroke-linecap": "round",
+							"stroke-linejoin": "round",
+							d: "M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z",
+						}),
+					],
+				)
+			}
+			if (sector === "WASH") {
+				return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
+					h("path", {
+						"fill-rule": "evenodd",
+						d: "M10 2a1 1 0 01.832.445l4.83 7.245A6 6 0 114.338 9.69L9.168 2.445A1 1 0 0110 2z",
+						"clip-rule": "evenodd",
+					}),
+				])
+			}
+			if (sector === "Livelihoods") {
+				return h(
+					"svg",
+					{
+						fill: "none",
+						stroke: "currentColor",
+						"stroke-width": "2",
+						viewBox: "0 0 24 24",
+					},
+					[
+						h("path", {
+							"stroke-linecap": "round",
+							"stroke-linejoin": "round",
+							d: "M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z",
+						}),
+					],
+				)
+			}
+			if (sector === "Disaster Relief") {
+				return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
+					h("path", {
+						"fill-rule": "evenodd",
+						d: "M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z",
+						"clip-rule": "evenodd",
+					}),
+				])
+			}
+			return h("svg", { fill: "currentColor", viewBox: "0 0 20 20" }, [
+				h("path", { d: "M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z" }),
+				h("path", {
+					"fill-rule": "evenodd",
+					d: "M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9z",
+				}),
+			])
+		},
+	}
 }
 </script>

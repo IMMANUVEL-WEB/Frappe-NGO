@@ -566,49 +566,29 @@ def get_portal_settings():
         "sidebar_color": "#1f2937",
         "login_portal_title": "Kindred",
         "login_portal_subtitle": "IMPACTSPHERE",
-        "login_status_badge": "Systems Operational",
-        "login_support_label": "Field Support & FAQ",
-        "login_support_url": "#",
-        "login_enable_language_selector": 1,
-        "login_hero_badge": "GLOBAL VOLUNTEER COMMUNITY",
+        "login_hero_badge": "GLOBAL NGO COMMUNITY",
         "login_hero_title": "Empowering communities, together.",
-        "login_hero_description": "Sign in to claim regional volunteer shifts, track community outcomes, and manage verified field contributions in real time.",
-        "login_stat1_value": "120k+",
-        "login_stat1_label": "HOURS LOGGED",
-        "login_stat2_value": "48",
-        "login_stat2_label": "CHAPTERS",
-        "login_stat3_value": "99.8%",
-        "login_stat3_label": "VERIFIED",
-        "login_testimonial_stars": 5,
-        "login_testimonial_quote": '"Every hour deployed across local food distributions and emergency shelters directly shifts the needle for our neighborhood families."',
-        "login_testimonial_author": "Elena Cruz",
-        "login_testimonial_role": "Pacific Chapter Deployment Lead",
-        "login_testimonial_avatar_initials": "EC",
+        "login_hero_description": "Support your community as a volunteer or donor, discover meaningful opportunities, and track your impact.",
+        "login_hero_image": "",
         "login_form_title": "Welcome back, changemaker",
         "login_form_subtitle": "Log in to access your deployment shifts, impact ledger, and verified hours.",
-        "login_show_google_login": 1,
-        "login_google_label": "Google Account",
-        "login_google_url": "#",
-        "login_show_sso_login": 1,
-        "login_sso_label": "NGO SSO Portal",
-        "login_sso_url": "#",
-        "login_divider_text": "OR SIGN IN WITH EMAIL",
         "login_email_label": "VOLUNTEER EMAIL ADDRESS",
         "login_email_placeholder": "you@example.com",
         "login_password_label": "PASSWORD",
         "login_forgot_password_label": "Forgot password?",
         "login_forgot_password_url": "#",
         "login_remember_me_label": "Remember this station for 30 days",
-        "login_security_badge_label": "Frappe Guard",
         "login_submit_button_label": "Sign In to Dashboard",
         "login_apply_button_label": "Apply to be a Volunteer",
         "login_apply_button_url": "/apply",
-        "login_show_badge_scan": 1,
-        "login_badge_scan_text": "At a physical deployment hub?",
-        "login_badge_scan_link_label": "Scan Volunteer Badge",
-        "login_badge_scan_url": "#",
-        "login_encryption_note": "Protected by 256-bit encryption",
-        "login_powered_by_note": "Secure connection powered by Frappe Framework",
+        "apply_hero_badge": "VOLUNTEER ENROLLMENT",
+        "apply_hero_title": "Step Forward. Create Lasting Impact.",
+        "apply_hero_description": "Join our dedicated volunteer community. Whether tutoring students, planting saplings, or coordinating local relief drives, your time drives tangible community change.",
+        "apply_hero_image": "",
+        "apply_form_title": "Apply to be a Volunteer",
+        "apply_form_subtitle": "Fields marked with an asterisk (*) are mandatory.",
+        "apply_submit_button_label": "Submit Application",
+        "apply_login_button_label": "Already registered? Sign In to Dashboard",
         "login_footer_copyright": "© 2026 Kindred Community Impact Network. All rights reserved.",
         "login_footer_links": "Terms of Service | Volunteer Privacy Notice | Accessibility",
     }
@@ -620,8 +600,10 @@ def get_portal_settings():
 
     if d.get("login_logo"):
         res["login_logo"] = d.get("login_logo")
-    if d.get("login_testimonial_avatar_image"):
-        res["login_testimonial_avatar_image"] = d.get("login_testimonial_avatar_image")
+    if d.get("login_hero_image"):
+        res["login_hero_image"] = d.get("login_hero_image")
+    if d.get("apply_hero_image"):
+        res["apply_hero_image"] = d.get("apply_hero_image")
 
     return res
 
@@ -631,7 +613,7 @@ def get_portal_settings():
 
 @frappe.whitelist(allow_guest=True)
 def get_all_skills():
-    return frappe.get_all("Volunteer Skill", pluck="name", ignore_permissions=True, order_by="name asc")
+    return frappe.get_all("Volunteer Skill", fields=["name", "skill_name"], ignore_permissions=True, order_by="name asc")
 
 @frappe.whitelist(allow_guest=True)
 def submit_application(applicant_name, email, phone=None, date_of_birth=None, gender=None, address=None, skills=None, availability=None, preferred_impact_area=None):

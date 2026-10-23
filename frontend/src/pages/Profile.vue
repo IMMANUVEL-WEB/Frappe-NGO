@@ -3,7 +3,7 @@
     <div class="max-w-7xl mx-auto space-y-6 pb-16">
       <!-- Top Breadcrumb & Header -->
       <div>
-        <nav class="flex items-center gap-1.5 text-xs text-gray-400 font-medium mb-1">
+        <nav class="flex items-center gap-1.5 text-xs text-black-400 font-medium mb-1">
           <router-link to="/" class="hover:text-emerald-700 transition-colors flex items-center gap-1">
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -11,13 +11,13 @@
             </svg>
           </router-link>
           <span>&rsaquo;</span>
-          <span class="text-gray-600">Profile Settings</span>
+          <span class="text-black-600">Profile Settings</span>
         </nav>
 
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-black-900 tracking-tight">
           My Profile
         </h1>
-        <p class="text-gray-500 text-sm mt-0.5">
+        <p class="text-black-500 text-sm mt-0.5">
           Manage your personal information, skills and account settings.
         </p>
       </div>
@@ -26,7 +26,7 @@
       <div v-if="profileResource.loading" class="flex justify-center py-16">
         <div class="flex flex-col items-center gap-3">
           <div class="w-10 h-10 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin"></div>
-          <p class="text-sm font-medium text-gray-500">Loading profile...</p>
+          <p class="text-sm font-medium text-black-500">Loading profile...</p>
         </div>
       </div>
 
@@ -37,7 +37,7 @@
       <!-- Real Profile Content -->
       <div v-else class="space-y-6">
         <!-- Top Hero Profile Card (faithful to design screenshot) -->
-        <div class="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden relative">
+        <div class="bg-white rounded-3xl border border-black-100 shadow-sm overflow-hidden relative">
           <!-- Top Emerald Botanical Banner with Wave -->
           <div class="h-32 sm:h-36 bg-gradient-to-r from-[#032e22] via-[#054434] to-[#075642] relative overflow-hidden">
             <!-- Translucent Organic Leaves Foliage on Right -->
@@ -70,7 +70,7 @@
                 
                 <!-- White Rounded Card Container for Avatar - Negative top margin ONLY on avatar -->
                 <div 
-                  class="relative -mt-16 sm:-mt-20 bg-white p-2 sm:p-2.5 rounded-3xl shadow-lg border border-gray-100 flex-shrink-0 group cursor-pointer z-10"
+                  class="relative -mt-16 sm:-mt-20 bg-white p-2 sm:p-2.5 rounded-3xl shadow-lg border border-black-100 flex-shrink-0 group cursor-pointer z-10"
                   @click="triggerPhotoUpload"
                 >
                   <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-amber-100 flex items-center justify-center">
@@ -107,10 +107,10 @@
 
                 <!-- Name, Email, Status & Joined Date - Sits completely on white background -->
                 <div class="text-center sm:text-left space-y-1 pb-1">
-                  <h2 class="text-2xl sm:text-3xl font-black text-gray-950 tracking-tight leading-snug">
+                  <h2 class="text-2xl sm:text-3xl font-black text-black-950 tracking-tight leading-snug">
                     {{ profileData.full_name || "Volunteer" }}
                   </h2>
-                  <p class="text-xs sm:text-sm font-medium text-gray-500">
+                  <p class="text-xs sm:text-sm font-medium text-black-500">
                     {{ profileData.email || "" }}
                   </p>
 
@@ -123,8 +123,8 @@
                     </span>
 
                     <!-- Joined Date with Calendar Icon -->
-                    <div v-if="profileData.joined_on" class="flex items-center gap-1.5 text-xs text-gray-500 font-medium">
-                      <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <div v-if="profileData.joined_on" class="flex items-center gap-1.5 text-xs text-black-500 font-medium">
+                      <svg class="w-4 h-4 text-black-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                         <line x1="16" y1="2" x2="16" y2="6"></line>
                         <line x1="8" y1="2" x2="8" y2="6"></line>
@@ -141,9 +141,9 @@
               <div class="flex justify-center sm:justify-end pb-1.5">
                 <button
                   @click="toggleEdit"
-                  class="px-4 py-2 bg-white border border-gray-200 hover:bg-gray-50 text-gray-800 text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-2"
+                  class="px-4 py-2 bg-white border border-black-200 hover:bg-black-50 text-black-800 text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-2"
                 >
-                  <svg class="w-3.5 h-3.5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                  <svg class="w-3.5 h-3.5 text-black-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                   </svg>
@@ -160,14 +160,14 @@
           <!-- LEFT COLUMN (8 cols): Personal Info & Security -->
           <div class="lg:col-span-8 space-y-6">
             <!-- Card 1: Personal Information -->
-            <div class="bg-white rounded-3xl border border-gray-100 p-6 sm:p-8 shadow-sm">
-              <div class="flex items-center justify-between mb-6 pb-2 border-b border-gray-100">
+            <div class="bg-white rounded-3xl border border-black-100 p-6 sm:p-8 shadow-sm">
+              <div class="flex items-center justify-between mb-6 pb-2 border-b border-black-100">
                 <div class="flex items-center gap-2.5">
                   <svg class="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                     <circle cx="12" cy="7" r="4"></circle>
                   </svg>
-                  <h3 class="text-base font-bold text-gray-900">
+                  <h3 class="text-base font-bold text-black-900">
                     Personal Information
                   </h3>
                 </div>
@@ -184,21 +184,21 @@
                 <!-- Row 1: Full Name & Email -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">Full Name</label>
+                    <label class="block text-xs font-bold text-black-700 mb-1.5">Full Name</label>
                     <input
                       type="text"
                       v-model="editForm.full_name"
                       :disabled="!isEditing"
-                      class="w-full px-4 py-2.5 bg-gray-50/60 border border-gray-200 rounded-xl text-xs sm:text-sm font-medium text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 disabled:opacity-80"
+                      class="w-full px-4 py-2.5 bg-black-50/60 border border-black-200 rounded-xl text-xs sm:text-sm font-medium text-black-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 disabled:opacity-80"
                     />
                   </div>
                   <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">Email Address</label>
+                    <label class="block text-xs font-bold text-black-700 mb-1.5">Email Address</label>
                     <input
                       type="email"
                       v-model="editForm.email"
                       disabled
-                      class="w-full px-4 py-2.5 bg-gray-50/60 border border-gray-200 rounded-xl text-xs sm:text-sm font-medium text-gray-500 cursor-not-allowed"
+                      class="w-full px-4 py-2.5 bg-black-50/60 border border-black-200 rounded-xl text-xs sm:text-sm font-medium text-black-500 cursor-not-allowed"
                     />
                   </div>
                 </div>
@@ -206,9 +206,9 @@
                 <!-- Row 2: Phone Number & Date of Birth -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">Phone Number</label>
+                    <label class="block text-xs font-bold text-black-700 mb-1.5">Phone Number</label>
                     <div class="relative">
-                      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-black-400">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                           <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                         </svg>
@@ -217,15 +217,15 @@
                         type="text"
                         v-model="editForm.phone"
                         :disabled="!isEditing"
-                        class="w-full pl-9 pr-4 py-2.5 bg-gray-50/60 border border-gray-200 rounded-xl text-xs sm:text-sm font-medium text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 disabled:opacity-80"
+                        class="w-full pl-9 pr-4 py-2.5 bg-black-50/60 border border-black-200 rounded-xl text-xs sm:text-sm font-medium text-black-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 disabled:opacity-80"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label class="block text-xs font-bold text-gray-700 mb-1.5">Date of Birth</label>
+                    <label class="block text-xs font-bold text-black-700 mb-1.5">Date of Birth</label>
                     <div class="relative">
-                      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-black-400">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                           <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                           <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -237,7 +237,7 @@
                         type="text"
                         v-model="editForm.date_of_birth"
                         :disabled="!isEditing"
-                        class="w-full pl-9 pr-4 py-2.5 bg-gray-50/60 border border-gray-200 rounded-xl text-xs sm:text-sm font-medium text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 disabled:opacity-80"
+                        class="w-full pl-9 pr-4 py-2.5 bg-black-50/60 border border-black-200 rounded-xl text-xs sm:text-sm font-medium text-black-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 disabled:opacity-80"
                       />
                     </div>
                   </div>
@@ -245,9 +245,9 @@
 
                 <!-- Row 3: Address -->
                 <div>
-                  <label class="block text-xs font-bold text-gray-700 mb-1.5">Address</label>
+                  <label class="block text-xs font-bold text-black-700 mb-1.5">Address</label>
                   <div class="relative">
-                    <div class="absolute top-3 left-3 flex items-center pointer-events-none text-gray-400">
+                    <div class="absolute top-3 left-3 flex items-center pointer-events-none text-black-400">
                       <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
@@ -257,16 +257,16 @@
                       type="text"
                       v-model="editForm.address"
                       :disabled="!isEditing"
-                      class="w-full pl-9 pr-4 py-2.5 bg-gray-50/60 border border-gray-200 rounded-xl text-xs sm:text-sm font-medium text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 disabled:opacity-80"
+                      class="w-full pl-9 pr-4 py-2.5 bg-black-50/60 border border-black-200 rounded-xl text-xs sm:text-sm font-medium text-black-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 disabled:opacity-80"
                     />
                   </div>
                 </div>
 
                 <!-- Row 4: Bio / About Me -->
                 <div>
-                  <label class="block text-xs font-bold text-gray-700 mb-1.5">Bio / About Me</label>
+                  <label class="block text-xs font-bold text-black-700 mb-1.5">Bio / About Me</label>
                   <div class="relative">
-                    <div class="absolute top-3 left-3 pointer-events-none text-gray-400">
+                    <div class="absolute top-3 left-3 pointer-events-none text-black-400">
                       <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                         <polyline points="14 2 14 8 20 8"></polyline>
@@ -277,10 +277,10 @@
                       v-model="editForm.bio"
                       :disabled="!isEditing"
                       maxlength="500"
-                      class="w-full pl-9 pr-4 py-2.5 bg-gray-50/60 border border-gray-200 rounded-xl text-xs sm:text-sm font-medium text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 disabled:opacity-80 resize-none"
+                      class="w-full pl-9 pr-4 py-2.5 bg-black-50/60 border border-black-200 rounded-xl text-xs sm:text-sm font-medium text-black-800 focus:outline-none focus:ring-2 focus:ring-emerald-600 disabled:opacity-80 resize-none"
                     ></textarea>
                   </div>
-                  <div class="text-right text-[11px] text-gray-400 mt-1">
+                  <div class="text-right text-[11px] text-black-400 mt-1">
                     {{ editForm.bio ? editForm.bio.length : 0 }}/500
                   </div>
                 </div>
@@ -299,14 +299,14 @@
             </div>
 
             <!-- Card 2: Account Security -->
-            <div class="bg-white rounded-3xl border border-gray-100 p-6 sm:p-8 shadow-sm">
-              <div class="flex items-center justify-between mb-4 pb-2 border-b border-gray-100">
+            <div class="bg-white rounded-3xl border border-black-100 p-6 sm:p-8 shadow-sm">
+              <div class="flex items-center justify-between mb-4 pb-2 border-b border-black-100">
                 <div class="flex items-center gap-2.5">
                   <svg class="w-5 h-5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
                   </svg>
-                  <h3 class="text-base font-bold text-gray-900">
+                  <h3 class="text-base font-bold text-black-900">
                     Account Security
                   </h3>
                 </div>
@@ -321,18 +321,18 @@
               <!-- Password Field Display -->
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div class="flex-1">
-                  <label class="block text-xs font-bold text-gray-700 mb-1.5">Current Password</label>
+                  <label class="block text-xs font-bold text-black-700 mb-1.5">Current Password</label>
                   <div class="relative">
                     <input
                       :type="showPassword ? 'text' : 'password'"
                       value="••••••••"
                       readonly
-                      class="w-full px-4 py-2.5 bg-gray-50/60 border border-gray-200 rounded-xl text-xs sm:text-sm font-medium text-gray-800 tracking-widest focus:outline-none"
+                      class="w-full px-4 py-2.5 bg-black-50/60 border border-black-200 rounded-xl text-xs sm:text-sm font-medium text-black-800 tracking-widest focus:outline-none"
                     />
                     <button
                       type="button"
                       @click="showPassword = !showPassword"
-                      class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                      class="absolute inset-y-0 right-0 pr-3 flex items-center text-black-400 hover:text-black-600"
                     >
                       <svg v-if="!showPassword" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
@@ -380,7 +380,7 @@
             <!-- Card 2: 2x2 Quick Stats Grid -->
             <div class="grid grid-cols-2 gap-3">
               <!-- Total Assignments -->
-              <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm flex items-start gap-3">
+              <div class="bg-white rounded-2xl p-4 border border-black-100 shadow-sm flex items-start gap-3">
                 <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
                   <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -389,34 +389,34 @@
                   </svg>
                 </div>
                 <div>
-                  <h4 class="text-xl font-black text-gray-900 leading-none">
+                  <h4 class="text-xl font-black text-black-900 leading-none">
                     {{ profileData.stats?.total_assignments || 0 }}
                   </h4>
-                  <p class="text-[11px] font-medium text-gray-500 mt-1">
+                  <p class="text-[11px] font-medium text-black-500 mt-1">
                     Total Assignments
                   </p>
                 </div>
               </div>
 
               <!-- Completed -->
-              <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm flex items-start gap-3">
+              <div class="bg-white rounded-2xl p-4 border border-black-100 shadow-sm flex items-start gap-3">
                 <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
                   <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <polyline points="20 6 9 17 4 12"></polyline>
                   </svg>
                 </div>
                 <div>
-                  <h4 class="text-xl font-black text-gray-900 leading-none">
+                  <h4 class="text-xl font-black text-black-900 leading-none">
                     {{ profileData.stats?.completed_assignments || 0 }}
                   </h4>
-                  <p class="text-[11px] font-medium text-gray-500 mt-1">
+                  <p class="text-[11px] font-medium text-black-500 mt-1">
                     Completed
                   </p>
                 </div>
               </div>
 
               <!-- Upcoming Shifts -->
-              <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm flex items-start gap-3">
+              <div class="bg-white rounded-2xl p-4 border border-black-100 shadow-sm flex items-start gap-3">
                 <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0">
                   <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="10"></circle>
@@ -424,17 +424,17 @@
                   </svg>
                 </div>
                 <div>
-                  <h4 class="text-xl font-black text-gray-900 leading-none">
+                  <h4 class="text-xl font-black text-black-900 leading-none">
                     {{ profileData.stats?.upcoming_shifts || 0 }}
                   </h4>
-                  <p class="text-[11px] font-medium text-gray-500 mt-1">
+                  <p class="text-[11px] font-medium text-black-500 mt-1">
                     Upcoming Shifts
                   </p>
                 </div>
               </div>
 
               <!-- Active Campaigns -->
-              <div class="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm flex items-start gap-3">
+              <div class="bg-white rounded-2xl p-4 border border-black-100 shadow-sm flex items-start gap-3">
                 <div class="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center flex-shrink-0">
                   <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -444,10 +444,10 @@
                   </svg>
                 </div>
                 <div>
-                  <h4 class="text-xl font-black text-gray-900 leading-none">
+                  <h4 class="text-xl font-black text-black-900 leading-none">
                     {{ profileData.stats?.active_campaigns || 0 }}
                   </h4>
-                  <p class="text-[11px] font-medium text-gray-500 mt-1">
+                  <p class="text-[11px] font-medium text-black-500 mt-1">
                     Active Campaigns
                   </p>
                 </div>
@@ -455,13 +455,13 @@
             </div>
 
             <!-- Card 3: Your Skills -->
-            <div class="bg-white rounded-3xl border border-gray-100 p-6 shadow-sm">
-              <div class="flex items-center justify-between mb-4 pb-2 border-b border-gray-100">
+            <div class="bg-white rounded-3xl border border-black-100 p-6 shadow-sm">
+              <div class="flex items-center justify-between mb-4 pb-2 border-b border-black-100">
                 <div class="flex items-center gap-2">
                   <svg class="w-5 h-5 text-amber-500" viewBox="0 0 24 24" fill="currentColor">
                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                   </svg>
-                  <h3 class="text-base font-bold text-gray-900">Your Skills</h3>
+                  <h3 class="text-base font-bold text-black-900">Your Skills</h3>
                 </div>
               </div>
 
@@ -485,10 +485,10 @@
                       </svg>
                     </div>
                     <div>
-                      <h5 class="text-xs font-bold text-gray-900 leading-tight">
+                      <h5 class="text-xs font-bold text-black-900 leading-tight">
                         {{ skill.skill }}
                       </h5>
-                      <p class="text-[10px] font-semibold text-gray-500 mt-0.5">
+                      <p class="text-[10px] font-semibold text-black-500 mt-0.5">
                         {{ skill.proficiency || "Intermediate" }}
                       </p>
                     </div>
@@ -496,7 +496,7 @@
                 </div>
               </div>
 
-              <div v-else class="text-xs text-gray-400 py-4 text-center">
+              <div v-else class="text-xs text-black-400 py-4 text-center">
                 No skills listed on your volunteer profile yet.
               </div>
             </div>
@@ -513,7 +513,7 @@
       <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
         <button
           @click="showPasswordModal = false"
-          class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 p-1.5 rounded-full hover:bg-gray-100"
+          class="absolute top-5 right-5 text-black-400 hover:text-black-600 p-1.5 rounded-full hover:bg-black-100"
         >
           <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -521,29 +521,29 @@
           </svg>
         </button>
 
-        <h3 class="text-lg font-bold text-gray-900 mb-4">Change Password</h3>
+        <h3 class="text-lg font-bold text-black-900 mb-4">Change Password</h3>
 
         <div class="space-y-4">
           <div>
-            <label class="block text-xs font-bold text-gray-700 mb-1">Current Password</label>
+            <label class="block text-xs font-bold text-black-700 mb-1">Current Password</label>
             <input
               type="password"
               v-model="pwdForm.old"
-              class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:ring-2 focus:ring-emerald-600"
+              class="w-full px-4 py-2 bg-black-50 border border-black-200 rounded-xl text-xs focus:ring-2 focus:ring-emerald-600"
             />
           </div>
           <div>
-            <label class="block text-xs font-bold text-gray-700 mb-1">New Password</label>
+            <label class="block text-xs font-bold text-black-700 mb-1">New Password</label>
             <input
               type="password"
               v-model="pwdForm.new"
-              class="w-full px-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:ring-2 focus:ring-emerald-600"
+              class="w-full px-4 py-2 bg-black-50 border border-black-200 rounded-xl text-xs focus:ring-2 focus:ring-emerald-600"
             />
           </div>
           <div class="flex justify-end gap-2 pt-2">
             <button
               @click="showPasswordModal = false"
-              class="px-4 py-2 text-xs font-bold text-gray-600 hover:bg-gray-100 rounded-xl"
+              class="px-4 py-2 text-xs font-bold text-black-600 hover:bg-black-100 rounded-xl"
             >
               Cancel
             </button>
@@ -557,12 +557,134 @@
         </div>
       </div>
     </div>
+
+    <!-- Beautiful Alert / Notification Modal -->
+    <div
+      v-if="alertModal.show"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in"
+      @click.self="closeAlert"
+    >
+      <div
+        class="bg-white rounded-3xl max-w-sm sm:max-w-md w-full p-6 sm:p-7 shadow-2xl relative border border-gray-100 transform transition-all animate-in fade-in zoom-in-95 duration-150"
+      >
+        <button
+          @click="closeAlert"
+          class="absolute top-5 right-5 text-gray-400 hover:text-gray-600 p-1.5 rounded-full hover:bg-gray-100 transition"
+          title="Close"
+        >
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+
+        <div class="flex items-start gap-4">
+          <!-- Icon based on alert type -->
+          <div
+            class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 shadow-sm"
+            :class="{
+              'bg-emerald-100 text-emerald-700': alertModal.type === 'success',
+              'bg-red-100 text-red-600': alertModal.type === 'error',
+              'bg-amber-100 text-amber-600': alertModal.type === 'warning',
+              'bg-blue-100 text-blue-600': alertModal.type === 'info',
+            }"
+          >
+            <!-- Success Icon -->
+            <svg
+              v-if="alertModal.type === 'success'"
+              class="w-6 h-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <!-- Error Icon -->
+            <svg
+              v-else-if="alertModal.type === 'error'"
+              class="w-6 h-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="15" y1="9" x2="9" y2="15" />
+              <line x1="9" y1="9" x2="15" y2="15" />
+            </svg>
+            <!-- Warning Icon -->
+            <svg
+              v-else-if="alertModal.type === 'warning'"
+              class="w-6 h-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z" />
+              <line x1="12" y1="9" x2="12" y2="13" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+            <!-- Info Icon -->
+            <svg
+              v-else
+              class="w-6 h-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+          </div>
+
+          <!-- Title & Message -->
+          <div class="flex-1 pr-3 pt-0.5">
+            <h3 class="text-base sm:text-lg font-bold text-gray-900 leading-snug">
+              {{ alertModal.title }}
+            </h3>
+            <p class="mt-1.5 text-xs sm:text-sm text-gray-600 leading-relaxed break-words whitespace-pre-line">
+              {{ alertModal.message }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Confirm Button -->
+        <div class="mt-6 flex justify-end">
+          <button
+            type="button"
+            @click="closeAlert"
+            class="px-5 py-2.5 text-xs font-bold rounded-xl transition shadow-sm text-white"
+            :class="{
+              'bg-[#064e3b] hover:bg-[#043226] shadow-emerald-900/10': alertModal.type === 'success',
+              'bg-red-600 hover:bg-red-700 shadow-red-600/10': alertModal.type === 'error',
+              'bg-amber-600 hover:bg-amber-700 shadow-amber-600/10': alertModal.type === 'warning',
+              'bg-blue-600 hover:bg-blue-700 shadow-blue-600/10': alertModal.type === 'info',
+            }"
+          >
+            {{ alertModal.confirmText || 'Got it' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
   </VolunteerLayout>
 </template>
 
 <script setup>
 import { createResource } from "frappe-ui"
-import { ref, computed } from "vue"
+import { computed, ref, onMounted, onUnmounted } from "vue"
 import VolunteerLayout from "../components/VolunteerLayout.vue"
 
 const isEditing = ref(false)
@@ -571,189 +693,292 @@ const showPasswordModal = ref(false)
 const showPassword = ref(false)
 const fileInput = ref(null)
 
+const alertModal = ref({
+	show: false,
+	title: "",
+	message: "",
+	type: "info",
+	confirmText: "Got it",
+	onConfirm: null,
+})
+
+function cleanServerMessage(raw) {
+	if (!raw) return ""
+	let msg = String(raw)
+	if (msg.includes("[") && msg.includes("message")) {
+		try {
+			const parsed = JSON.parse(msg)
+			if (Array.isArray(parsed) && parsed[0]) {
+				const inner = typeof parsed[0] === "string" ? JSON.parse(parsed[0]) : parsed[0]
+				if (inner && inner.message) return inner.message
+			}
+		} catch (e) {
+			// ignore and clean tags
+		}
+	}
+	// Strip any html tags
+	return msg.replace(/<[^>]*>/g, "").trim()
+}
+
+function showAlert(message, type = "info", title = null) {
+	const defaultTitles = {
+		success: "Success",
+		error: "Error Occurred",
+		warning: "Attention",
+		info: "Notice",
+	}
+
+	const cleaned = cleanServerMessage(message)
+	alertModal.value = {
+		show: true,
+		title: title || defaultTitles[type] || "Notice",
+		message: cleaned || "An unexpected notice occurred.",
+		type,
+		confirmText: type === "success" ? "Continue" : "Got it",
+	}
+}
+
+function closeAlert() {
+	alertModal.value.show = false
+	if (typeof alertModal.value.onConfirm === "function") {
+		alertModal.value.onConfirm()
+	}
+}
+
+// Override local alert calls
+const alert = (msg) => showAlert(msg, "info", "Notice")
+
+function handleGlobalKeydown(e) {
+	if (e.key === "Escape") {
+		if (alertModal.value.show) closeAlert()
+		if (showPasswordModal.value) showPasswordModal.value = false
+	}
+}
+
+onMounted(() => {
+	window.addEventListener("keydown", handleGlobalKeydown)
+})
+
+onUnmounted(() => {
+	window.removeEventListener("keydown", handleGlobalKeydown)
+})
+
+
 const pwdForm = ref({
-  old: "",
-  new: "",
+	old: "",
+	new: "",
 })
 
 const editForm = ref({
-  full_name: "",
-  email: "",
-  phone: "",
-  date_of_birth: "",
-  address: "",
-  bio: "",
+	full_name: "",
+	email: "",
+	phone: "",
+	date_of_birth: "",
+	address: "",
+	bio: "",
 })
 
 // Backend profile resource
 const profileResource = createResource({
-  url: "ngo.api.volunteer.my_profile",
-  method: "GET",
-  auto: true,
-  onSuccess(data) {
-    if (data) {
-      editForm.value.full_name = data.full_name || ""
-      editForm.value.email = data.email || ""
-      editForm.value.phone = data.phone || ""
-      editForm.value.address = data.address || ""
-      editForm.value.bio = data.bio || ""
-      if (data.date_of_birth) {
-        editForm.value.date_of_birth = formatDateOfBirth(data.date_of_birth)
-      }
-    }
-  },
+	url: "ngo.api.volunteer.my_profile",
+	method: "GET",
+	auto: true,
+	onSuccess(data) {
+		if (data) {
+			editForm.value.full_name = data.full_name || ""
+			editForm.value.email = data.email || ""
+			editForm.value.phone = data.phone || ""
+			editForm.value.address = data.address || ""
+			editForm.value.bio = data.bio || ""
+			if (data.date_of_birth) {
+				editForm.value.date_of_birth = formatDateOfBirth(data.date_of_birth)
+			}
+		}
+	},
 })
 
 const profileData = computed(() => {
-  return profileResource.data || {}
+	return profileResource.data || {}
 })
 
 const skillsList = computed(() => {
-  if (profileResource.data && Array.isArray(profileResource.data.skills)) {
-    return profileResource.data.skills
-  }
-  return []
+	if (profileResource.data && Array.isArray(profileResource.data.skills)) {
+		return profileResource.data.skills
+	}
+	return []
 })
 
 function getSkillCardBg(idx) {
-  if (idx % 3 === 0) return "bg-emerald-50/70 border border-emerald-100/80"
-  if (idx % 3 === 1) return "bg-amber-50/70 border border-amber-100/80"
-  return "bg-blue-50/70 border border-blue-100/80"
+	if (idx % 3 === 0) return "bg-emerald-50/70 border border-emerald-100/80"
+	if (idx % 3 === 1) return "bg-amber-50/70 border border-amber-100/80"
+	return "bg-blue-50/70 border border-blue-100/80"
 }
 
 function getSkillIconBg(idx) {
-  if (idx % 3 === 0) return "bg-emerald-100"
-  if (idx % 3 === 1) return "bg-amber-100"
-  return "bg-blue-100"
+	if (idx % 3 === 0) return "bg-emerald-100"
+	if (idx % 3 === 1) return "bg-amber-100"
+	return "bg-blue-100"
 }
 
 function formatJoinedDate(dateStr) {
-  if (!dateStr) return ""
-  const d = new Date(dateStr)
-  return d.toLocaleDateString("en-US", { month: "long", year: "numeric" })
+	if (!dateStr) return ""
+	const d = new Date(dateStr)
+	return d.toLocaleDateString("en-US", { month: "long", year: "numeric" })
 }
 
 function formatDateOfBirth(dateStr) {
-  if (!dateStr) return ""
-  const d = new Date(dateStr)
-  return d.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  })
+	if (!dateStr) return ""
+	const d = new Date(dateStr)
+	return d.toLocaleDateString("en-GB", {
+		day: "numeric",
+		month: "long",
+		year: "numeric",
+	})
 }
 
 function toggleEdit() {
-  isEditing.value = !isEditing.value
+	isEditing.value = !isEditing.value
 }
 
 function triggerPhotoUpload() {
-  if (fileInput.value) {
-    fileInput.value.click()
-  }
+	if (fileInput.value) {
+		fileInput.value.click()
+	}
 }
 
 function getCsrfToken() {
-  return window.csrf_token || (window.frappe ? window.frappe.csrf_token : "") || ""
+	return (
+		window.csrf_token || (window.frappe ? window.frappe.csrf_token : "") || ""
+	)
 }
 
 async function handlePhotoUpload(event) {
-  const file = event.target.files[0]
-  if (!file) return
+	const file = event.target.files[0]
+	if (!file) return
 
-  const formData = new FormData()
-  formData.append("file", file)
+	const formData = new FormData()
+	formData.append("file", file)
 
-  const csrf = getCsrfToken()
-  try {
-    const res = await fetch("/api/method/ngo.api.volunteer.upload_profile_image", {
-      method: "POST",
-      headers: {
-        ...(csrf && { "X-Frappe-CSRF-Token": csrf }),
-      },
-      body: formData,
-    })
-    const data = await res.json()
-    if (data.message && data.message.file_url) {
-      const fileUrl = data.message.file_url
-      await profileResource.fetch()
-      window.dispatchEvent(new CustomEvent('volunteer-image-updated', { detail: { image: fileUrl } }))
-    } else if (data.exc) {
-      alert("Upload failed: " + (data._server_messages || "Could not upload image"))
-    }
-  } catch (err) {
-    console.error("Photo upload error:", err)
-    alert("Could not upload photo. Please try again.")
-  } finally {
-    if (event.target) event.target.value = ""
-  }
+	const csrf = getCsrfToken()
+	try {
+		const res = await fetch(
+			"/api/method/ngo.api.volunteer.upload_profile_image",
+			{
+				method: "POST",
+				headers: {
+					...(csrf && { "X-Frappe-CSRF-Token": csrf }),
+				},
+				body: formData,
+			},
+		)
+		const data = await res.json()
+		if (data.message && data.message.file_url) {
+			const fileUrl = data.message.file_url
+			await profileResource.fetch()
+			window.dispatchEvent(
+				new CustomEvent("volunteer-image-updated", {
+					detail: { image: fileUrl },
+				}),
+			)
+			showAlert(
+				"Your profile picture has been updated successfully!",
+				"success",
+				"Photo Updated",
+			)
+		} else if (data.exc) {
+			showAlert(
+				data._server_messages || "Could not upload image. Please check file format and size.",
+				"error",
+				"Upload Failed",
+			)
+		}
+	} catch (err) {
+		console.error("Photo upload error:", err)
+		showAlert("Could not upload photo. Please try again.", "error", "Upload Error")
+	} finally {
+		if (event.target) event.target.value = ""
+	}
 }
 
 async function saveProfile() {
-  savingProfile.value = true
-  const csrf = getCsrfToken()
-  try {
-    const res = await fetch("/api/method/ngo.api.volunteer.update_my_profile", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...(csrf && { "X-Frappe-CSRF-Token": csrf }),
-      },
-      body: JSON.stringify({
-        full_name: editForm.value.full_name,
-        phone: editForm.value.phone,
-        date_of_birth: editForm.value.date_of_birth,
-        address: editForm.value.address,
-        bio: editForm.value.bio,
-      }),
-    })
-    const data = await res.json()
-    if (!data.exc) {
-      isEditing.value = false
-      await profileResource.fetch()
-      window.dispatchEvent(new CustomEvent('volunteer-profile-updated', {
-        detail: { full_name: editForm.value.full_name }
-      }))
-    } else {
-      alert("Error saving profile: " + (data._server_messages || "Failed to update profile"))
-    }
-  } catch (err) {
-    console.error("Save profile error:", err)
-    alert("An error occurred while saving profile changes.")
-  } finally {
-    savingProfile.value = false
-  }
+	savingProfile.value = true
+	const csrf = getCsrfToken()
+	try {
+		const res = await fetch("/api/method/ngo.api.volunteer.update_my_profile", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				...(csrf && { "X-Frappe-CSRF-Token": csrf }),
+			},
+			body: JSON.stringify({
+				full_name: editForm.value.full_name,
+				phone: editForm.value.phone,
+				date_of_birth: editForm.value.date_of_birth,
+				address: editForm.value.address,
+				bio: editForm.value.bio,
+			}),
+		})
+		const data = await res.json()
+		if (!data.exc) {
+			isEditing.value = false
+			await profileResource.fetch()
+			window.dispatchEvent(
+				new CustomEvent("volunteer-profile-updated", {
+					detail: { full_name: editForm.value.full_name },
+				}),
+			)
+			showAlert(
+				"Your profile changes have been saved successfully!",
+				"success",
+				"Profile Saved",
+			)
+		} else {
+			showAlert(
+				data._server_messages || "Failed to update profile. Please verify your entries.",
+				"error",
+				"Save Failed",
+			)
+		}
+	} catch (err) {
+		console.error("Save profile error:", err)
+		showAlert("An unexpected error occurred while saving profile changes.", "error", "Save Error")
+	} finally {
+		savingProfile.value = false
+	}
 }
 
 async function submitPasswordChange() {
-  if (!pwdForm.value.old || !pwdForm.value.new) {
-    alert("Please enter both current and new passwords")
-    return
-  }
-  const csrf = getCsrfToken()
-  try {
-    const res = await fetch("/api/method/frappe.core.doctype.user.user.update_password", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...(csrf && { "X-Frappe-CSRF-Token": csrf }),
-      },
-      body: JSON.stringify({
-        old_password: pwdForm.value.old,
-        new_password: pwdForm.value.new,
-      }),
-    })
-    const data = await res.json()
-    if (!data.exc) {
-      showPasswordModal.value = false
-      pwdForm.value.old = ""
-      pwdForm.value.new = ""
-      alert("Password updated successfully!")
-    } else {
-      alert("Could not update password. Please check your current password.")
-    }
-  } catch (err) {
-    alert("Could not update password. Please check your current password.")
-  }
+	if (!pwdForm.value.old || !pwdForm.value.new) {
+		showAlert("Please enter both your current and new passwords.", "warning", "Missing Fields")
+		return
+	}
+	const csrf = getCsrfToken()
+	try {
+		const res = await fetch(
+			"/api/method/frappe.core.doctype.user.user.update_password",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					...(csrf && { "X-Frappe-CSRF-Token": csrf }),
+				},
+				body: JSON.stringify({
+					old_password: pwdForm.value.old,
+					new_password: pwdForm.value.new,
+				}),
+			},
+		)
+		const data = await res.json()
+		if (!data.exc) {
+			showPasswordModal.value = false
+			pwdForm.value.old = ""
+			pwdForm.value.new = ""
+			showAlert("Your password has been updated successfully!", "success", "Password Updated")
+		} else {
+			showAlert("Could not update password. Please verify your current password.", "error", "Update Failed")
+		}
+	} catch (err) {
+		showAlert("Could not update password. Please verify your connection and try again.", "error", "Update Error")
+	}
 }
 </script>

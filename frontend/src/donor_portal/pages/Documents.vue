@@ -173,70 +173,71 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { computed, ref } from "vue"
 
 const searchQuery = ref("")
 const selectedType = ref("")
 
 const docs = ref([
-  {
-    title: "Clean Water Access Initiative MoU 2026",
-    code: "MOU-GI-2026-001",
-    type: "Grant Agreement",
-    linked: "Clean Water Access Initiative",
-    date: "05 Oct 2026",
-    url: "#"
-  },
-  {
-    title: "Education for Rural Children Grant Deed",
-    code: "MOU-GI-2026-002",
-    type: "Grant Agreement",
-    linked: "Quality Education for Rural Children",
-    date: "12 Sep 2026",
-    url: "#"
-  },
-  {
-    title: "Q3 2026 Utilisation Certificate (CA Signed)",
-    code: "UC-Q3-2026-WASH",
-    type: "Utilisation Certificate",
-    linked: "Clean Water Access Initiative",
-    date: "01 Oct 2026",
-    url: "#"
-  },
-  {
-    title: "Health & Wellness MoU & CapEx Schedule",
-    code: "MOU-GI-2026-003",
-    type: "Grant Agreement",
-    linked: "Community Health & Wellness Program",
-    date: "12 Oct 2026",
-    url: "#"
-  },
-  {
-    title: "Disaster Emergency Grant Sanction Order",
-    code: "SAN-GI-2026-004",
-    type: "Grant Agreement",
-    linked: "Disaster Relief Response",
-    date: "20 Sep 2026",
-    url: "#"
-  },
-  {
-    title: "FY 2025-26 Annual Statutory Audit Statement",
-    code: "AUD-STAT-2026",
-    type: "Audit Report",
-    linked: "All Active Initiatives",
-    date: "15 Aug 2026",
-    url: "#"
-  }
+	{
+		title: "Clean Water Access Initiative MoU 2026",
+		code: "MOU-GI-2026-001",
+		type: "Grant Agreement",
+		linked: "Clean Water Access Initiative",
+		date: "05 Oct 2026",
+		url: "#",
+	},
+	{
+		title: "Education for Rural Children Grant Deed",
+		code: "MOU-GI-2026-002",
+		type: "Grant Agreement",
+		linked: "Quality Education for Rural Children",
+		date: "12 Sep 2026",
+		url: "#",
+	},
+	{
+		title: "Q3 2026 Utilisation Certificate (CA Signed)",
+		code: "UC-Q3-2026-WASH",
+		type: "Utilisation Certificate",
+		linked: "Clean Water Access Initiative",
+		date: "01 Oct 2026",
+		url: "#",
+	},
+	{
+		title: "Health & Wellness MoU & CapEx Schedule",
+		code: "MOU-GI-2026-003",
+		type: "Grant Agreement",
+		linked: "Community Health & Wellness Program",
+		date: "12 Oct 2026",
+		url: "#",
+	},
+	{
+		title: "Disaster Emergency Grant Sanction Order",
+		code: "SAN-GI-2026-004",
+		type: "Grant Agreement",
+		linked: "Disaster Relief Response",
+		date: "20 Sep 2026",
+		url: "#",
+	},
+	{
+		title: "FY 2025-26 Annual Statutory Audit Statement",
+		code: "AUD-STAT-2026",
+		type: "Audit Report",
+		linked: "All Active Initiatives",
+		date: "15 Aug 2026",
+		url: "#",
+	},
 ])
 
 const filteredDocs = computed(() => {
-  return docs.value.filter(d => {
-    const matchSearch = !searchQuery.value ||
-      d.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      d.code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-      d.linked.toLowerCase().includes(searchQuery.value.toLowerCase())
-    const matchType = !selectedType.value || d.type === selectedType.value
-    return matchSearch && matchType
-  })
+	return docs.value.filter((d) => {
+		const matchSearch =
+			!searchQuery.value ||
+			d.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+			d.code.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+			d.linked.toLowerCase().includes(searchQuery.value.toLowerCase())
+		const matchType = !selectedType.value || d.type === selectedType.value
+		return matchSearch && matchType
+	})
 })
 </script>

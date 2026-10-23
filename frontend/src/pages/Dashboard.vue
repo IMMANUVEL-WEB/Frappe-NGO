@@ -7,21 +7,21 @@
       >
         <div>
           <h1
-            class="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight flex items-center gap-2"
+            class="text-2xl md:text-3xl font-extrabold text-red-900 tracking-tight flex items-center gap-2"
           >
             Welcome back{{ userName ? ", " + userName : "" }}!
             <span class="inline-block animate-wave origin-[70%_70%]">👋</span>
           </h1>
-          <p class="text-xs md:text-sm text-gray-500 font-normal mt-0.5">
+          <p class="text-xs md:text-sm text-red-500 font-normal mt-0.5">
             Your time makes a difference in the community.
           </p>
         </div>
 
         <div class="hidden md:block text-right">
-          <p class="text-xs md:text-sm font-semibold text-gray-700">
+          <p class="text-xs md:text-sm font-semibold text-red-700">
             {{ currentDate }}
           </p>
-          <p class="text-xs italic text-gray-400 mt-0.5 font-serif">
+          <p class="text-xs italic text-red-400 mt-0.5 font-serif">
             "People helping people creates a stronger tomorrow."
           </p>
         </div>
@@ -135,7 +135,7 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
         <!-- Card 1: Total Impact -->
         <div
-          class="bg-white rounded-2xl p-5 border border-gray-100/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+          class="bg-white rounded-2xl p-5 border border-red-100/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
         >
           <div class="flex items-start justify-between">
             <div
@@ -157,12 +157,12 @@
             </div>
             <div class="text-right">
               <p
-                class="text-[11px] uppercase tracking-wider font-bold text-gray-500"
+                class="text-[11px] uppercase tracking-wider font-bold text-red-500"
               >
-                Total Impact
+                Total Hours Spent
               </p>
               <svg
-                class="text-gray-300 ml-auto mt-1"
+                class="text-red-300 ml-auto mt-1"
                 width="14"
                 height="14"
                 viewBox="0 0 24 24"
@@ -177,7 +177,7 @@
 
           <div class="my-3">
             <div
-              class="text-2xl md:text-3xl font-black text-gray-900 tracking-tight"
+              class="text-2xl md:text-3xl font-black text-red-900 tracking-tight"
             >
               {{ metrics.total_hours }} hrs
             </div>
@@ -219,7 +219,7 @@
 
         <!-- Card 2: This Month -->
         <div
-          class="bg-white rounded-2xl p-5 border border-gray-100/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+          class="bg-white rounded-2xl p-5 border border-red-100/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
         >
           <div class="flex items-start justify-between">
             <div
@@ -243,12 +243,12 @@
             </div>
             <div class="text-right">
               <p
-                class="text-[11px] uppercase tracking-wider font-bold text-gray-500"
+                class="text-[11px] uppercase tracking-wider font-bold text-red-500"
               >
-                This Month
+                Total Hours This Month
               </p>
               <svg
-                class="text-gray-300 ml-auto mt-1"
+                class="text-red-300 ml-auto mt-1"
                 width="14"
                 height="14"
                 viewBox="0 0 24 24"
@@ -263,7 +263,7 @@
 
           <div class="my-3">
             <div
-              class="text-2xl md:text-3xl font-black text-gray-900 tracking-tight"
+              class="text-2xl md:text-3xl font-black text-red-900 tracking-tight"
             >
               {{ metrics.hours_this_month }} hrs
             </div>
@@ -305,7 +305,7 @@
 
         <!-- Card 3: Active Assignments -->
         <div
-          class="bg-white rounded-2xl p-5 border border-gray-100/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+          class="bg-white rounded-2xl p-5 border border-red-100/90 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
         >
           <div class="flex items-start justify-between">
             <div
@@ -331,7 +331,7 @@
             </div>
             <div class="text-right">
               <p
-                class="text-[11px] uppercase tracking-wider font-bold text-gray-500"
+                class="text-[11px] uppercase tracking-wider font-bold text-red-500"
               >
                 Active Assignments
               </p>
@@ -354,14 +354,14 @@
 
           <div class="my-3">
             <div
-              class="text-2xl md:text-3xl font-black text-gray-900 tracking-tight"
+              class="text-2xl md:text-3xl font-black text-red-900 tracking-tight"
             >
               {{ metrics.active_assignments }}
               {{ metrics.active_assignments === 1 ? "campaign" : "campaigns" }}
             </div>
           </div>
 
-          <p class="text-xs text-gray-400 font-medium">
+          <p class="text-xs text-red-400 font-medium">
             {{
               metrics.active_assignments > 0
                 ? `You are assigned to ${
@@ -379,14 +379,14 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <!-- Left Column: Next Upcoming Shift (7 Cols) -->
         <div
-          class="lg:col-span-7 bg-white rounded-2xl p-6 border border-gray-100 shadow-sm flex flex-col justify-between"
+          class="lg:col-span-7 bg-white rounded-2xl p-6 border border-red-100 shadow-sm flex flex-col justify-between"
         >
           <!-- Header -->
           <div
-            class="flex items-center justify-between pb-4 border-b border-gray-100/80"
+            class="flex items-center justify-between pb-4 border-b border-red-100/80"
           >
             <h3
-              class="text-base md:text-lg font-bold text-gray-900 flex items-center gap-2.5"
+              class="text-base md:text-lg font-bold text-red-900 flex items-center gap-2.5"
             >
               <svg
                 class="text-emerald-700"
@@ -421,7 +421,7 @@
           >
             <!-- Classroom Tutoring Image (5 cols) -->
             <div
-              class="md:col-span-5 h-44 rounded-xl overflow-hidden shadow-sm border border-gray-100 relative group"
+              class="md:col-span-5 h-44 rounded-xl overflow-hidden shadow-sm border border-red-100 relative group"
             >
               <img
                 src="/volunteer_tutoring.jpg"
@@ -440,18 +440,18 @@
                 Confirmed
               </span>
 
-              <h4 class="text-base font-extrabold text-gray-950 leading-snug">
+              <h4 class="text-base font-extrabold text-red-950 leading-snug">
                 {{ nextShift.opportunity_title }}
               </h4>
 
               <!-- Meta List -->
-              <div class="space-y-1.5 text-xs text-gray-600 font-medium">
+              <div class="space-y-1.5 text-xs text-red-600 font-medium">
                 <div
                   v-if="nextShift.date_label"
                   class="flex items-center gap-2"
                 >
                   <svg
-                    class="text-gray-400 flex-shrink-0"
+                    class="text-red-400 flex-shrink-0"
                     width="14"
                     height="14"
                     viewBox="0 0 24 24"
@@ -479,7 +479,7 @@
                   class="flex items-center gap-2"
                 >
                   <svg
-                    class="text-gray-400 flex-shrink-0"
+                    class="text-red-400 flex-shrink-0"
                     width="14"
                     height="14"
                     viewBox="0 0 24 24"
@@ -495,7 +495,7 @@
 
                 <div v-if="nextShift.location" class="flex items-center gap-2">
                   <svg
-                    class="text-gray-400 flex-shrink-0"
+                    class="text-red-400 flex-shrink-0"
                     width="14"
                     height="14"
                     viewBox="0 0 24 24"
@@ -513,7 +513,7 @@
 
                 <div v-if="nextShift.project" class="flex items-center gap-2">
                   <svg
-                    class="text-gray-400 flex-shrink-0"
+                    class="text-red-400 flex-shrink-0"
                     width="14"
                     height="14"
                     viewBox="0 0 24 24"
@@ -564,10 +564,10 @@
                 <line x1="3" y1="10" x2="21" y2="10"></line>
               </svg>
             </div>
-            <h4 class="text-sm font-bold text-gray-800">
+            <h4 class="text-sm font-bold text-red-800">
               No upcoming shifts scheduled
             </h4>
-            <p class="text-xs text-gray-500 max-w-sm mt-1">
+            <p class="text-xs text-red-500 max-w-sm mt-1">
               Explore open volunteer opportunities to register for your next
               shift.
             </p>
@@ -583,14 +583,12 @@
         <!-- Right Column: 2 Stacked Cards (5 Cols) -->
         <div class="lg:col-span-5 space-y-6">
           <!-- Card 1: Annual Impact Goal -->
-          <div
-            class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm"
-          >
+          <div class="bg-white rounded-2xl p-6 border border-red-100 shadow-sm">
             <div
-              class="flex items-center justify-between pb-3 border-b border-gray-100/80"
+              class="flex items-center justify-between pb-3 border-b border-red-100/80"
             >
               <h3
-                class="text-sm md:text-base font-bold text-gray-900 flex items-center gap-2"
+                class="text-sm md:text-base font-bold text-red-900 flex items-center gap-2"
               >
                 <svg
                   class="text-emerald-700"
@@ -625,7 +623,7 @@
                 <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                   <!-- Background Trail -->
                   <path
-                    class="text-gray-100"
+                    class="text-red-100"
                     stroke-width="3.5"
                     stroke="currentColor"
                     fill="none"
@@ -643,7 +641,7 @@
                   />
                 </svg>
                 <div class="absolute inset-0 flex items-center justify-center">
-                  <span class="text-base font-black text-gray-900"
+                  <span class="text-base font-black text-red-900"
                     >{{ goalPercentage }}%</span
                   >
                 </div>
@@ -651,17 +649,15 @@
 
               <!-- Gauge Details -->
               <div class="flex-1 space-y-1.5 min-w-0">
-                <div class="text-base font-black text-gray-900 leading-tight">
+                <div class="text-base font-black text-red-900 leading-tight">
                   {{ metrics.total_hours }} of {{ targetGoalHours }} hours
                 </div>
-                <p class="text-xs text-gray-500 font-medium">
+                <p class="text-xs text-red-500 font-medium">
                   Next milestone: {{ targetGoalHours }} hours
                 </p>
 
                 <!-- Linear Progress -->
-                <div
-                  class="w-full bg-gray-100 rounded-full h-2 overflow-hidden"
-                >
+                <div class="w-full bg-red-100 rounded-full h-2 overflow-hidden">
                   <div
                     class="bg-emerald-600 h-2 rounded-full transition-all duration-500"
                     :style="{ width: `${goalPercentage}%` }"
@@ -684,14 +680,12 @@
           </div>
 
           <!-- Card 2: Volunteer Resources -->
-          <div
-            class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm"
-          >
+          <div class="bg-white rounded-2xl p-6 border border-red-100 shadow-sm">
             <div
-              class="flex items-center justify-between pb-3 border-b border-gray-100/80"
+              class="flex items-center justify-between pb-3 border-b border-red-100/80"
             >
               <h3
-                class="text-sm md:text-base font-bold text-gray-900 flex items-center gap-2"
+                class="text-sm md:text-base font-bold text-red-900 flex items-center gap-2"
               >
                 <svg
                   class="text-emerald-700"
@@ -723,7 +717,7 @@
               <!-- Resource Item 1 -->
               <router-link
                 to="/profile"
-                class="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 border border-gray-100 transition-all group"
+                class="flex items-center justify-between p-3 rounded-xl hover:bg-red-50 border border-red-100 transition-all group"
               >
                 <div class="flex items-center gap-3">
                   <div
@@ -745,17 +739,17 @@
                   </div>
                   <div>
                     <h5
-                      class="text-xs font-bold text-gray-900 group-hover:text-emerald-800 transition-colors"
+                      class="text-xs font-bold text-red-900 group-hover:text-emerald-800 transition-colors"
                     >
                       Guidelines & Handbook
                     </h5>
-                    <p class="text-[11px] text-gray-500 font-medium">
+                    <p class="text-[11px] text-red-500 font-medium">
                       Learn about policies and best practices
                     </p>
                   </div>
                 </div>
                 <svg
-                  class="text-gray-400 group-hover:text-gray-600 group-hover:translate-x-0.5 transition-all"
+                  class="text-red-400 group-hover:text-red-600 group-hover:translate-x-0.5 transition-all"
                   width="14"
                   height="14"
                   viewBox="0 0 24 24"
@@ -770,7 +764,7 @@
               <!-- Resource Item 2 -->
               <router-link
                 to="/opportunities"
-                class="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 border border-gray-100 transition-all group"
+                class="flex items-center justify-between p-3 rounded-xl hover:bg-red-50 border border-red-100 transition-all group"
               >
                 <div class="flex items-center gap-3">
                   <div
@@ -794,17 +788,17 @@
                   </div>
                   <div>
                     <h5
-                      class="text-xs font-bold text-gray-900 group-hover:text-emerald-800 transition-colors"
+                      class="text-xs font-bold text-red-900 group-hover:text-emerald-800 transition-colors"
                     >
                       Training Materials
                     </h5>
-                    <p class="text-[11px] text-gray-500 font-medium">
+                    <p class="text-[11px] text-red-500 font-medium">
                       Build your skills as a volunteer
                     </p>
                   </div>
                 </div>
                 <svg
-                  class="text-gray-400 group-hover:text-gray-600 group-hover:translate-x-0.5 transition-all"
+                  class="text-red-400 group-hover:text-red-600 group-hover:translate-x-0.5 transition-all"
                   width="14"
                   height="14"
                   viewBox="0 0 24 24"
@@ -822,14 +816,14 @@
 
       <!-- Bottom Section: Recent Attendance Table -->
       <div
-        class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm overflow-hidden"
+        class="bg-white rounded-2xl p-6 border border-red-100 shadow-sm overflow-hidden"
       >
         <!-- Table Header -->
         <div
-          class="flex items-center justify-between pb-4 border-b border-gray-100/80 mb-2"
+          class="flex items-center justify-between pb-4 border-b border-red-100/80 mb-2"
         >
           <h3
-            class="text-base md:text-lg font-bold text-gray-900 flex items-center gap-2.5"
+            class="text-base md:text-lg font-bold text-red-900 flex items-center gap-2.5"
           >
             <svg
               class="text-emerald-700"
@@ -860,7 +854,7 @@
           <table class="w-full text-left text-xs">
             <thead>
               <tr
-                class="text-[11px] uppercase tracking-wider text-gray-400 font-bold border-b border-gray-100"
+                class="text-[11px] uppercase tracking-wider text-red-400 font-bold border-b border-red-100"
               >
                 <th class="py-3 px-3 w-10">#</th>
                 <th class="py-3 px-3">Activity / Assignment</th>
@@ -873,35 +867,35 @@
             </thead>
             <tbody
               v-if="attendanceRows && attendanceRows.length > 0"
-              class="divide-y divide-gray-50"
+              class="divide-y divide-red-50"
             >
               <tr
                 v-for="(row, idx) in attendanceRows"
                 :key="idx"
-                class="hover:bg-gray-50/70 transition-colors group"
+                class="hover:bg-red-50/70 transition-colors group"
               >
                 <!-- # -->
-                <td class="py-3.5 px-3 font-semibold text-gray-400">
+                <td class="py-3.5 px-3 font-semibold text-red-400">
                   {{ idx + 1 }}
                 </td>
 
                 <!-- Activity / Assignment -->
-                <td class="py-3.5 px-3 font-semibold text-gray-900">
+                <td class="py-3.5 px-3 font-semibold text-red-900">
                   {{ row.activity }}
                 </td>
 
                 <!-- Date -->
-                <td class="py-3.5 px-3 text-gray-600">
+                <td class="py-3.5 px-3 text-red-600">
                   {{ formatDate(row.date) }}
                 </td>
 
                 <!-- Hours -->
-                <td class="py-3.5 px-3 font-semibold text-gray-800">
+                <td class="py-3.5 px-3 font-semibold text-red-800">
                   {{ row.hours }}
                 </td>
 
                 <!-- Location -->
-                <td class="py-3.5 px-3 text-gray-600">
+                <td class="py-3.5 px-3 text-red-600">
                   {{ row.location || "-" }}
                 </td>
 
@@ -936,7 +930,7 @@
                 <td class="py-3.5 px-3 text-right">
                   <router-link
                     to="/attendance"
-                    class="text-gray-400 hover:text-emerald-700 p-1 rounded-md hover:bg-gray-100 transition-colors inline-block"
+                    class="text-red-400 hover:text-emerald-700 p-1 rounded-md hover:bg-red-100 transition-colors inline-block"
                   >
                     <svg
                       width="14"
@@ -956,11 +950,11 @@
             <!-- Empty Attendance State -->
             <tbody v-else>
               <tr>
-                <td colspan="7" class="py-10 text-center text-gray-400">
-                  <p class="font-medium text-xs text-gray-500">
+                <td colspan="7" class="py-10 text-center text-red-400">
+                  <p class="font-medium text-xs text-red-500">
                     No attendance records found yet
                   </p>
-                  <p class="text-[11px] text-gray-400 mt-1">
+                  <p class="text-[11px] text-red-400 mt-1">
                     Your approved shifts and logged volunteer hours will appear
                     here once submitted.
                   </p>
@@ -975,118 +969,118 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import VolunteerLayout from "../components/VolunteerLayout.vue";
+import { computed, onMounted, ref } from "vue"
+import VolunteerLayout from "../components/VolunteerLayout.vue"
 
-const userName = ref("");
-const currentDate = ref("");
-const targetGoalHours = ref(100);
+const userName = ref("")
+const currentDate = ref("")
+const targetGoalHours = ref(100)
 
 const metrics = ref({
-  total_hours: 0,
-  hours_this_month: 0,
-  active_assignments: 0,
-});
+	total_hours: 0,
+	hours_this_month: 0,
+	active_assignments: 0,
+})
 
-const nextShift = ref(null);
-const attendanceRows = ref([]);
+const nextShift = ref(null)
+const attendanceRows = ref([])
 
 const goalPercentage = computed(() => {
-  const hrs = Number(metrics.value.total_hours) || 0;
-  const target = Number(targetGoalHours.value) || 100;
-  return Math.min(100, Math.round((hrs / target) * 100));
-});
+	const hrs = Number(metrics.value.total_hours) || 0
+	const target = Number(targetGoalHours.value) || 100
+	return Math.min(100, Math.round((hrs / target) * 100))
+})
 
 function formatDate(dateStr) {
-  if (!dateStr || dateStr === "-") return "-";
-  try {
-    return new Date(dateStr).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-  } catch (e) {
-    return dateStr;
-  }
+	if (!dateStr || dateStr === "-") return "-"
+	try {
+		return new Date(dateStr).toLocaleDateString("en-US", {
+			month: "short",
+			day: "numeric",
+			year: "numeric",
+		})
+	} catch (e) {
+		return dateStr
+	}
 }
 
 onMounted(async () => {
-  // Current Date
-  try {
-    const now = new Date();
-    currentDate.value = now.toLocaleDateString("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  } catch (e) {}
+	// Current Date
+	try {
+		const now = new Date()
+		currentDate.value = now.toLocaleDateString("en-US", {
+			weekday: "long",
+			year: "numeric",
+			month: "long",
+			day: "numeric",
+		})
+	} catch (e) {}
 
-  // Fetch Real Dashboard Data for Current Volunteer
-  try {
-    const res = await fetch("/api/method/ngo.api.volunteer.my_dashboard");
-    const json = await res.json();
-    if (json.message) {
-      const d = json.message;
+	// Fetch Real Dashboard Data for Current Volunteer
+	try {
+		const res = await fetch("/api/method/ngo.api.volunteer.my_dashboard")
+		const json = await res.json()
+		if (json.message) {
+			const d = json.message
 
-      // User Name
-      if (d.first_name || d.volunteer_name) {
-        userName.value = d.first_name || d.volunteer_name;
-      }
+			// User Name
+			if (d.first_name || d.volunteer_name) {
+				userName.value = d.first_name || d.volunteer_name
+			}
 
-      // Real Metrics
-      metrics.value.total_hours = d.total_hours ?? 0;
-      metrics.value.hours_this_month = d.hours_this_month ?? 0;
-      metrics.value.active_assignments = d.active_assignments ?? 0;
+			// Real Metrics
+			metrics.value.total_hours = d.total_hours ?? 0
+			metrics.value.hours_this_month = d.hours_this_month ?? 0
+			metrics.value.active_assignments = d.active_assignments ?? 0
 
-      if (d.annual_goal) {
-        targetGoalHours.value = d.annual_goal;
-      }
+			if (d.annual_goal) {
+				targetGoalHours.value = d.annual_goal
+			}
 
-      // Real Next Shift
-      if (d.next_shift && d.next_shift.opportunity_title) {
-        const s = d.next_shift;
-        let dateLabel = "";
-        if (s.date) {
-          try {
-            dateLabel = new Date(s.date).toLocaleDateString("en-US", {
-              weekday: "short",
-              month: "short",
-              day: "numeric",
-              year: "numeric",
-            });
-          } catch (e) {
-            dateLabel = s.date;
-          }
-        }
+			// Real Next Shift
+			if (d.next_shift && d.next_shift.opportunity_title) {
+				const s = d.next_shift
+				let dateLabel = ""
+				if (s.date) {
+					try {
+						dateLabel = new Date(s.date).toLocaleDateString("en-US", {
+							weekday: "short",
+							month: "short",
+							day: "numeric",
+							year: "numeric",
+						})
+					} catch (e) {
+						dateLabel = s.date
+					}
+				}
 
-        let timeLabel = "";
-        if (s.start_time && s.end_time) {
-          const st = s.start_time.slice(0, 5);
-          const et = s.end_time.slice(0, 5);
-          timeLabel = `${st} - ${et}`;
-        }
+				let timeLabel = ""
+				if (s.start_time && s.end_time) {
+					const st = s.start_time.slice(0, 5)
+					const et = s.end_time.slice(0, 5)
+					timeLabel = `${st} - ${et}`
+				}
 
-        nextShift.value = {
-          opportunity_title: s.opportunity_title,
-          date_label: dateLabel,
-          time_label: timeLabel,
-          location: s.location || "",
-          project: s.project || "",
-        };
-      } else {
-        nextShift.value = null;
-      }
+				nextShift.value = {
+					opportunity_title: s.opportunity_title,
+					date_label: dateLabel,
+					time_label: timeLabel,
+					location: s.location || "",
+					project: s.project || "",
+				}
+			} else {
+				nextShift.value = null
+			}
 
-      // Real Attendance
-      if (Array.isArray(d.recent_attendances)) {
-        attendanceRows.value = d.recent_attendances;
-      }
-    }
-  } catch (err) {
-    console.error("Error fetching volunteer dashboard data:", err);
-  }
-});
+			// Real Attendance
+			if (Array.isArray(d.recent_attendances)) {
+				attendanceRows.value = d.recent_attendances
+			}
+		}
+	} catch (err) {
+		console.error("Error fetching volunteer dashboard data:", err)
+	}
+})
 </script>
 
 <style scoped>

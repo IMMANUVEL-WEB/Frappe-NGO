@@ -541,106 +541,105 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { donorApi } from "../api";
-import { session } from "../../data/session";
+import { computed, onMounted, ref } from "vue"
+import { useRoute, useRouter } from "vue-router"
+import { session } from "../../data/session"
+import { donorApi } from "../api"
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 
 const portalSettings = ref({
-  login_portal_title: "Donor Portal",
-  login_portal_subtitle: "Donor Impact & Grants",
-});
-const isMobileMenuOpen = ref(false);
-const showLogoutModal = ref(false);
-const loggingOut = ref(false);
+	login_portal_title: "Donor Portal",
+	login_portal_subtitle: "Donor Impact & Grants",
+})
+const isMobileMenuOpen = ref(false)
+const showLogoutModal = ref(false)
+const loggingOut = ref(false)
 
 function triggerLogout() {
-  showLogoutModal.value = true;
-  isMobileMenuOpen.value = false;
+	showLogoutModal.value = true
+	isMobileMenuOpen.value = false
 }
 
 function cancelLogout() {
-  showLogoutModal.value = false;
+	showLogoutModal.value = false
 }
-const isNotificationOpen = ref(false);
-const isAdmin = ref(false);
-const pendingProposalsCount = ref(1);
-const notifications = ref([]);
+const isNotificationOpen = ref(false)
+const isAdmin = ref(false)
+const pendingProposalsCount = ref(1)
+const notifications = ref([])
 
 const currentTitle = computed(() => {
-  if (route.path.includes("grants")) return "My Grants";
-  if (route.path.includes("fund-utilization")) return "Fund Utilization";
-  if (route.path.includes("projects")) return "Project Progress";
-  if (route.path.includes("impact")) return "Beneficiary & Impact";
-  if (route.path.includes("documents")) return "Documents & Compliance";
-  if (route.path.includes("profile")) return "Donor Profile";
-  if (route.path.includes("proposals")) return "Project Proposals";
-  return "Dashboard";
-});
+	if (route.path.includes("grants")) return "My Grants"
+	if (route.path.includes("fund-utilization")) return "Fund Utilization"
+	if (route.path.includes("projects")) return "Project Progress"
+	if (route.path.includes("impact")) return "Beneficiary & Impact"
+	if (route.path.includes("documents")) return "Documents & Compliance"
+	if (route.path.includes("profile")) return "Donor Profile"
+	if (route.path.includes("proposals")) return "Project Proposals"
+	return "Dashboard"
+})
 
 onMounted(async () => {
-  try {
-    const sRes = await fetch(
-      "/api/method/ngo.api.volunteer.get_portal_settings"
-    );
-    const sJson = await sRes.json();
-    if (sJson?.message) {
-      portalSettings.value = { ...portalSettings.value, ...sJson.message };
-    }
-  } catch (err) {
-    // defaults already initialized
-  }
-  try {
-    const routeInfo = await donorApi.getRoute();
-    if (routeInfo && routeInfo.is_admin) {
-      isAdmin.value = true;
-    }
-  } catch (e) {
-    console.error("Error fetching route info:", e);
-  }
+	try {
+		const sRes = await fetch(
+			"/api/method/ngo.api.volunteer.get_portal_settings",
+		)
+		const sJson = await sRes.json()
+		if (sJson?.message) {
+			portalSettings.value = { ...portalSettings.value, ...sJson.message }
+		}
+	} catch (err) {
+		// defaults already initialized
+	}
+	try {
+		const routeInfo = await donorApi.getRoute()
+		if (routeInfo && routeInfo.is_admin) {
+			isAdmin.value = true
+		}
+	} catch (e) {
+		console.error("Error fetching route info:", e)
+	}
 
-  try {
-    const notifs = await donorApi.getNotifications();
-    if (notifs) {
-      notifications.value = notifs;
-    }
-  } catch (e) {
-    console.error("Error fetching notifications:", e);
-  }
-});
+	try {
+		const notifs = await donorApi.getNotifications()
+		if (notifs) {
+			notifications.value = notifs
+		}
+	} catch (e) {
+		console.error("Error fetching notifications:", e)
+	}
+})
 
 async function confirmLogout() {
-  loggingOut.value = true;
-  try {
-    if (session?.logout?.submit) {
-      await session.logout.submit();
-    }
-  } catch (e) {
-    console.warn("Session logout submit warning:", e);
-  }
+	loggingOut.value = true
+	try {
+		if (session?.logout?.submit) {
+			await session.logout.submit()
+		}
+	} catch (e) {
+		console.warn("Session logout submit warning:", e)
+	}
 
-  try {
-    const headers = { "Content-Type": "application/json" };
-    if (window.csrf_token && window.csrf_token !== "None") {
-      headers["X-Frappe-CSRF-Token"] = window.csrf_token;
-    }
-    await fetch("/api/method/logout", { method: "POST", headers });
-  } catch (e) {
-    console.warn("Direct logout fetch warning:", e);
-  }
+	try {
+		const headers = { "Content-Type": "application/json" }
+		if (window.csrf_token && window.csrf_token !== "None") {
+			headers["X-Frappe-CSRF-Token"] = window.csrf_token
+		}
+		await fetch("/api/method/logout", { method: "POST", headers })
+	} catch (e) {
+		console.warn("Direct logout fetch warning:", e)
+	}
 
-  // Clear local cookies explicitly
-  document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  document.cookie = "sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  document.cookie =
-    "system_user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  document.cookie =
-    "full_name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	// Clear local cookies explicitly
+	document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+	document.cookie = "sid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+	document.cookie =
+		"system_user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+	document.cookie = "full_name=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
 
-  window.location.href = "/frontend/account/login";
+	window.location.href = "/frontend/account/login"
 }
 </script>
 

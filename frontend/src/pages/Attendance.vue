@@ -5,7 +5,7 @@
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
           <!-- Breadcrumb -->
-          <nav class="flex items-center gap-1.5 text-xs text-gray-400 font-medium mb-1">
+          <nav class="flex items-center gap-1.5 text-xs text-black-400 font-medium mb-1">
             <router-link to="/" class="hover:text-emerald-700 transition-colors flex items-center gap-1">
               <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -13,13 +13,13 @@
               </svg>
             </router-link>
             <span>&rsaquo;</span>
-            <span class="text-gray-600">Attendance</span>
+            <span class="text-black-600">Attendance</span>
           </nav>
 
-          <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-black-900 tracking-tight">
             Attendance Record
           </h1>
-          <p class="text-gray-500 text-sm mt-0.5">
+          <p class="text-black-500 text-sm mt-0.5">
             Track the hours you've contributed to your community.
           </p>
         </div>
@@ -30,15 +30,15 @@
             <input
               type="date"
               v-model="filters.from_date"
-              class="bg-white border border-gray-200 rounded-xl px-3.5 py-2 text-xs font-medium text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-600"
+              class="bg-white border border-black-200 rounded-xl px-3.5 py-2 text-xs font-medium text-black-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-600"
             />
           </div>
-          <span class="text-xs font-semibold text-gray-400">to</span>
+          <span class="text-xs font-semibold text-black-400">to</span>
           <div class="relative">
             <input
               type="date"
               v-model="filters.to_date"
-              class="bg-white border border-gray-200 rounded-xl px-3.5 py-2 text-xs font-medium text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-600"
+              class="bg-white border border-black-200 rounded-xl px-3.5 py-2 text-xs font-medium text-black-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-600"
             />
           </div>
           <button
@@ -53,7 +53,7 @@
       <!-- 3 Stat Summary Cards (Present, Absent, Half Day Count & Hours) -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <!-- Present Card -->
-        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex items-start justify-between">
+        <div class="bg-white rounded-2xl p-5 border border-black-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex items-start justify-between">
           <div class="flex items-start gap-4">
             <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 border border-emerald-100/60">
               <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -62,8 +62,8 @@
               </svg>
             </div>
             <div>
-              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Present</p>
-              <h3 class="text-2xl font-black text-gray-900 mt-0.5">
+              <p class="text-xs font-semibold text-black-500 uppercase tracking-wider">Present</p>
+              <h3 class="text-2xl font-black text-black-900 mt-0.5">
                 {{ presentCount }}
               </h3>
               <p class="text-xs text-emerald-600 font-semibold mt-0.5">
@@ -79,7 +79,7 @@
         </div>
 
         <!-- Absent Card -->
-        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex items-start justify-between">
+        <div class="bg-white rounded-2xl p-5 border border-black-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex items-start justify-between">
           <div class="flex items-start gap-4">
             <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0 border border-rose-100/60">
               <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -89,8 +89,8 @@
               </svg>
             </div>
             <div>
-              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Absent</p>
-              <h3 class="text-2xl font-black text-gray-900 mt-0.5">
+              <p class="text-xs font-semibold text-black-500 uppercase tracking-wider">Absent</p>
+              <h3 class="text-2xl font-black text-black-900 mt-0.5">
                 {{ absentCount }}
               </h3>
               <p class="text-xs text-rose-500 font-medium mt-0.5">
@@ -106,7 +106,7 @@
         </div>
 
         <!-- Half Day Card -->
-        <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex items-start justify-between">
+        <div class="bg-white rounded-2xl p-5 border border-black-100 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex items-start justify-between">
           <div class="flex items-start gap-4">
             <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center flex-shrink-0 border border-amber-100/60">
               <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -115,8 +115,8 @@
               </svg>
             </div>
             <div>
-              <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">Half Day</p>
-              <h3 class="text-2xl font-black text-gray-900 mt-0.5">
+              <p class="text-xs font-semibold text-black-500 uppercase tracking-wider">Half Day</p>
+              <h3 class="text-2xl font-black text-black-900 mt-0.5">
                 {{ halfDayCount }}
               </h3>
               <p class="text-xs text-amber-600 font-semibold mt-0.5">
@@ -159,7 +159,7 @@
       </div>
 
       <!-- Filter Tabs (All, Present, Absent, Half Day) & Export Button Bar -->
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-3">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-black-200 pb-3">
         <!-- Status Tabs: All, Present, Absent, Half Day -->
         <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
           <button
@@ -170,7 +170,7 @@
             :class="[
               activeStatusFilter === tab.id
                 ? 'text-[#064e3b] font-bold after:content-[\'\'] after:absolute after:bottom-[-13px] after:left-0 after:right-0 after:h-0.5 after:bg-[#064e3b]'
-                : 'text-gray-500 hover:text-gray-800',
+                : 'text-black-500 hover:text-black-800',
             ]"
           >
             <span>{{ tab.label }}</span>
@@ -179,7 +179,7 @@
               :class="[
                 activeStatusFilter === tab.id
                   ? 'bg-[#064e3b] text-white'
-                  : 'bg-gray-100 text-gray-600',
+                  : 'bg-black-100 text-black-600',
               ]"
             >
               {{ tab.count }}
@@ -191,9 +191,9 @@
         <button
           v-if="filteredRecords.length > 0"
           @click="exportAttendance"
-          class="px-4 py-2 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-2 self-end sm:self-auto"
+          class="px-4 py-2 bg-white border border-black-200 hover:bg-black-50 text-black-700 text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-2 self-end sm:self-auto"
         >
-          <svg class="w-4 h-4 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg class="w-4 h-4 text-black-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -203,27 +203,27 @@
       </div>
 
       <!-- Attendance Table -->
-      <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-        <div v-if="attendanceResource.loading" class="py-16 text-center text-gray-500">
+      <div class="bg-white rounded-2xl border border-black-100 shadow-sm overflow-hidden">
+        <div v-if="attendanceResource.loading" class="py-16 text-center text-black-500">
           <div class="w-8 h-8 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin mx-auto mb-2"></div>
           Loading attendance records...
         </div>
 
-        <div v-else-if="filteredRecords.length === 0" class="py-16 text-center text-gray-500">
-          <div class="w-16 h-16 bg-gray-50 text-gray-400 rounded-full flex items-center justify-center mx-auto mb-3">
+        <div v-else-if="filteredRecords.length === 0" class="py-16 text-center text-black-500">
+          <div class="w-16 h-16 bg-black-50 text-black-400 rounded-full flex items-center justify-center mx-auto mb-3">
             <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"></circle>
               <polyline points="12 6 12 12 16 14"></polyline>
             </svg>
           </div>
-          <h4 class="text-base font-bold text-gray-900 mb-1">No attendance records found</h4>
-          <p class="text-xs text-gray-400">There are no attendance logs matching your filter for this volunteer account.</p>
+          <h4 class="text-base font-bold text-black-900 mb-1">No attendance records found</h4>
+          <p class="text-xs text-black-400">There are no attendance logs matching your filter for this volunteer account.</p>
         </div>
 
         <div v-else class="overflow-x-auto">
           <table class="w-full text-left border-collapse">
             <thead>
-              <tr class="bg-gray-50/70 border-b border-gray-100 text-[11px] font-bold text-gray-400 uppercase tracking-wider">
+              <tr class="bg-black-50/70 border-b border-black-100 text-[11px] font-bold text-black-400 uppercase tracking-wider">
                 <th class="py-3.5 px-4 text-center w-12">#</th>
                 <th class="py-3.5 px-4">Date</th>
                 <th class="py-3.5 px-6">Shift / Opportunity</th>
@@ -232,25 +232,25 @@
                 <th class="py-3.5 px-4">Status</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-100 text-xs font-medium text-gray-700">
+            <tbody class="divide-y divide-black-100 text-xs font-medium text-black-700">
               <tr
                 v-for="(row, idx) in filteredRecords"
                 :key="row.name || idx"
-                class="hover:bg-gray-50/60 transition-colors"
+                class="hover:bg-black-50/60 transition-colors"
               >
                 <!-- # Index -->
-                <td class="py-4 px-4 text-center font-bold text-gray-400">
+                <td class="py-4 px-4 text-center font-bold text-black-400">
                   {{ idx + 1 }}
                 </td>
 
                 <!-- Date -->
-                <td class="py-4 px-4 whitespace-nowrap font-semibold text-gray-900">
+                <td class="py-4 px-4 whitespace-nowrap font-semibold text-black-900">
                   {{ formatDate(row.date) }}
                 </td>
 
                 <!-- Shift / Opportunity -->
                 <td class="py-4 px-6">
-                  <div class="font-bold text-gray-900">
+                  <div class="font-bold text-black-900">
                     {{ row.opportunity_title || row.opportunity || (row.shift ? 'Shift ' + row.shift : 'Volunteer Activity') }}
                   </div>
                   <div v-if="row.project_name || row.project" class="text-[11px] text-blue-600 font-medium flex items-center gap-1 mt-0.5">
@@ -262,12 +262,12 @@
                 </td>
 
                 <!-- Location -->
-                <td class="py-4 px-6 text-gray-600">
+                <td class="py-4 px-6 text-black-600">
                   {{ row.location || '—' }}
                 </td>
 
                 <!-- Hours -->
-                <td class="py-4 px-4 font-bold text-gray-900 whitespace-nowrap">
+                <td class="py-4 px-4 font-bold text-black-900 whitespace-nowrap">
                   {{ Number(row.total_hours || 0).toFixed(1) }} hrs
                 </td>
 
@@ -295,139 +295,148 @@
 
 <script setup>
 import { createResource } from "frappe-ui"
-import { ref, computed } from "vue"
+import { computed, ref } from "vue"
 import VolunteerLayout from "../components/VolunteerLayout.vue"
 
 const activeStatusFilter = ref("all")
 const filters = ref({
-  from_date: "",
-  to_date: "",
+	from_date: "",
+	to_date: "",
 })
 
 // Real backend resource for attendance
 const attendanceResource = createResource({
-  url: "ngo.api.volunteer.my_attendance",
-  method: "GET",
-  auto: true,
+	url: "ngo.api.volunteer.my_attendance",
+	method: "GET",
+	auto: true,
 })
 
 // Real attendance records
 const attendanceRecords = computed(() => {
-  if (
-    attendanceResource.data &&
-    Array.isArray(attendanceResource.data.data)
-  ) {
-    return attendanceResource.data.data
-  }
-  return []
+	if (attendanceResource.data && Array.isArray(attendanceResource.data.data)) {
+		return attendanceResource.data.data
+	}
+	return []
 })
 
 // Filter tabs with dynamic counts for Present, Absent, Half Day
 const filterTabs = computed(() => {
-  const records = attendanceRecords.value
-  return [
-    { id: "all", label: "All", count: records.length },
-    {
-      id: "Present",
-      label: "Present",
-      count: records.filter((r) => r.status === "Present").length,
-    },
-    {
-      id: "Absent",
-      label: "Absent",
-      count: records.filter((r) => r.status === "Absent").length,
-    },
-    {
-      id: "Half Day",
-      label: "Half Day",
-      count: records.filter((r) => r.status === "Half Day" || r.status === "Halfday").length,
-    },
-  ]
+	const records = attendanceRecords.value
+	return [
+		{ id: "all", label: "All", count: records.length },
+		{
+			id: "Present",
+			label: "Present",
+			count: records.filter((r) => r.status === "Present").length,
+		},
+		{
+			id: "Absent",
+			label: "Absent",
+			count: records.filter((r) => r.status === "Absent").length,
+		},
+		{
+			id: "Half Day",
+			label: "Half Day",
+			count: records.filter(
+				(r) => r.status === "Half Day" || r.status === "Halfday",
+			).length,
+		},
+	]
 })
 
 // Filtered rows
 const filteredRecords = computed(() => {
-  let list = [...attendanceRecords.value]
-  if (activeStatusFilter.value !== "all") {
-    if (activeStatusFilter.value === "Half Day") {
-      list = list.filter((r) => r.status === "Half Day" || r.status === "Halfday")
-    } else {
-      list = list.filter((r) => r.status === activeStatusFilter.value)
-    }
-  }
-  return list
+	let list = [...attendanceRecords.value]
+	if (activeStatusFilter.value !== "all") {
+		if (activeStatusFilter.value === "Half Day") {
+			list = list.filter(
+				(r) => r.status === "Half Day" || r.status === "Halfday",
+			)
+		} else {
+			list = list.filter((r) => r.status === activeStatusFilter.value)
+		}
+	}
+	return list
 })
 
 // Period total hours based on current filtered view
 const periodTotalHours = computed(() => {
-  const sum = filteredRecords.value.reduce((acc, r) => acc + (Number(r.total_hours) || 0), 0)
-  return Math.round(sum * 10) / 10
+	const sum = filteredRecords.value.reduce(
+		(acc, r) => acc + (Number(r.total_hours) || 0),
+		0,
+	)
+	return Math.round(sum * 10) / 10
 })
 
 // Present metrics
 const presentCount = computed(() => {
-  return attendanceRecords.value.filter(r => r.status === "Present").length
+	return attendanceRecords.value.filter((r) => r.status === "Present").length
 })
 const presentHours = computed(() => {
-  const sum = attendanceRecords.value
-    .filter(r => r.status === "Present")
-    .reduce((acc, r) => acc + (Number(r.total_hours) || 0), 0)
-  return Math.round(sum * 10) / 10
+	const sum = attendanceRecords.value
+		.filter((r) => r.status === "Present")
+		.reduce((acc, r) => acc + (Number(r.total_hours) || 0), 0)
+	return Math.round(sum * 10) / 10
 })
 
 // Absent metrics
 const absentCount = computed(() => {
-  return attendanceRecords.value.filter(r => r.status === "Absent").length
+	return attendanceRecords.value.filter((r) => r.status === "Absent").length
 })
 
 // Half Day metrics
 const halfDayCount = computed(() => {
-  return attendanceRecords.value.filter(r => r.status === "Half Day" || r.status === "Halfday").length
+	return attendanceRecords.value.filter(
+		(r) => r.status === "Half Day" || r.status === "Halfday",
+	).length
 })
 const halfDayHours = computed(() => {
-  const sum = attendanceRecords.value
-    .filter(r => r.status === "Half Day" || r.status === "Halfday")
-    .reduce((acc, r) => acc + (Number(r.total_hours) || 0), 0)
-  return Math.round(sum * 10) / 10
+	const sum = attendanceRecords.value
+		.filter((r) => r.status === "Half Day" || r.status === "Halfday")
+		.reduce((acc, r) => acc + (Number(r.total_hours) || 0), 0)
+	return Math.round(sum * 10) / 10
 })
 
 function getStatusPillClass(status) {
-  if (status === "Present") return "bg-emerald-100 text-emerald-800 border border-emerald-200"
-  if (status === "Half Day" || status === "Halfday") return "bg-amber-100 text-amber-800 border border-amber-200"
-  if (status === "Absent") return "bg-rose-100 text-rose-800 border border-rose-200"
-  return "bg-gray-100 text-gray-700"
+	if (status === "Present")
+		return "bg-emerald-100 text-emerald-800 border border-emerald-200"
+	if (status === "Half Day" || status === "Halfday")
+		return "bg-amber-100 text-amber-800 border border-amber-200"
+	if (status === "Absent")
+		return "bg-rose-100 text-rose-800 border border-rose-200"
+	return "bg-black-100 text-black-700"
 }
 
 function formatDate(dateStr) {
-  if (!dateStr) return "-"
-  const d = new Date(dateStr)
-  return d.toLocaleDateString("en-US", {
-    month: "short",
-    day: "2-digit",
-    year: "numeric",
-  })
+	if (!dateStr) return "-"
+	const d = new Date(dateStr)
+	return d.toLocaleDateString("en-US", {
+		month: "short",
+		day: "2-digit",
+		year: "numeric",
+	})
 }
 
 function applyDateFilter() {
-  const p = {}
-  if (filters.value.from_date) p.from_date = filters.value.from_date
-  if (filters.value.to_date) p.to_date = filters.value.to_date
-  attendanceResource.params = p
-  attendanceResource.fetch()
+	const p = {}
+	if (filters.value.from_date) p.from_date = filters.value.from_date
+	if (filters.value.to_date) p.to_date = filters.value.to_date
+	attendanceResource.params = p
+	attendanceResource.fetch()
 }
 
 function exportAttendance() {
-  const rows = filteredRecords.value
-  if (!rows || rows.length === 0) return
-  let csv = "Date,Shift,Opportunity,Project,Location,Hours,Status\n"
-  rows.forEach(r => {
-    csv += `"${r.date}","${r.shift || ''}","${r.opportunity_title || ''}","${r.project_name || ''}","${r.location || ''}","${r.total_hours || 0}","${r.status || ''}"\n`
-  })
-  const blob = new Blob([csv], { type: 'text/csv' })
-  const url = window.URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.setAttribute('href', url)
-  a.setAttribute('download', 'attendance_records.csv')
-  a.click()
+	const rows = filteredRecords.value
+	if (!rows || rows.length === 0) return
+	let csv = "Date,Shift,Opportunity,Project,Location,Hours,Status\n"
+	rows.forEach((r) => {
+		csv += `"${r.date}","${r.shift || ""}","${r.opportunity_title || ""}","${r.project_name || ""}","${r.location || ""}","${r.total_hours || 0}","${r.status || ""}"\n`
+	})
+	const blob = new Blob([csv], { type: "text/csv" })
+	const url = window.URL.createObjectURL(blob)
+	const a = document.createElement("a")
+	a.setAttribute("href", url)
+	a.setAttribute("download", "attendance_records.csv")
+	a.click()
 }
 </script>

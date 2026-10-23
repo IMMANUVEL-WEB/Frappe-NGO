@@ -139,7 +139,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue"
+import { onMounted, ref } from "vue"
 import { useRoute } from "vue-router"
 import { donorApi } from "../api"
 
@@ -148,14 +148,14 @@ const loading = ref(true)
 const grantData = ref(null)
 
 onMounted(async () => {
-  const grantId = route.params.id
-  try {
-    const res = await donorApi.getGrantDetail(grantId)
-    if (res) grantData.value = res
-  } catch (e) {
-    console.error("Failed to load grant details:", e)
-  } finally {
-    loading.value = false
-  }
+	const grantId = route.params.id
+	try {
+		const res = await donorApi.getGrantDetail(grantId)
+		if (res) grantData.value = res
+	} catch (e) {
+		console.error("Failed to load grant details:", e)
+	} finally {
+		loading.value = false
+	}
 })
 </script>

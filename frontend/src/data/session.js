@@ -43,7 +43,9 @@ export const session = reactive({
 
 			// Role-based destination redirect via GET (CSRF-safe)
 			try {
-				const res = await fetch("/api/method/ngo.api.donor_portal.auth.get_portal_route")
+				const res = await fetch(
+					"/api/method/ngo.api.donor_portal.auth.get_portal_route",
+				)
 				const json = await res.json()
 				const route = json?.message?.route
 				if (route) {

@@ -141,18 +141,47 @@
 import { ref } from "vue"
 
 const sectorImpact = ref([
-  { sector: "Health & Nutrition", count: 9800, percent: 34, barColor: "bg-rose-500" },
-  { sector: "Education & Youth Empowerment", count: 7200, percent: 25, barColor: "bg-purple-600" },
-  { sector: "WASH (Water, Sanitation & Hygiene)", count: 5400, percent: 19, barColor: "bg-blue-600" },
-  { sector: "Livelihood & Women Self Help", count: 3800, percent: 14, barColor: "bg-emerald-500" },
-  { sector: "Disaster Emergency Relief", count: 2250, percent: 8, barColor: "bg-amber-400" }
+	{
+		sector: "Health & Nutrition",
+		count: 9800,
+		percent: 34,
+		barColor: "bg-rose-500",
+	},
+	{
+		sector: "Education & Youth Empowerment",
+		count: 7200,
+		percent: 25,
+		barColor: "bg-purple-600",
+	},
+	{
+		sector: "WASH (Water, Sanitation & Hygiene)",
+		count: 5400,
+		percent: 19,
+		barColor: "bg-blue-600",
+	},
+	{
+		sector: "Livelihood & Women Self Help",
+		count: 3800,
+		percent: 14,
+		barColor: "bg-emerald-500",
+	},
+	{
+		sector: "Disaster Emergency Relief",
+		count: 2250,
+		percent: 8,
+		barColor: "bg-amber-400",
+	},
 ])
 
 const districtImpact = ref([
-  { name: "Patna & Gaya (Bihar)", count: 7850, dotColor: "bg-blue-500" },
-  { name: "Varanasi (Uttar Pradesh)", count: 6200, dotColor: "bg-emerald-500" },
-  { name: "Madurai & Chennai (Tamil Nadu)", count: 5400, dotColor: "bg-rose-500" },
-  { name: "Koraput (Odisha)", count: 4600, dotColor: "bg-purple-500" },
-  { name: "Guwahati & Cachar (Assam)", count: 4400, dotColor: "bg-amber-500" }
+	{ name: "Patna & Gaya (Bihar)", count: 7850, dotColor: "bg-blue-500" },
+	{ name: "Varanasi (Uttar Pradesh)", count: 6200, dotColor: "bg-emerald-500" },
+	{
+		name: "Madurai & Chennai (Tamil Nadu)",
+		count: 5400,
+		dotColor: "bg-rose-500",
+	},
+	{ name: "Koraput (Odisha)", count: 4600, dotColor: "bg-purple-500" },
+	{ name: "Guwahati & Cachar (Assam)", count: 4400, dotColor: "bg-amber-500" },
 ])
 </script>

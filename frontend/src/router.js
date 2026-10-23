@@ -49,7 +49,11 @@ const routes = [
 	// ==================== DONOR PORTAL ROUTES ====================
 	{
 		path: "/donor-portal",
-		alias: ["/donor_portal", "/frontend/donor-portal", "/frontend/donor_portal"],
+		alias: [
+			"/donor_portal",
+			"/frontend/donor-portal",
+			"/frontend/donor_portal",
+		],
 		component: () => import("@/donor_portal/layouts/DonorLayout.vue"),
 		children: [
 			{
@@ -101,20 +105,20 @@ const routes = [
 	},
 	{
 		path: "/donor_portal/:subpath(.*)*",
-		redirect: to => {
+		redirect: (to) => {
 			const sub = to.params.subpath
-			return sub ? `/donor-portal/${sub}` : '/donor-portal'
-		}
+			return sub ? `/donor-portal/${sub}` : "/donor-portal"
+		},
 	},
 	{
 		path: "/:catchAll(.*)*",
-		redirect: to => {
+		redirect: (to) => {
 			if (window.location.pathname.toLowerCase().includes("donor")) {
 				return "/donor-portal"
 			}
 			return "/"
-		}
-	}
+		},
+	},
 ]
 
 // Determine base history cleanly based on current URL
@@ -158,14 +162,17 @@ router.beforeEach(async (to, from, next) => {
 	// If user is logged in, resolve role-based redirect
 	try {
 		if (!cachedPortalRoute) {
-			const res = await fetch("/api/method/ngo.api.donor_portal.auth.get_portal_route")
+			const res = await fetch(
+				"/api/method/ngo.api.donor_portal.auth.get_portal_route",
+			)
 			const json = await res.json()
 			cachedPortalRoute = json?.message
 		}
 
 		if (cachedPortalRoute) {
 			const isDonorUser = cachedPortalRoute.role === "Donor Liaison"
-			const isSystemUser = cachedPortalRoute.is_admin || cachedPortalRoute.role === "System User"
+			const isSystemUser =
+				cachedPortalRoute.is_admin || cachedPortalRoute.role === "System User"
 
 			// If on Login page, redirect to appropriate destination
 			if (to.name === "Login") {
@@ -182,7 +189,12 @@ router.beforeEach(async (to, from, next) => {
 			}
 
 			// If a Donor Liaison visits volunteer portal pages (e.g. "/" or "/assignments"), immediately redirect to donor portal
-			if (!isDonorRoute && isDonorUser && !isSystemUser && to.name !== "Apply") {
+			if (
+				!isDonorRoute &&
+				isDonorUser &&
+				!isSystemUser &&
+				to.name !== "Apply"
+			) {
 				window.location.href = "/donor-portal"
 				return
 			}
