@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-6">
+  <div class="space-y-6 overflow-x-hidden">
     <!-- Top Stat Cards (4 Cards) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <!-- 1. Total Proposals -->
@@ -143,17 +143,15 @@
           <p class="text-xs text-slate-400 mt-1">There are no project proposals linked to your profile matching the filters.</p>
         </div>
 
-        <div v-else class="overflow-x-auto">
-          <table class="w-full text-left text-xs">
+        <div v-else class="w-full overflow-hidden">
+          <table class="w-full text-left text-xs table-auto">
             <thead class="bg-slate-50/75 border-b border-slate-100 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
               <tr>
-                <th class="py-3 px-4">#</th>
-                <th class="py-3 px-4">Proposal Title</th>
-                <th class="py-3 px-3">Code</th>
+                <th class="py-3 px-3 w-8 text-center">#</th>
+                <th class="py-3 px-3">Proposal</th>
                 <th class="py-3 px-3">Sector</th>
-                <th class="py-3 px-3">Budget (Lakh)</th>
+                <th class="py-3 px-3">Budget</th>
                 <th class="py-3 px-3">Status</th>
-                <th class="py-3 px-3">Submitted On</th>
                 <th class="py-3 px-3 text-right">Actions</th>
               </tr>
             </thead>
@@ -163,53 +161,57 @@
                 :key="row.name || row.code"
                 class="hover:bg-slate-50/60 transition group"
               >
-                <td class="py-3.5 px-4 text-slate-400 font-medium">{{ (currentPage - 1) * pageSize + idx + 1 }}</td>
-                <td class="py-3.5 px-4 font-semibold text-slate-900 max-w-xs truncate">
-                  {{ row.title }}
+                <td class="py-3 px-3 text-center text-slate-400 font-medium">{{ (currentPage - 1) * pageSize + idx + 1 }}</td>
+                <td class="py-3 px-3 min-w-0">
+                  <div class="font-bold text-slate-900 leading-snug line-clamp-1">{{ row.title }}</div>
+                  <div class="text-[11px] font-mono text-slate-400 mt-0.5">{{ row.code || row.name }}</div>
                 </td>
-                <td class="py-3.5 px-3 font-mono text-[11px] text-slate-500">{{ row.code || row.name }}</td>
-                <td class="py-3.5 px-3">
+                <td class="py-3 px-3 whitespace-nowrap">
                   <span 
-                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium"
+                    class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium"
                     :class="getSectorClass(row.sector)"
                   >
                     <component :is="getSectorIcon(row.sector)" class="w-3 h-3" />
                     {{ row.sector || 'General' }}
                   </span>
                 </td>
-                <td class="py-3.5 px-3 font-semibold text-slate-900">₹{{ row.budget_lakh ? Number(row.budget_lakh).toFixed(2) + ' L' : '0.00 L' }}</td>
-                <td class="py-3.5 px-3">
+                <td class="py-3 px-3 whitespace-nowrap">
+                  <div class="font-bold text-slate-900">?{{ row.budget_lakh ? Number(row.budget_lakh).toFixed(2) + ' L' : '0.00 L' }}</div>
+                  <div class="text-[10px] text-slate-400">{{ formatDate(row.created_at || row.submittedOn) }}</div>
+                </td>
+                <td class="py-3 px-3 whitespace-nowrap">
                   <span 
-                    class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold"
+                    class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-semibold whitespace-nowrap"
                     :class="{
                       'bg-emerald-50 text-emerald-700 border border-emerald-100': row.status === 'Approved',
-                      'bg-amber-50 text-amber-700 border border-amber-200': row.status === 'Under Review' || row.status === 'Draft' || row.status === 'Pending',
+                      'bg-amber-50 text-amber-700 border border-amber-200': row.status === 'Under Review' || row.status === 'Draft' || row.status === 'Pending' || (row.status || '').toLowerCase().includes('pending'),
                       'bg-rose-50 text-rose-700 border border-rose-200': row.status === 'Rejected'
                     }"
                   >
                     {{ row.status }}
                   </span>
                 </td>
-                <td class="py-3.5 px-3 text-slate-500 whitespace-nowrap">{{ formatDate(row.created_at || row.submittedOn) }}</td>
-                <td class="py-3.5 px-3 text-right relative">
+                <td class="py-3 px-3 text-right whitespace-nowrap">
                   <div class="flex items-center justify-end space-x-1">
                     <button 
-                      v-if="row.status === 'Under Review' || row.status === 'Pending'"
+                      v-if="row.status === 'Under Review' || row.status === 'Pending' || (row.status || '').toLowerCase().includes('pending')"
                       @click="makeDecision(row, 'approve')"
-                      class="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition"
+                      class="px-2 py-1 text-[11px] font-bold rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition"
+                      title="Approve Proposal"
                     >
                       Approve
                     </button>
                     <button 
-                      v-if="row.status === 'Under Review' || row.status === 'Pending'"
+                      v-if="row.status === 'Under Review' || row.status === 'Pending' || (row.status || '').toLowerCase().includes('pending')"
                       @click="makeDecision(row, 'reject')"
-                      class="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-100 transition"
+                      class="px-2 py-1 text-[11px] font-bold rounded-lg bg-rose-50 text-rose-700 hover:bg-rose-100 transition"
+                      title="Reject Proposal"
                     >
                       Reject
                     </button>
                     <button 
                       @click="openDetail(row)"
-                      class="p-1 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition"
+                      class="p-1.5 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition"
                       title="View Details"
                     >
                       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -223,7 +225,6 @@
             </tbody>
           </table>
         </div>
-
         <!-- Pagination Footer -->
         <div v-if="filteredProposals.length > 0" class="px-5 py-3.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
           <div>

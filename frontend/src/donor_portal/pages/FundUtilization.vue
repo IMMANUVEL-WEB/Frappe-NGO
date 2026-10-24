@@ -125,55 +125,110 @@
     <!-- Middle Charts Row (2 Cards) -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
       <!-- Left Card: Monthly Trend (7 cols) -->
-      <div class="lg:col-span-7 bg-white rounded-2xl p-5 border border-slate-100 shadow-xs flex flex-col justify-between">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
-          <div class="flex items-center space-x-2">
-            <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
-            <h3 class="text-sm font-bold text-slate-900 tracking-tight">Fund Utilization Trend (Lakh)</h3>
+      <div class="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-100 shadow-xs flex flex-col justify-between min-h-[350px]">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+          <div class="flex items-center space-x-3">
+            <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100/60">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-900 tracking-tight">Fund Utilization Trend (Lakh)</h3>
+              <p class="text-[11px] text-slate-400 font-medium">Monthly grant receipts vs project execution disbursements</p>
+            </div>
           </div>
 
-          <div class="flex items-center space-x-3 text-xs">
-            <span class="flex items-center gap-1.5 text-slate-600">
-              <span class="w-2.5 h-2.5 rounded bg-blue-600"></span> Funds Given
+          <!-- Legend Pills -->
+          <div class="flex items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50/80 text-blue-700 border border-blue-100">
+              <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+              Given
             </span>
-            <span class="flex items-center gap-1.5 text-slate-600">
-              <span class="w-2.5 h-2.5 rounded bg-amber-400"></span> Funds Spent
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-50/80 text-amber-700 border border-amber-100">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+              Spent
             </span>
           </div>
         </div>
 
         <!-- Monthly Dynamic Bars -->
-        <div class="relative h-60 pt-4 pb-2">
+        <div class="relative pt-6 pb-2 min-h-[250px] flex flex-col justify-end">
           <!-- Background Grid Lines -->
-          <div class="absolute inset-x-4 inset-y-4 flex flex-col justify-between pointer-events-none text-[10px] text-slate-400 font-medium">
-            <div v-for="tick in chartTicks" :key="tick" class="border-b border-slate-100 pb-1 flex justify-between">
-              <span>{{ tick }}L</span>
+          <div class="absolute inset-x-0 inset-y-4 flex flex-col justify-between pointer-events-none text-[10px] text-slate-400 font-medium">
+            <div v-for="tick in chartTicks" :key="tick" class="border-b border-slate-100/90 pb-0.5 flex justify-between">
+              <span class="font-mono text-slate-400 text-[10px]">?{{ tick }}L</span>
             </div>
           </div>
 
-          <!-- Bars Container -->
-          <div class="relative h-full mx-6 flex items-end justify-around z-10">
+          <!-- Bars Container with background pillar tracks -->
+          <div class="relative h-48 ml-10 mr-2 flex items-end justify-between z-10 gap-2 sm:gap-3">
             <div 
-              v-for="item in monthlyChartData" 
-              :key="item.month" 
-              class="flex flex-col items-center group relative h-full justify-end"
+              v-for="(item, idx) in monthlyChartData" 
+              :key="idx" 
+              class="flex flex-col items-center flex-1 h-full justify-end relative cursor-pointer group"
+              @mouseenter="hoveredTrendIndex = idx"
+              @mouseleave="hoveredTrendIndex = null"
             >
-              <!-- Bar Pair -->
-              <div class="flex items-end space-x-1.5 h-44">
-                <!-- Given Bar (Blue) -->
-                <div 
-                  class="w-3.5 bg-blue-600 rounded-t-sm transition-all duration-300 hover:brightness-110"
-                  :style="{ height: getBarHeight(item.given) }"
-                  :title="`${item.month} Given: ₹${item.given}L`"
-                ></div>
-                <!-- Spent Bar (Amber) -->
-                <div 
-                  class="w-3.5 bg-amber-400 rounded-t-sm transition-all duration-300 hover:brightness-110"
-                  :style="{ height: getBarHeight(item.spent) }"
-                  :title="`${item.month} Spent: ₹${item.spent}L`"
-                ></div>
+              <!-- Floating Tooltip on Hover -->
+              <transition
+                enter-active-class="transition duration-150 ease-out"
+                enter-from-class="opacity-0 translate-y-1"
+                enter-to-class="opacity-100 translate-y-0"
+                leave-active-class="transition duration-100 ease-in"
+                leave-from-class="opacity-100 translate-y-0"
+                leave-to-class="opacity-0 translate-y-1"
+              >
+                <div
+                  v-if="hoveredTrendIndex === idx"
+                  class="absolute -top-16 left-1/2 -translate-x-1/2 bg-slate-900/95 backdrop-blur-xs text-white text-[11px] rounded-xl py-2 px-3 shadow-xl border border-slate-800 whitespace-nowrap z-30 pointer-events-none"
+                >
+                  <div class="font-bold text-slate-300 border-b border-slate-700/60 pb-1 mb-1 text-[10px] uppercase tracking-wider text-center">
+                    {{ item.month_year || item.month }}
+                  </div>
+                  <div class="flex items-center gap-2.5">
+                    <span class="flex items-center gap-1 font-semibold text-blue-300">
+                      <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                      Given: ?{{ item.given }} L
+                    </span>
+                    <span class="text-slate-600">|</span>
+                    <span class="flex items-center gap-1 font-semibold text-amber-300">
+                      <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                      Spent: ?{{ item.spent }} L
+                    </span>
+                  </div>
+                </div>
+              </transition>
+
+              <!-- Pillar Slot -->
+              <div 
+                class="w-full max-w-[44px] h-40 rounded-xl bg-slate-50/80 border border-slate-100 flex items-end justify-center gap-1 sm:gap-1.5 p-1 transition-all duration-200"
+                :class="hoveredTrendIndex === idx ? 'bg-slate-100 ring-2 ring-emerald-500/20' : ''"
+              >
+                <!-- Given Bar (Blue gradient) -->
+                <div class="w-2.5 sm:w-3 h-full flex items-end justify-center">
+                  <div 
+                    class="w-full bg-gradient-to-t from-blue-600 to-sky-400 rounded-t-md transition-all duration-500 shadow-xs"
+                    :style="{ height: getBarHeight(item.given) }"
+                  ></div>
+                </div>
+                <!-- Spent Bar (Amber gradient) -->
+                <div class="w-2.5 sm:w-3 h-full flex items-end justify-center">
+                  <div 
+                    class="w-full bg-gradient-to-t from-amber-500 to-amber-300 rounded-t-md transition-all duration-500 shadow-xs"
+                    :style="{ height: getBarHeight(item.spent) }"
+                  ></div>
+                </div>
               </div>
-              <span class="text-[11px] text-slate-500 font-medium mt-2">{{ item.month }}</span>
+
+              <!-- Month Label -->
+              <span 
+                class="text-[11px] font-semibold mt-2 transition"
+                :class="item.given > 0 || item.spent > 0 ? 'text-slate-900 font-bold' : 'text-slate-400'"
+              >
+                {{ item.month }}
+              </span>
             </div>
           </div>
         </div>
@@ -351,6 +406,7 @@ const selectedSector = ref("")
 const grants = ref([])
 const spendBreakdown = ref(null)
 const monthlyChartData = ref([])
+const hoveredTrendIndex = ref(null)
 
 onMounted(async () => {
   try {
