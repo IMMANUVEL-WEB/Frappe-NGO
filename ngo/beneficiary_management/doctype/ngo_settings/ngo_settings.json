@@ -8,7 +8,12 @@
  "field_order": [
   "company",
   "default_credit_account",
-  "default_stock_expense_account"
+  "default_stock_expense_account",
+  "donor_portal_section",
+  "donor_portal_role",
+  "donor_portal_show_vendor_names",
+  "donor_portal_show_procurement",
+  "spend_category_mapping"
  ],
  "fields": [
   {
@@ -34,6 +39,38 @@
    "fieldtype": "Link",
    "label": "Default Stock Expense Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "donor_portal_section",
+   "fieldtype": "Section Break",
+   "label": "Donor Portal Settings"
+  },
+  {
+   "default": "Donor Liaison",
+   "description": "Role required to access the Donor Portal (default: Donor Liaison)",
+   "fieldname": "donor_portal_role",
+   "fieldtype": "Data",
+   "label": "Donor Portal Role"
+  },
+  {
+   "default": "0",
+   "description": "If checked, real vendor names will be displayed in transaction lists; otherwise generic labels are shown.",
+   "fieldname": "donor_portal_show_vendor_names",
+   "fieldtype": "Check",
+   "label": "Show Vendor Names in Donor Portal"
+  },
+  {
+   "default": "1",
+   "description": "Show the procurement/purchases tab in the Donor Portal",
+   "fieldname": "donor_portal_show_procurement",
+   "fieldtype": "Check",
+   "label": "Show Procurement in Donor Portal"
+  },
+  {
+   "fieldname": "spend_category_mapping",
+   "fieldtype": "Table",
+   "label": "Spend Category Mapping",
+   "options": "Spend Category Mapping"
   }
  ],
  "grid_page_length": 50,

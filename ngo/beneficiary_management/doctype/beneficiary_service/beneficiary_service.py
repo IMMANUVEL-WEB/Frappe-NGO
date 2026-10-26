@@ -1,7 +1,9 @@
+from typing import Any
+
 import frappe
+from frappe import _
 from frappe.model.document import Document
 from frappe.utils import flt, getdate, nowdate
-from frappe import _
 
 
 class BeneficiaryService(Document):
@@ -22,15 +24,11 @@ class BeneficiaryService(Document):
 		start_date = getdate(enrollment.enrollment_date)
 
 		if service_date < start_date:
-			frappe.throw(
-				_("Service Date cannot be before the Enrollment Date ({0})").format(start_date)
-			)
+			frappe.throw(_("Service Date cannot be before the Enrollment Date ({0})").format(start_date))
 
 		end_date = enrollment.actual_end_date or enrollment.expected_end_date
 		if end_date and service_date > getdate(end_date):
-			frappe.throw(
-				_("Service Date cannot be after the Enrollment End Date ({0})").format(end_date)
-			)
+			frappe.throw(_("Service Date cannot be after the Enrollment End Date ({0})").format(end_date))
 
 		beneficiary = frappe.get_doc("Beneficiary", self.beneficiary)
 		if not beneficiary.consent_given:
@@ -41,7 +39,7 @@ class BeneficiaryService(Document):
 
 
 @frappe.whitelist()
-def make_journal_entry(source_name, target_doc=None):
+def make_journal_entry(source_name: str, target_doc: Any = None):
 	service = frappe.get_doc("Beneficiary Service", source_name)
 
 	company = None
@@ -57,14 +55,10 @@ def make_journal_entry(source_name, target_doc=None):
 	if not service.service_type:
 		frappe.throw(_("Please select a Service Type first."))
 
-	expense_account = frappe.db.get_value(
-		"Service Type", service.service_type, "default_expense_account"
-	)
+	expense_account = frappe.db.get_value("Service Type", service.service_type, "default_expense_account")
 	if not expense_account:
 		frappe.throw(
-			_("Please configure 'Default Expense Account' in Service Type '{0}'").format(
-				service.service_type
-			)
+			_("Please configure 'Default Expense Account' in Service Type '{0}'").format(service.service_type)
 		)
 
 	cash_account = frappe.db.get_value("Company", company, "default_cash_account")
@@ -89,9 +83,7 @@ def make_journal_entry(source_name, target_doc=None):
 	je.voucher_type = "Journal Entry"
 	je.company = company
 	je.posting_date = service.service_date or nowdate()
-	je.user_remark = _("Beneficiary Service: {0} for {1}").format(
-		service.name, service.beneficiary or ""
-	)
+	je.user_remark = _("Beneficiary Service: {0} for {1}").format(service.name, service.beneficiary or "")
 
 	# Populate custom mandatory fields from linked project or active grant if present
 	donor_grant = None

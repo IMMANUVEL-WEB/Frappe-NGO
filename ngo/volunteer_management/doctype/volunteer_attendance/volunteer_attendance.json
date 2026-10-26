@@ -13,6 +13,7 @@
   "shift",
   "opportunity",
   "project",
+  "column_break_pf1s",
   "date",
   "in_time",
   "out_time",
@@ -96,12 +97,16 @@
    "fieldtype": "Link",
    "label": "Approved By",
    "options": "User"
+  },
+  {
+   "fieldname": "column_break_pf1s",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-10-06 17:29:32.614561",
+ "modified": "2026-10-20 15:43:43.698920",
  "modified_by": "Administrator",
  "module": "Volunteer Management",
  "name": "Volunteer Attendance",

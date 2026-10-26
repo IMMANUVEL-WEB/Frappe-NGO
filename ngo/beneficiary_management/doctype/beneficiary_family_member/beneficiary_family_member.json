@@ -11,6 +11,7 @@
   "relationship",
   "gender",
   "date_of_birth",
+  "column_break_xrgu",
   "age",
   "national_id_number",
   "is_dependent"
@@ -59,13 +60,17 @@
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Is Dependent"
+  },
+  {
+   "fieldname": "column_break_xrgu",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-09-30 12:44:13.725705",
+ "modified": "2026-10-20 16:15:59.765567",
  "modified_by": "Administrator",
  "module": "Beneficiary Management",
  "name": "Beneficiary Family Member",

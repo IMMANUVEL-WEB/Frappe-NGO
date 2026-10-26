@@ -13,15 +13,16 @@
   "beneficiary",
   "project",
   "cost_center",
+  "cb_amounts",
   "service_type",
   "service_date",
-  "cb_amounts",
   "qty",
   "rate",
   "amount",
   "sb_accounting",
   "warehouse",
   "journal_entry",
+  "column_break_8elg",
   "stock_entry",
   "amended_from"
  ],
@@ -136,16 +137,21 @@
    "no_copy": 1,
    "options": "Beneficiary Service",
    "read_only": 1
+  },
+  {
+   "fieldname": "column_break_8elg",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-09-30 12:59:02.946611",
+ "modified": "2026-10-20 16:09:40.873005",
  "modified_by": "Administrator",
  "module": "Beneficiary Management",
  "name": "Beneficiary Service",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {

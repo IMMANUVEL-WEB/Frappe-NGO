@@ -1,4 +1,4 @@
-import frappeUIPreset from "frappe-ui/src/tailwind/preset"
+import frappeUIPreset from "frappe-ui/src/tailwind/preset";
 
 export default {
 	presets: [frappeUIPreset],
@@ -9,13 +9,13 @@ export default {
 	],
 	theme: {
 		extend: {
-            colors: {
-                primary: 'var(--primary-color)',
-                secondary: 'var(--secondary-color)',
-                login: 'var(--login-color)',
-                sidebar: 'var(--sidebar-color)'
-            }
-        },
+			colors: {
+				primary: "var(--primary-color)",
+				secondary: "var(--secondary-color)",
+				login: "var(--login-color)",
+				sidebar: "var(--sidebar-color)",
+			},
+		},
 	},
 	plugins: [],
-}
+};

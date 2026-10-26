@@ -7,19 +7,20 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "grant_id",
   "grant_title",
   "currency",
   "linked_project",
   "valid_from",
   "status",
-  "cost_center",
-  "column_break_tehu",
   "donor_name",
+  "column_break_tehu",
+  "cost_center",
   "funding_type",
   "total_amount",
   "valid_to",
   "compliance_tag",
+  "section_break_2tph",
+  "grant_id",
   "donor_notes"
  ],
  "fields": [
@@ -119,14 +120,18 @@
   },
   {
    "fieldname": "donor_notes",
-   "fieldtype": "Text",
+   "fieldtype": "Small Text",
    "label": "Donor Notes"
+  },
+  {
+   "fieldname": "section_break_2tph",
+   "fieldtype": "Section Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-10-01 09:54:46.934313",
+ "modified": "2026-10-22 10:20:19.719050",
  "modified_by": "Administrator",
  "module": "Ngo",
  "name": "Donor Grant",

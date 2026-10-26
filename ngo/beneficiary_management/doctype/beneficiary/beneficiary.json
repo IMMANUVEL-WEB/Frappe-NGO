@@ -12,6 +12,7 @@
   "full_name",
   "gender",
   "date_of_birth",
+  "column_break_yrpc",
   "age",
   "status",
   "territory",
@@ -20,6 +21,7 @@
   "national_id_type",
   "national_id_number",
   "phone",
+  "section_break_wx9f",
   "address",
   "sb_consent",
   "consent_given",
@@ -182,16 +184,25 @@
    "fieldtype": "Table",
    "label": "Family Members",
    "options": "Beneficiary Family Member"
+  },
+  {
+   "fieldname": "column_break_yrpc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_wx9f",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "image_field": "photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-30 12:44:13.959119",
+ "modified": "2026-10-20 16:14:10.922723",
  "modified_by": "Administrator",
  "module": "Beneficiary Management",
  "name": "Beneficiary",
+ "naming_rule": "By \"Naming Series\" field",
  "owner": "Administrator",
  "permissions": [
   {

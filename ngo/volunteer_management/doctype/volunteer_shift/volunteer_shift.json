@@ -11,10 +11,12 @@
   "opportunity",
   "project",
   "shift_date",
+  "column_break_whrk",
   "start_time",
   "end_time",
   "required_count",
   "status",
+  "section_break_5pc1",
   "participants"
  ],
  "fields": [
@@ -74,12 +76,20 @@
    "fieldtype": "Table",
    "label": "Participants",
    "options": "Volunteer Shift Participant"
+  },
+  {
+   "fieldname": "column_break_whrk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_5pc1",
+   "fieldtype": "Section Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-10-06 17:33:14.381171",
+ "modified": "2026-10-21 21:41:04.704389",
  "modified_by": "Administrator",
  "module": "Volunteer Management",
  "name": "Volunteer Shift",
@@ -125,5 +135,6 @@
  "rows_threshold_for_grid_search": 20,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "naming_series"
 }

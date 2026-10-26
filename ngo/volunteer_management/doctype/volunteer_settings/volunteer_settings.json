@@ -6,12 +6,56 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "theme_tab",
   "primary_color",
   "secondary_color",
   "login_color",
-  "sidebar_color"
+  "sidebar_color",
+  "login_page_tab",
+  "header_section",
+  "login_portal_title",
+  "login_portal_subtitle",
+  "login_logo",
+  "header_col_break",
+  "hero_section",
+  "login_hero_badge",
+  "login_hero_title",
+  "login_hero_description",
+  "login_hero_image",
+  "form_section",
+  "login_form_title",
+  "login_form_subtitle",
+  "fields_section",
+  "login_email_label",
+  "login_email_placeholder",
+  "login_password_label",
+  "login_forgot_password_label",
+  "login_forgot_password_url",
+  "login_remember_me_label",
+  "login_submit_button_label",
+  "login_apply_button_label",
+  "login_apply_button_url",
+  "footer_section",
+  "login_footer_copyright",
+  "login_footer_links",
+  "apply_page_tab",
+  "apply_hero_section",
+  "apply_hero_badge",
+  "apply_hero_title",
+  "apply_hero_description",
+  "apply_hero_image",
+  "apply_form_section",
+  "apply_form_title",
+  "apply_form_subtitle",
+  "apply_submit_button_label",
+  "apply_login_button_label"
  ],
  "fields": [
+  {
+   "fieldname": "theme_tab",
+   "fieldtype": "Tab Break",
+   "label": "Theme & Branding"
+  },
   {
    "default": "#2563eb",
    "fieldname": "primary_color",
@@ -35,13 +79,227 @@
    "fieldname": "sidebar_color",
    "fieldtype": "Color",
    "label": "Sidebar Color"
+  },
+  {
+   "fieldname": "login_page_tab",
+   "fieldtype": "Tab Break",
+   "label": "Login Page"
+  },
+  {
+   "fieldname": "header_section",
+   "fieldtype": "Section Break",
+   "label": "Header Bar"
+  },
+  {
+   "default": "Kindred",
+   "fieldname": "login_portal_title",
+   "fieldtype": "Data",
+   "label": "Portal Title"
+  },
+  {
+   "default": "IMPACTSPHERE",
+   "fieldname": "login_portal_subtitle",
+   "fieldtype": "Data",
+   "label": "Portal Subtitle"
+  },
+  {
+   "fieldname": "login_logo",
+   "fieldtype": "Attach Image",
+   "label": "Logo Image"
+  },
+  {
+   "fieldname": "header_col_break",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "hero_section",
+   "fieldtype": "Section Break",
+   "label": "Hero Banner (Left Panel)"
+  },
+  {
+   "default": "GLOBAL NGO COMMUNITY",
+   "fieldname": "login_hero_badge",
+   "fieldtype": "Data",
+   "label": "Hero Badge Tag"
+  },
+  {
+   "default": "Empowering communities, together.",
+   "fieldname": "login_hero_title",
+   "fieldtype": "Small Text",
+   "label": "Hero Headline"
+  },
+  {
+   "default": "Support your community as a volunteer or donor, discover meaningful opportunities, and track your impact.",
+   "fieldname": "login_hero_description",
+   "fieldtype": "Small Text",
+   "label": "Hero Description"
+  },
+  {
+   "fieldname": "login_hero_image",
+   "fieldtype": "Attach Image",
+   "label": "Hero Banner Image"
+  },
+  {
+   "fieldname": "form_section",
+   "fieldtype": "Section Break",
+   "label": "Login Form (Right Panel)"
+  },
+  {
+   "default": "Welcome back, changemaker",
+   "fieldname": "login_form_title",
+   "fieldtype": "Data",
+   "label": "Form Title"
+  },
+  {
+   "default": "Log in to access your deployment shifts, impact ledger, and verified hours.",
+   "fieldname": "login_form_subtitle",
+   "fieldtype": "Small Text",
+   "label": "Form Subtitle"
+  },
+  {
+   "fieldname": "fields_section",
+   "fieldtype": "Section Break",
+   "label": "Form Fields & Actions"
+  },
+  {
+   "default": "VOLUNTEER EMAIL ADDRESS",
+   "fieldname": "login_email_label",
+   "fieldtype": "Data",
+   "label": "Email Label"
+  },
+  {
+   "default": "you@example.com",
+   "fieldname": "login_email_placeholder",
+   "fieldtype": "Data",
+   "label": "Email Placeholder"
+  },
+  {
+   "default": "PASSWORD",
+   "fieldname": "login_password_label",
+   "fieldtype": "Data",
+   "label": "Password Label"
+  },
+  {
+   "default": "Forgot password?",
+   "fieldname": "login_forgot_password_label",
+   "fieldtype": "Data",
+   "label": "Forgot Password Label"
+  },
+  {
+   "default": "#",
+   "fieldname": "login_forgot_password_url",
+   "fieldtype": "Data",
+   "label": "Forgot Password URL"
+  },
+  {
+   "default": "Remember this station for 30 days",
+   "fieldname": "login_remember_me_label",
+   "fieldtype": "Data",
+   "label": "Remember Me Label"
+  },
+  {
+   "default": "Sign In to Dashboard",
+   "fieldname": "login_submit_button_label",
+   "fieldtype": "Data",
+   "label": "Submit Button Label"
+  },
+  {
+   "default": "Apply to be a Volunteer",
+   "fieldname": "login_apply_button_label",
+   "fieldtype": "Data",
+   "label": "Apply Button Label"
+  },
+  {
+   "default": "/apply",
+   "fieldname": "login_apply_button_url",
+   "fieldtype": "Data",
+   "label": "Apply Button URL"
+  },
+  {
+   "fieldname": "footer_section",
+   "fieldtype": "Section Break",
+   "label": "Footer"
+  },
+  {
+   "default": "\u00a9 2026 Kindred Community Impact Network. All rights reserved.",
+   "fieldname": "login_footer_copyright",
+   "fieldtype": "Data",
+   "label": "Footer Copyright"
+  },
+  {
+   "default": "Terms of Service | Volunteer Privacy Notice | Accessibility",
+   "fieldname": "login_footer_links",
+   "fieldtype": "Small Text",
+   "label": "Footer Links"
+  },
+  {
+   "fieldname": "apply_page_tab",
+   "fieldtype": "Tab Break",
+   "label": "Apply Page"
+  },
+  {
+   "fieldname": "apply_hero_section",
+   "fieldtype": "Section Break",
+   "label": "Apply Hero Banner (Left Panel)"
+  },
+  {
+   "default": "VOLUNTEER ENROLLMENT",
+   "fieldname": "apply_hero_badge",
+   "fieldtype": "Data",
+   "label": "Hero Badge Tag"
+  },
+  {
+   "default": "Step Forward. Create Lasting Impact.",
+   "fieldname": "apply_hero_title",
+   "fieldtype": "Small Text",
+   "label": "Hero Headline"
+  },
+  {
+   "default": "Join our dedicated volunteer community. Whether tutoring students, planting saplings, or coordinating local relief drives, your time drives tangible community change.",
+   "fieldname": "apply_hero_description",
+   "fieldtype": "Small Text",
+   "label": "Hero Description"
+  },
+  {
+   "fieldname": "apply_hero_image",
+   "fieldtype": "Attach Image",
+   "label": "Apply Hero Banner Image"
+  },
+  {
+   "fieldname": "apply_form_section",
+   "fieldtype": "Section Break",
+   "label": "Apply Form (Right Panel)"
+  },
+  {
+   "default": "Apply to be a Volunteer",
+   "fieldname": "apply_form_title",
+   "fieldtype": "Data",
+   "label": "Form Title"
+  },
+  {
+   "default": "Fields marked with an asterisk (*) are mandatory.",
+   "fieldname": "apply_form_subtitle",
+   "fieldtype": "Small Text",
+   "label": "Form Subtitle"
+  },
+  {
+   "default": "Submit Application",
+   "fieldname": "apply_submit_button_label",
+   "fieldtype": "Data",
+   "label": "Submit Button Label"
+  },
+  {
+   "default": "Already registered? Sign In to Dashboard",
+   "fieldname": "apply_login_button_label",
+   "fieldtype": "Data",
+   "label": "Sign In Link Label"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-10-06 12:33:41.259293",
+ "modified": "2026-10-20 18:00:00.000000",
  "modified_by": "Administrator",
  "module": "Volunteer Management",
  "name": "Volunteer Settings",

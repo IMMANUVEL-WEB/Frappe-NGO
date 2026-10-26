@@ -8,6 +8,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    FrappeDatePicker: typeof import('./src/components/FrappeDatePicker.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     VolunteerLayout: typeof import('./src/components/VolunteerLayout.vue')['default']

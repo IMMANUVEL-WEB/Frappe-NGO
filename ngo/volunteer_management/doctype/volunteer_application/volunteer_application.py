@@ -52,9 +52,9 @@ class VolunteerApplication(Document):
 		if not frappe.db.exists("User", user_email):
 			user = frappe.new_doc("User")
 			user.email = user_email
-			user.first_name = self.applicant_name.split(' ')[0] if self.applicant_name else "Volunteer"
-			if len(self.applicant_name.split(' ')) > 1:
-				user.last_name = " ".join(self.applicant_name.split(' ')[1:])
+			user.first_name = self.applicant_name.split(" ")[0] if self.applicant_name else "Volunteer"
+			if len(self.applicant_name.split(" ")) > 1:
+				user.last_name = " ".join(self.applicant_name.split(" ")[1:])
 			user.send_welcome_email = 1
 			user.insert(ignore_permissions=True)
 			user.add_roles("Volunteer")
@@ -75,7 +75,7 @@ class VolunteerApplication(Document):
 				"gender": self.gender,
 				"joined_on": today(),
 				"status": "Active",
-				"user": user_email
+				"user": user_email,
 			}
 		)
 		for row in self.get("skills", []):
@@ -89,6 +89,8 @@ class VolunteerApplication(Document):
 
 		self.db_set("volunteer", vol.name)
 		frappe.msgprint(
-			_("Volunteer {0} and User {1} created.").format(frappe.utils.get_link_to_form("Volunteer", vol.name), user_email),
+			_("Volunteer {0} and User {1} created.").format(
+				frappe.utils.get_link_to_form("Volunteer", vol.name), user_email
+			),
 			alert=True,
 		)

@@ -2,6 +2,7 @@
 import frappe
 from frappe.model.document import Document
 
+
 class ProjectProposal(Document):
 	def before_save(self):
 		if not self.proposal_code:
@@ -15,7 +16,7 @@ class ProjectProposal(Document):
 			capex = 0
 			opex = 0
 			admin = 0
-			for row in (self.budget_breakdown or []):
+			for row in self.budget_breakdown or []:
 				amount = flt(row.amount)
 				if row.category == "CapEx":
 					capex += amount
@@ -27,18 +28,11 @@ class ProjectProposal(Document):
 
 			donor_cost_center = None
 			if self.donor_profile:
-				donor_cost_center = frappe.db.get_value(
-					"Supplier",
-					self.donor_profile,
-					"custom_cost_center"
-				)
+				donor_cost_center = frappe.db.get_value("Supplier", self.donor_profile, "custom_cost_center")
 
 			# Ensure Project Type "Donor Project" exists
 			if not frappe.db.exists("Project Type", "Donor Project"):
-				pt = frappe.get_doc({
-					"doctype": "Project Type",
-					"project_type": "Donor Project"
-				})
+				pt = frappe.get_doc({"doctype": "Project Type", "project_type": "Donor Project"})
 				pt.insert(ignore_permissions=True)
 
 			company = frappe.defaults.get_user_default("Company")
@@ -72,20 +66,14 @@ class ProjectProposal(Document):
 
 			project.insert(ignore_permissions=True)
 
-			frappe.db.set_value(
-				"Project Proposal",
-				self.name,
-				"linked_project",
-				project.name,
-				update_modified=False
-			)
-			self.linked_project = project.name
+			self.db_set("linked_project", project.name, update_modified=False)
 
 			frappe.msgprint(
 				msg=f"Project <b>{project.name}</b> created successfully.<br>Cost Center: <b>{donor_cost_center}</b>",
 				title="Project Created",
-				indicator="green"
+				indicator="green",
 			)
+
 
 def flt(val):
 	try:

@@ -33,7 +33,9 @@ class VolunteerAssignment(Document):
 		if self.status in ACTIVE_STATUSES:
 			vol_status = frappe.db.get_value("Volunteer", self.volunteer, "status")
 			if vol_status != "Active":
-				frappe.throw(_("Volunteer {0} is {1} and cannot be assigned.").format(self.volunteer, vol_status))
+				frappe.throw(
+					_("Volunteer {0} is {1} and cannot be assigned.").format(self.volunteer, vol_status)
+				)
 
 	def validate_duplicate(self):
 		if self.status not in ACTIVE_STATUSES:
@@ -73,9 +75,7 @@ def update_opportunity_filled_count(opportunity, exclude=None):
 	"""Set filled_count, then flip Open <-> Filled. Closed / Cancelled are never touched."""
 	if not opportunity:
 		return
-	opp = frappe.db.get_value(
-		"Volunteer Opportunity", opportunity, ["vacancies", "status"], as_dict=True
-	)
+	opp = frappe.db.get_value("Volunteer Opportunity", opportunity, ["vacancies", "status"], as_dict=True)
 	if not opp:
 		return
 
@@ -87,3 +87,25 @@ def update_opportunity_filled_count(opportunity, exclude=None):
 		values["status"] = "Open"
 
 	frappe.db.set_value("Volunteer Opportunity", opportunity, values)
+
+
+@frappe.whitelist()
+def make_volunteer_shift(source_name: str):
+	assignment = frappe.get_doc("Volunteer Assignment", source_name)
+	shift = frappe.new_doc("Volunteer Shift")
+	shift.opportunity = assignment.opportunity
+	shift.project = assignment.project
+	shift.shift_date = assignment.from_date or frappe.utils.today()
+	shift.status = "Scheduled"
+	shift.required_count = 1
+	if assignment.volunteer:
+		vol_name = (
+			assignment.volunteer_name
+			or frappe.db.get_value("Volunteer", assignment.volunteer, "full_name")
+			or assignment.volunteer
+		)
+		shift.append(
+			"participants",
+			{"volunteer": assignment.volunteer, "volunteer_name": vol_name, "status": "Confirmed"},
+		)
+	return shift.as_dict()
