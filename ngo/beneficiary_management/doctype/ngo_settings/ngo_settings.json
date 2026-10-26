@@ -6,16 +6,56 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "accounting_tab",
   "company",
   "default_credit_account",
   "default_stock_expense_account",
+  "donor_portal_tab",
   "donor_portal_section",
   "donor_portal_role",
   "donor_portal_show_vendor_names",
   "donor_portal_show_procurement",
-  "spend_category_mapping"
+  "spend_category_mapping",
+  "footer_tab",
+  "footer_display_section",
+  "footer_enabled",
+  "footer_organization_name",
+  "footer_tagline",
+  "footer_description",
+  "footer_logo",
+  "footer_col_legal",
+  "footer_copyright_text",
+  "footer_powered_by",
+  "footer_show_quick_links",
+  "footer_show_social_links",
+  "footer_show_contact_info",
+  "footer_contact_section",
+  "footer_contact_email",
+  "footer_contact_phone",
+  "footer_col_address",
+  "footer_address",
+  "footer_links_section",
+  "footer_privacy_url",
+  "footer_terms_url",
+  "footer_col_links",
+  "footer_support_url",
+  "footer_website_url",
+  "footer_social_section",
+  "footer_facebook_url",
+  "footer_twitter_url",
+  "footer_col_social",
+  "footer_linkedin_url",
+  "footer_instagram_url",
+  "footer_youtube_url",
+  "footer_custom_section",
+  "footer_custom_links"
  ],
  "fields": [
+  {
+   "fieldname": "accounting_tab",
+   "fieldtype": "Tab Break",
+   "label": "General & Accounting"
+  },
   {
    "fieldname": "company",
    "fieldtype": "Link",
@@ -39,6 +79,11 @@
    "fieldtype": "Link",
    "label": "Default Stock Expense Account",
    "options": "Account"
+  },
+  {
+   "fieldname": "donor_portal_tab",
+   "fieldtype": "Tab Break",
+   "label": "Donor Portal"
   },
   {
    "fieldname": "donor_portal_section",
@@ -71,6 +116,193 @@
    "fieldtype": "Table",
    "label": "Spend Category Mapping",
    "options": "Spend Category Mapping"
+  },
+  {
+   "fieldname": "footer_tab",
+   "fieldtype": "Tab Break",
+   "label": "Footer"
+  },
+  {
+   "fieldname": "footer_display_section",
+   "fieldtype": "Section Break",
+   "label": "Footer Display & Branding"
+  },
+  {
+   "default": "1",
+   "description": "Toggle to show or hide the footer across both Volunteer and Donor portals",
+   "fieldname": "footer_enabled",
+   "fieldtype": "Check",
+   "label": "Enable Footer in Portals"
+  },
+  {
+   "default": "Kindred ImpactSphere",
+   "description": "Primary organization / initiative name displayed in the footer",
+   "fieldname": "footer_organization_name",
+   "fieldtype": "Data",
+   "label": "Organization / Portal Name"
+  },
+  {
+   "default": "People helping people creates a stronger tomorrow.",
+   "description": "Short inspiring slogan or mission tagline",
+   "fieldname": "footer_tagline",
+   "fieldtype": "Data",
+   "label": "Tagline / Slogan"
+  },
+  {
+   "default": "Together, we drive community empowerment through transparent volunteer action and accountable donor partnerships.",
+   "fieldname": "footer_description",
+   "fieldtype": "Small Text",
+   "label": "About / Mission Description"
+  },
+  {
+   "fieldname": "footer_logo",
+   "fieldtype": "Attach Image",
+   "label": "Footer Logo (Optional)"
+  },
+  {
+   "fieldname": "footer_col_legal",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "\u00a9 2026 Kindred ImpactSphere. All rights reserved.",
+   "fieldname": "footer_copyright_text",
+   "fieldtype": "Data",
+   "label": "Copyright Notice"
+  },
+  {
+   "default": "Kindred NGO Platform",
+   "fieldname": "footer_powered_by",
+   "fieldtype": "Data",
+   "label": "Powered By Text"
+  },
+  {
+   "default": "1",
+   "fieldname": "footer_show_quick_links",
+   "fieldtype": "Check",
+   "label": "Show Quick Navigation Links"
+  },
+  {
+   "default": "1",
+   "fieldname": "footer_show_social_links",
+   "fieldtype": "Check",
+   "label": "Show Social Media Links"
+  },
+  {
+   "default": "1",
+   "fieldname": "footer_show_contact_info",
+   "fieldtype": "Check",
+   "label": "Show Contact Information"
+  },
+  {
+   "fieldname": "footer_contact_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Information & Address"
+  },
+  {
+   "default": "support@impactsphere.org",
+   "fieldname": "footer_contact_email",
+   "fieldtype": "Data",
+   "label": "Contact Email"
+  },
+  {
+   "default": "+1 (800) 555-0199",
+   "fieldname": "footer_contact_phone",
+   "fieldtype": "Data",
+   "label": "Contact Phone"
+  },
+  {
+   "fieldname": "footer_col_address",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "100 Impact Way, Social Innovation Hub, CA 94105",
+   "fieldname": "footer_address",
+   "fieldtype": "Small Text",
+   "label": "Office Address / Headquarters"
+  },
+  {
+   "fieldname": "footer_links_section",
+   "fieldtype": "Section Break",
+   "label": "Support & Legal Links"
+  },
+  {
+   "default": "/privacy",
+   "fieldname": "footer_privacy_url",
+   "fieldtype": "Data",
+   "label": "Privacy Policy URL"
+  },
+  {
+   "default": "/terms",
+   "fieldname": "footer_terms_url",
+   "fieldtype": "Data",
+   "label": "Terms of Service URL"
+  },
+  {
+   "fieldname": "footer_col_links",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "/support",
+   "fieldname": "footer_support_url",
+   "fieldtype": "Data",
+   "label": "Support / Help URL"
+  },
+  {
+   "default": "https://impactsphere.org",
+   "fieldname": "footer_website_url",
+   "fieldtype": "Data",
+   "label": "Main Website URL"
+  },
+  {
+   "fieldname": "footer_social_section",
+   "fieldtype": "Section Break",
+   "label": "Social Media Links"
+  },
+  {
+   "default": "https://facebook.com",
+   "fieldname": "footer_facebook_url",
+   "fieldtype": "Data",
+   "label": "Facebook URL"
+  },
+  {
+   "default": "https://x.com",
+   "fieldname": "footer_twitter_url",
+   "fieldtype": "Data",
+   "label": "X (Twitter) URL"
+  },
+  {
+   "fieldname": "footer_col_social",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "https://linkedin.com",
+   "fieldname": "footer_linkedin_url",
+   "fieldtype": "Data",
+   "label": "LinkedIn URL"
+  },
+  {
+   "default": "https://instagram.com",
+   "fieldname": "footer_instagram_url",
+   "fieldtype": "Data",
+   "label": "Instagram URL"
+  },
+  {
+   "default": "https://youtube.com",
+   "fieldname": "footer_youtube_url",
+   "fieldtype": "Data",
+   "label": "YouTube URL"
+  },
+  {
+   "fieldname": "footer_custom_section",
+   "fieldtype": "Section Break",
+   "label": "Custom Navigation Links"
+  },
+  {
+   "fieldname": "footer_custom_links",
+   "fieldtype": "Code",
+   "label": "Custom Links (JSON Array)",
+   "options": "JSON",
+   "description": "Optional JSON array of custom links, e.g. [{\"label\": \"Annual Impact Report\", \"url\": \"#\"}]"
   }
  ],
  "grid_page_length": 50,

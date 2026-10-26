@@ -424,6 +424,9 @@
 			<main class="flex-1 p-4 md:p-8 overflow-x-hidden">
 				<router-view />
 			</main>
+
+			<!-- Configurable Portal Footer -->
+			<PortalFooter portalType="donor" />
 		</div>
 	</div>
 
@@ -512,6 +515,7 @@
 </template>
 
 <script setup>
+import PortalFooter from "../../components/PortalFooter.vue";
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { session } from "../../data/session";

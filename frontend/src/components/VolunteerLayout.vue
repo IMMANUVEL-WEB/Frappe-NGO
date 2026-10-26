@@ -623,6 +623,9 @@
 			<main class="flex-1 p-5 md:p-8 max-w-7xl mx-auto w-full">
 				<slot />
 			</main>
+
+			<!-- Configurable Portal Footer -->
+			<PortalFooter portalType="volunteer" />
 		</div>
 
 		<!-- Solid, Perfectly Aligned Sign Out Modal -->
@@ -745,6 +748,7 @@
 </template>
 
 <script setup>
+import PortalFooter from "./PortalFooter.vue";
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
