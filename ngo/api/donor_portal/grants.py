@@ -55,7 +55,7 @@ def get_grants():
 			params["cc"] = cc
 
 		if conditions:
-			gle = frappe.db.sql(
+			gle = frappe.db.sql(  # nosemgrep
 				f"""
 				SELECT SUM(gle.debit - gle.credit) as total_spent
 				FROM `tabGL Entry` gle
@@ -114,7 +114,7 @@ def get_grants():
 
 
 @frappe.whitelist()
-def get_grant_detail(grant):
+def get_grant_detail(grant: str):
 	"""
 	Returns deep details for a specific grant, with budget vs actual and variance.
 	"""

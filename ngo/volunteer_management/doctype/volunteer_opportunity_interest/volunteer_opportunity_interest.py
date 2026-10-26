@@ -10,7 +10,7 @@ class VolunteerOpportunityInterest(Document):
 
 
 @frappe.whitelist()
-def make_volunteer_shift(source_name):
+def make_volunteer_shift(source_name: str):
 	interest = frappe.get_doc("Volunteer Opportunity Interest", source_name)
 	shift = frappe.new_doc("Volunteer Shift")
 	shift.opportunity = interest.opportunity

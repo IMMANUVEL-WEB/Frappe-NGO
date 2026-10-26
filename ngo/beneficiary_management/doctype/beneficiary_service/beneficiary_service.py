@@ -1,3 +1,5 @@
+from typing import Any
+
 import frappe
 from frappe import _
 from frappe.model.document import Document
@@ -37,7 +39,7 @@ class BeneficiaryService(Document):
 
 
 @frappe.whitelist()
-def make_journal_entry(source_name, target_doc=None):
+def make_journal_entry(source_name: str, target_doc: Any = None):
 	service = frappe.get_doc("Beneficiary Service", source_name)
 
 	company = None

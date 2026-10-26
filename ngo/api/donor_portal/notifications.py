@@ -64,8 +64,8 @@ def get_notifications():
 	return notifications
 
 
-@frappe.whitelist()
-def submit_query(grant=None, subject=None, message=None):
+@frappe.whitelist(methods=["POST"])
+def submit_query(grant: str | None = None, subject: str | None = None, message: str | None = None):
 	"""
 	Submits an inquiry from the donor tied to a specific grant or project.
 	Creates a ToDo / Communication for the Donor Liaison desk team.
@@ -96,7 +96,6 @@ def submit_query(grant=None, subject=None, message=None):
 	todo.reference_name = comm.reference_name
 	todo.insert(ignore_permissions=True)
 
-	frappe.db.commit()
 	return {
 		"success": True,
 		"message": _("Your inquiry has been submitted. Our team will get back to you shortly."),

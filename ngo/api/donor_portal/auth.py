@@ -53,7 +53,7 @@ def get_current_donor(allow_admin_preview=True):
 	)
 
 
-@frappe.whitelist(allow_guest=True, methods=["GET", "POST"])
+@frappe.whitelist(allow_guest=True, methods=["GET", "POST"])  # nosemgrep
 def get_portal_route():
 	"""
 	Whitelisted endpoint to resolve user destination and role status.

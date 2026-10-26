@@ -5,7 +5,7 @@ from ngo.api.donor_portal.auth import get_current_donor
 
 
 @frappe.whitelist()
-def get_documents(grant=None):
+def get_documents(grant: str | None = None):
 	"""
 	Returns documents and compliance certificates shareable with the donor.
 	Includes:
@@ -82,7 +82,7 @@ def get_documents(grant=None):
 
 
 @frappe.whitelist()
-def download_document(name):
+def download_document(name: str):
 	"""
 	Validates access permission before serving the file.
 	"""

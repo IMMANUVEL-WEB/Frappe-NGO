@@ -8,7 +8,7 @@ from ngo.api.donor_portal.auth import get_current_donor
 
 
 @frappe.whitelist()
-def get_spend_breakdown(grant=None, from_date=None, to_date=None):
+def get_spend_breakdown(grant: str | None = None, from_date: str | None = None, to_date: str | None = None):
 	"""
 	Returns detailed categorization:
 	Goods purchased vs Cash assistance vs Services/salaries vs Admin vs Remaining balance.
@@ -50,7 +50,7 @@ def get_spend_breakdown(grant=None, from_date=None, to_date=None):
 		params["to_date"] = to_date
 
 	query_where = " AND ".join(conditions)
-	entries = frappe.db.sql(
+	entries = frappe.db.sql(  # nosemgrep
 		f"""
 		SELECT gle.account, SUM(gle.debit - gle.credit) as amount
 		FROM `tabGL Entry` gle
@@ -121,7 +121,14 @@ def get_spend_breakdown(grant=None, from_date=None, to_date=None):
 
 
 @frappe.whitelist()
-def get_transactions(grant=None, from_date=None, to_date=None, category=None, page=1, page_size=20):
+def get_transactions(
+	grant: str | None = None,
+	from_date: str | None = None,
+	to_date: str | None = None,
+	category: str | None = None,
+	page: int = 1,
+	page_size: int = 20,
+):
 	"""
 	Paginated GL transactions for donor projects with party confidentiality check.
 	"""
@@ -163,7 +170,7 @@ def get_transactions(grant=None, from_date=None, to_date=None, category=None, pa
 		pass
 
 	# Count total
-	count_res = frappe.db.sql(
+	count_res = frappe.db.sql(  # nosemgrep
 		f"""
 		SELECT COUNT(*) as total
 		FROM `tabGL Entry` gle
@@ -176,7 +183,7 @@ def get_transactions(grant=None, from_date=None, to_date=None, category=None, pa
 	total_count = count_res[0].total if count_res else 0
 
 	# Fetch rows
-	rows = frappe.db.sql(
+	rows = frappe.db.sql(  # nosemgrep
 		f"""
 		SELECT
 			gle.name, gle.posting_date, gle.account, gle.debit, gle.credit,

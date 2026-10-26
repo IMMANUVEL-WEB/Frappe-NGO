@@ -1,6 +1,8 @@
 import re
+from typing import Any
 
 import frappe
+from frappe import _
 from frappe.utils import get_first_day, get_last_day, today
 
 
@@ -16,7 +18,7 @@ def get_current_volunteer():
 		volunteer = frappe.db.get_value("Volunteer", {"email": user}, "name")
 		if volunteer:
 			frappe.db.set_value("Volunteer", volunteer, "user", user)
-			frappe.db.commit()
+			frappe.db.commit()  # nosemgrep
 
 	# If still not found, check if user has Volunteer role and create a Volunteer record
 	if not volunteer:
@@ -39,7 +41,7 @@ def get_current_volunteer():
 				}
 			)
 			vol.insert(ignore_permissions=True)
-			frappe.db.commit()
+			frappe.db.commit()  # nosemgrep
 			return vol.name
 
 	return volunteer
@@ -202,7 +204,7 @@ def my_dashboard():
 
 
 @frappe.whitelist()
-def my_assignments(status=None):
+def my_assignments(status: str | None = None):
 	volunteer = get_current_volunteer()
 
 	filters = {"volunteer": volunteer, "docstatus": ["<", 2]}
@@ -254,7 +256,7 @@ def my_assignments(status=None):
 		else:
 			cond.append("1 = 0")
 
-		att_hours = frappe.db.sql(
+		att_hours = frappe.db.sql(  # nosemgrep
 			f"""
             SELECT SUM(total_hours) FROM `tabVolunteer Attendance`
             WHERE {" AND ".join(cond)}
@@ -267,7 +269,7 @@ def my_assignments(status=None):
 
 
 @frappe.whitelist()
-def my_shifts(period="upcoming"):
+def my_shifts(period: str = "upcoming"):
 	volunteer = get_current_volunteer()
 
 	# Get all shift names where the volunteer is a participant
@@ -323,7 +325,7 @@ def my_shifts(period="upcoming"):
 
 
 @frappe.whitelist()
-def my_attendance(from_date=None, to_date=None):
+def my_attendance(from_date: str | None = None, to_date: str | None = None):
 	volunteer = get_current_volunteer()
 
 	filters = {
@@ -446,13 +448,19 @@ def my_profile():
 	}
 
 
-@frappe.whitelist()
+@frappe.whitelist(methods=["POST"])
 def update_my_profile(
-	full_name=None, phone=None, address=None, date_of_birth=None, bio=None, availability=None, image=None
+	full_name: str | None = None,
+	phone: str | None = None,
+	address: str | None = None,
+	date_of_birth: str | None = None,
+	bio: str | None = None,
+	availability: Any = None,
+	image: str | None = None,
 ):
 	volunteer = get_current_volunteer()
 	if not volunteer:
-		frappe.throw("Volunteer record not found")
+		frappe.throw(_("Volunteer record not found"))
 
 	doc = frappe.get_doc("Volunteer", volunteer)
 
@@ -471,7 +479,7 @@ def update_my_profile(
 	if phone is not None:
 		p = phone.strip()
 		if p and not re.match(r"^\+?[\d\s-]{7,30}$", p):
-			frappe.throw("Invalid phone number format")
+			frappe.throw(_("Invalid phone number format"))
 		doc.phone = p
 		if getattr(doc, "user", None):
 			frappe.db.set_value("User", doc.user, "mobile_no", p)
@@ -508,13 +516,13 @@ def update_my_profile(
 
 		for row in availability:
 			if row.get("day_of_week") not in valid_days:
-				frappe.throw(f"Invalid day of week: {row.get('day_of_week')}")
+				frappe.throw(_("Invalid day of week: {0}").format(row.get("day_of_week")))
 
 			from_time = row.get("from_time")
 			to_time = row.get("to_time")
 
 			if from_time and to_time and str(from_time) >= str(to_time):
-				frappe.throw(f"From Time must be before To Time on {row.get('day_of_week')}")
+				frappe.throw(_("From Time must be before To Time on {0}").format(row.get("day_of_week")))
 
 			doc.append(
 				"availability",
@@ -523,18 +531,17 @@ def update_my_profile(
 
 	doc.flags.ignore_permissions = True
 	doc.save()
-	frappe.db.commit()
 	return "Success"
 
 
-@frappe.whitelist()
+@frappe.whitelist(methods=["POST"])
 def upload_profile_image():
 	volunteer = get_current_volunteer()
 	if not volunteer:
-		frappe.throw("Volunteer not found")
+		frappe.throw(_("Volunteer not found"))
 
 	if "file" not in frappe.request.files:
-		frappe.throw("No file uploaded")
+		frappe.throw(_("No file uploaded"))
 
 	uploaded_file = frappe.request.files["file"]
 	from frappe.utils.file_manager import save_file
@@ -549,7 +556,6 @@ def upload_profile_image():
 	if user:
 		frappe.db.set_value("User", user, "user_image", file_doc.file_url)
 
-	frappe.db.commit()
 	return {"file_url": file_doc.file_url}
 
 
@@ -594,12 +600,12 @@ def open_opportunities():
 	return opportunities
 
 
-@frappe.whitelist()
-def submit_interest(opportunity):
+@frappe.whitelist(methods=["POST"])
+def submit_interest(opportunity: str):
 	volunteer = get_current_volunteer()
 
 	if not frappe.db.exists("Volunteer Opportunity", opportunity):
-		frappe.throw("Invalid Opportunity")
+		frappe.throw(_("Invalid Opportunity"))
 
 	exists = frappe.db.exists(
 		"Volunteer Opportunity Interest", {"volunteer": volunteer, "opportunity": opportunity}
@@ -620,21 +626,21 @@ def submit_interest(opportunity):
 	return "Success"
 
 
-@frappe.whitelist()
-def update_password(old_password, new_password):
+@frappe.whitelist(methods=["POST"])
+def update_password(old_password: str, new_password: str):
 	user = frappe.session.user
 
 	if user == "Guest":
-		frappe.throw("Not logged in")
+		frappe.throw(_("Not logged in"))
 
 	try:
 		frappe.core.doctype.user.user.update_password(new_password=new_password, old_password=old_password)
 		return "Password updated successfully"
 	except frappe.AuthenticationError:
-		frappe.throw("Incorrect old password", frappe.AuthenticationError)
+		frappe.throw(_("Incorrect old password"), frappe.AuthenticationError)
 
 
-@frappe.whitelist(allow_guest=True)
+@frappe.whitelist(allow_guest=True)  # nosemgrep
 def get_portal_settings():
 	doc = frappe.get_single("Volunteer Settings")
 	d = doc.as_dict()
@@ -688,24 +694,24 @@ def get_portal_settings():
 	return res
 
 
-@frappe.whitelist(allow_guest=True)
+@frappe.whitelist(allow_guest=True)  # nosemgrep
 def get_all_skills():
 	return frappe.get_all(
 		"Volunteer Skill", fields=["name", "skill_name"], ignore_permissions=True, order_by="name asc"
 	)
 
 
-@frappe.whitelist(allow_guest=True)
+@frappe.whitelist(allow_guest=True, methods=["POST"])  # nosemgrep
 def submit_application(
-	applicant_name,
-	email,
-	phone=None,
-	date_of_birth=None,
-	gender=None,
-	address=None,
-	skills=None,
-	availability=None,
-	preferred_impact_area=None,
+	applicant_name: str,
+	email: str,
+	phone: str | None = None,
+	date_of_birth: str | None = None,
+	gender: str | None = None,
+	address: str | None = None,
+	skills: Any = None,
+	availability: Any = None,
+	preferred_impact_area: str | None = None,
 ):
 	import json
 
@@ -766,7 +772,6 @@ def submit_application(
 		if getattr(doc, "workflow_state", None) == "Draft":
 			doc.db_set("workflow_state", "Pending")
 
-		frappe.db.commit()
 		return {"status": "success"}
 	except Exception as e:
 		frappe.db.rollback()

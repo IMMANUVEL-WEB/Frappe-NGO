@@ -74,7 +74,7 @@ def get_projects():
 
 
 @frappe.whitelist()
-def get_project_detail(project):
+def get_project_detail(project: str):
 	"""
 	Returns deep details, tasks/milestones, and impact for a project.
 	"""
@@ -111,8 +111,8 @@ def get_project_detail(project):
 	}
 
 
-@frappe.whitelist()
-def approve_proposal(proposal):
+@frappe.whitelist(methods=["POST"])
+def approve_proposal(proposal: str):
 	"""
 	Applies the workflow action 'Mark as Approved' to the Project Proposal.
 	"""
@@ -130,19 +130,17 @@ def approve_proposal(proposal):
 
 	try:
 		apply_workflow(prop, "Mark as Approved")
-		frappe.db.commit()
 		return {"success": True, "message": _("Proposal approved successfully.")}
 	except Exception as e:
 		frappe.log_error(f"Error approving proposal: {e}")
 		# Fallback if workflow state direct update needed
 		prop.workflow_state = "Approved"
 		prop.save(ignore_permissions=True)
-		frappe.db.commit()
 		return {"success": True, "message": _("Proposal marked as approved.")}
 
 
-@frappe.whitelist()
-def reject_proposal(proposal, reason=None):
+@frappe.whitelist(methods=["POST"])
+def reject_proposal(proposal: str, reason: str | None = None):
 	"""
 	Rejects a Project Proposal with optional reason.
 	"""
@@ -162,13 +160,11 @@ def reject_proposal(proposal, reason=None):
 
 	try:
 		apply_workflow(prop, "Reject")
-		frappe.db.commit()
 		return {"success": True, "message": _("Proposal rejected.")}
 	except Exception as e:
 		frappe.log_error(f"Error rejecting proposal: {e}")
 		prop.workflow_state = "Rejected"
 		prop.save(ignore_permissions=True)
-		frappe.db.commit()
 		return {"success": True, "message": _("Proposal marked as rejected.")}
 
 

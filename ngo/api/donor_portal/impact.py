@@ -8,7 +8,7 @@ from ngo.api.donor_portal.auth import get_current_donor
 
 
 @frappe.whitelist()
-def get_impact(project=None):
+def get_impact(project: str | None = None):
 	"""
 	Returns strictly anonymized aggregates for beneficiaries, services, and district coordinates.
 	NEVER returns beneficiary names, phone numbers, IDs or exact personal addresses.

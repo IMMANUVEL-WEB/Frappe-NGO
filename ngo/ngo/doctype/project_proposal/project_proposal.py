@@ -66,10 +66,7 @@ class ProjectProposal(Document):
 
 			project.insert(ignore_permissions=True)
 
-			frappe.db.set_value(
-				"Project Proposal", self.name, "linked_project", project.name, update_modified=False
-			)
-			self.linked_project = project.name
+			self.db_set("linked_project", project.name, update_modified=False)
 
 			frappe.msgprint(
 				msg=f"Project <b>{project.name}</b> created successfully.<br>Cost Center: <b>{donor_cost_center}</b>",

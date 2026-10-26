@@ -6,7 +6,7 @@ from ngo.api.donor_portal.auth import get_current_donor
 
 
 @frappe.whitelist()
-def get_procurement(grant=None):
+def get_procurement(grant: str | None = None):
 	"""
 	Returns purchases and material goods procured under the donor's projects.
 	Protected by NGO Settings.donor_portal_show_procurement flag.

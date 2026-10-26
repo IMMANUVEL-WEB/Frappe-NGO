@@ -11,7 +11,7 @@ class VolunteerShift(Document):
 
 
 @frappe.whitelist()
-def make_volunteer_attendance(source_name, volunteer=None):
+def make_volunteer_attendance(source_name: str, volunteer: str | None = None):
 	shift = frappe.get_doc("Volunteer Shift", source_name)
 	attendance = frappe.new_doc("Volunteer Attendance")
 	attendance.shift = shift.name

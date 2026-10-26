@@ -44,12 +44,7 @@ def execute():
 			grant_col = "donor_grant"
 
 		if grant_col:
-			indices = [idx[2] for idx in frappe.db.sql("SHOW INDEX FROM `tabGL Entry`")]
-			if "idx_gl_donor_grant" not in indices:
-				frappe.db.sql(
-					f"CREATE INDEX idx_gl_donor_grant ON `tabGL Entry` ({grant_col}, voucher_type, posting_date)"
-				)
-				frappe.db.commit()
+			frappe.db.add_index("GL Entry", [grant_col, "voucher_type", "posting_date"], "idx_gl_donor_grant")
 	except Exception as e:
 		frappe.log_error(f"Error adding index on GL Entry: {e}")
 
