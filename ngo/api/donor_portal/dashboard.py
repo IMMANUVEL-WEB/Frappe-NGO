@@ -2,7 +2,6 @@ from collections import defaultdict
 from datetime import datetime
 
 import frappe
-from frappe import _
 from frappe.utils import add_days, flt, formatdate, getdate, today
 
 from ngo.api.donor_portal.auth import get_current_donor
@@ -69,32 +68,57 @@ def get_dashboard():
 	total_given = sum(flt(p.received_amount or p.paid_amount) for p in payments)
 
 	# 3. Total Spent (GL Entries on Donor Projects / Cost Centers)
-	spent_conditions = []
-	spent_params = {}
-	if project_ids:
-		spent_conditions.append("gle.project IN %(projects)s")
-		spent_params["projects"] = tuple(project_ids)
-	if cost_centers:
-		spent_conditions.append("gle.cost_center IN %(cost_centers)s")
-		spent_params["cost_centers"] = tuple(cost_centers)
-
+	# SQL text is static in each branch; all values are passed as parameters.
 	gl_entries = []
-	if spent_conditions:
-		query_where = " OR ".join(spent_conditions)
+	if project_ids and cost_centers:
 		gl_entries = frappe.db.sql(
-			f"""
+			"""
 			SELECT
 				gle.name, gle.posting_date, gle.account, gle.debit, gle.credit,
 				gle.project, gle.cost_center, gle.voucher_type, gle.voucher_no
 			FROM `tabGL Entry` gle
 			JOIN `tabAccount` acc ON acc.name = gle.account
-			WHERE ({query_where})
+			WHERE (gle.project IN %(projects)s OR gle.cost_center IN %(cost_centers)s)
 			  AND acc.root_type = 'Expense'
 			  AND gle.is_cancelled = 0
 			  AND gle.debit > 0
 			ORDER BY gle.posting_date ASC
-		""",
-			spent_params,
+			""",
+			{"projects": tuple(project_ids), "cost_centers": tuple(cost_centers)},
+			as_dict=True,
+		)
+	elif project_ids:
+		gl_entries = frappe.db.sql(
+			"""
+			SELECT
+				gle.name, gle.posting_date, gle.account, gle.debit, gle.credit,
+				gle.project, gle.cost_center, gle.voucher_type, gle.voucher_no
+			FROM `tabGL Entry` gle
+			JOIN `tabAccount` acc ON acc.name = gle.account
+			WHERE gle.project IN %(projects)s
+			  AND acc.root_type = 'Expense'
+			  AND gle.is_cancelled = 0
+			  AND gle.debit > 0
+			ORDER BY gle.posting_date ASC
+			""",
+			{"projects": tuple(project_ids)},
+			as_dict=True,
+		)
+	elif cost_centers:
+		gl_entries = frappe.db.sql(
+			"""
+			SELECT
+				gle.name, gle.posting_date, gle.account, gle.debit, gle.credit,
+				gle.project, gle.cost_center, gle.voucher_type, gle.voucher_no
+			FROM `tabGL Entry` gle
+			JOIN `tabAccount` acc ON acc.name = gle.account
+			WHERE gle.cost_center IN %(cost_centers)s
+			  AND acc.root_type = 'Expense'
+			  AND gle.is_cancelled = 0
+			  AND gle.debit > 0
+			ORDER BY gle.posting_date ASC
+			""",
+			{"cost_centers": tuple(cost_centers)},
 			as_dict=True,
 		)
 
@@ -104,27 +128,42 @@ def get_dashboard():
 
 	# 4. Total Purchases / Procurement
 	total_purchases = 0.0
-	if project_ids or cost_centers:
-		p_where = []
-		p_params = {}
-		if project_ids:
-			p_where.append("project IN %(projects)s")
-			p_params["projects"] = tuple(project_ids)
-		if cost_centers:
-			p_where.append("cost_center IN %(cost_centers)s")
-			p_params["cost_centers"] = tuple(cost_centers)
-
+	if project_ids and cost_centers:
 		purchases = frappe.db.sql(
-			f"""
-			SELECT SUM(grand_total) as total
+			"""
+			SELECT SUM(grand_total) AS total
 			FROM `tabPurchase Invoice`
-			WHERE ({" OR ".join(p_where)}) AND docstatus = 1
-		""",
-			p_params,
+			WHERE (project IN %(projects)s OR cost_center IN %(cost_centers)s)
+			  AND docstatus = 1
+			""",
+			{"projects": tuple(project_ids), "cost_centers": tuple(cost_centers)},
 			as_dict=True,
 		)
-		if purchases and purchases[0].total:
-			total_purchases = flt(purchases[0].total)
+	elif project_ids:
+		purchases = frappe.db.sql(
+			"""
+			SELECT SUM(grand_total) AS total
+			FROM `tabPurchase Invoice`
+			WHERE project IN %(projects)s AND docstatus = 1
+			""",
+			{"projects": tuple(project_ids)},
+			as_dict=True,
+		)
+	elif cost_centers:
+		purchases = frappe.db.sql(
+			"""
+			SELECT SUM(grand_total) AS total
+			FROM `tabPurchase Invoice`
+			WHERE cost_center IN %(cost_centers)s AND docstatus = 1
+			""",
+			{"cost_centers": tuple(cost_centers)},
+			as_dict=True,
+		)
+	else:
+		purchases = []
+
+	if purchases and purchases[0].total:
+		total_purchases = flt(purchases[0].total)
 
 	# 5. Balances
 	balance_available = max(total_given - total_spent, 0.0)
@@ -143,7 +182,7 @@ def get_dashboard():
 	for g in gl_entries:
 		if g.posting_date:
 			m_key = formatdate(g.posting_date, "MMM yyyy")
-			monthly_spent[m_key] += flt(g.debit)
+			monthly_spent[m_key] += flt(g.debit) - flt(g.credit)
 
 	# Default last 7 months if sparse
 	month_order = []
@@ -184,7 +223,7 @@ def get_dashboard():
 	for g in gl_entries:
 		acc_name = g.account or ""
 		cat = category_map.get(acc_name)
-		amt = flt(g.debit)
+		amt = flt(g.debit) - flt(g.credit)
 		if cat:
 			if cat in ["CapEx", "Goods"]:
 				capex_spent += amt
@@ -226,7 +265,7 @@ def get_dashboard():
 	project_spent_map = defaultdict(float)
 	for g in gl_entries:
 		if g.project:
-			project_spent_map[g.project] += flt(g.debit)
+			project_spent_map[g.project] += flt(g.debit) - flt(g.credit)
 
 	# Fetch project names/details
 	if project_ids:
