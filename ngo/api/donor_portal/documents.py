@@ -1,6 +1,8 @@
 import frappe
 from frappe import _
+
 from ngo.api.donor_portal.auth import get_current_donor
+
 
 @frappe.whitelist()
 def get_documents(grant=None):
@@ -32,12 +34,17 @@ def get_documents(grant=None):
 	# If custom_shared_with_donor is present, check it; else return attached files on donor grant/proposal
 	docs = frappe.get_all(
 		"File",
-		filters={
-			"attached_to_name": ["in", all_parent_names],
-			"is_folder": 0
-		},
-		fields=["name", "file_name", "file_url", "attached_to_doctype", "attached_to_name", "file_size", "creation"],
-		order_by="creation desc"
+		filters={"attached_to_name": ["in", all_parent_names], "is_folder": 0},
+		fields=[
+			"name",
+			"file_name",
+			"file_url",
+			"attached_to_doctype",
+			"attached_to_name",
+			"file_size",
+			"creation",
+		],
+		order_by="creation desc",
 	)
 
 	# Fetch Compliance Docs
@@ -46,22 +53,33 @@ def get_documents(grant=None):
 		comp_items = frappe.get_all(
 			"Compliance Doc",
 			filters={"parent": ["in", grant_names]},
-			fields=["name", "document_type", "document_title", "reference_number", "document_status", "attachment", "expiry_date"]
+			fields=[
+				"name",
+				"document_type",
+				"document_title",
+				"reference_number",
+				"document_status",
+				"attachment",
+				"expiry_date",
+			],
 		)
 		for c in comp_items:
-			compliance_docs.append({
-				"name": c.name,
-				"file_name": c.document_title or c.document_type,
-				"file_url": c.attachment,
-				"attached_to_doctype": "Donor Grant",
-				"attached_to_name": c.reference_number or c.document_type,
-				"file_size": None,
-				"creation": c.expiry_date,
-				"is_compliance": True,
-				"status": c.document_status
-			})
+			compliance_docs.append(
+				{
+					"name": c.name,
+					"file_name": c.document_title or c.document_type,
+					"file_url": c.attachment,
+					"attached_to_doctype": "Donor Grant",
+					"attached_to_name": c.reference_number or c.document_type,
+					"file_size": None,
+					"creation": c.expiry_date,
+					"is_compliance": True,
+					"status": c.document_status,
+				}
+			)
 
 	return docs + compliance_docs
+
 
 @frappe.whitelist()
 def download_document(name):
@@ -80,9 +98,9 @@ def download_document(name):
 	# Permission validation
 	allowed = False
 	if parent_dt == "Donor Grant":
-		allowed = (frappe.db.get_value("Donor Grant", parent_name, "donor_name") == donor)
+		allowed = frappe.db.get_value("Donor Grant", parent_name, "donor_name") == donor
 	elif parent_dt == "Project Proposal":
-		allowed = (frappe.db.get_value("Project Proposal", parent_name, "donor_profile") == donor)
+		allowed = frappe.db.get_value("Project Proposal", parent_name, "donor_profile") == donor
 	elif parent_dt == "Project":
 		allowed = frappe.db.exists("Donor Grant", {"donor_name": donor, "linked_project": parent_name}) or (
 			frappe.db.get_value("Project", parent_name, "custom_donor") == donor
@@ -91,12 +109,11 @@ def download_document(name):
 		allowed = True
 
 	if not allowed:
-		frappe.throw(_("Access denied: You are not authorized to download this file."), frappe.PermissionError)
+		frappe.throw(
+			_("Access denied: You are not authorized to download this file."), frappe.PermissionError
+		)
 
 	# Log access
 	frappe.logger("donor_portal").info(f"Donor {donor} downloaded file {f.file_name} ({f.name})")
 
-	return {
-		"file_name": f.file_name,
-		"file_url": f.file_url
-	}
+	return {"file_name": f.file_name, "file_url": f.file_url}

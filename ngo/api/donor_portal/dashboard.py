@@ -1,9 +1,12 @@
+from collections import defaultdict
+from datetime import datetime
+
 import frappe
 from frappe import _
-from frappe.utils import flt, getdate, add_days, today, formatdate
-from datetime import datetime
-from collections import defaultdict
+from frappe.utils import add_days, flt, formatdate, getdate, today
+
 from ngo.api.donor_portal.auth import get_current_donor
+
 
 @frappe.whitelist()
 def get_dashboard():
@@ -19,7 +22,17 @@ def get_dashboard():
 	grants = frappe.get_all(
 		"Donor Grant",
 		filters={"donor_name": donor, "status": "Active"},
-		fields=["name", "grant_id", "grant_title", "total_amount", "linked_project", "cost_center", "valid_from", "valid_to", "currency"]
+		fields=[
+			"name",
+			"grant_id",
+			"grant_title",
+			"total_amount",
+			"linked_project",
+			"cost_center",
+			"valid_from",
+			"valid_to",
+			"currency",
+		],
 	)
 
 	active_grants_count = len(grants)
@@ -28,9 +41,7 @@ def get_dashboard():
 
 	# Also find projects where Project-custom_donor is this donor
 	donor_projects = frappe.get_all(
-		"Project",
-		filters={"custom_donor": donor},
-		fields=["name", "project_name", "cost_center"]
+		"Project", filters={"custom_donor": donor}, fields=["name", "project_name", "cost_center"]
 	)
 	for dp in donor_projects:
 		if dp.name not in project_ids:
@@ -49,16 +60,11 @@ def get_dashboard():
 	total_committed = sum(flt(g.total_amount) for g in grants)
 
 	# 2. Total Given (Incoming Payment Entries from Donor)
-	payment_filters = {
-		"party_type": "Supplier",
-		"party": donor,
-		"payment_type": "Receive",
-		"docstatus": 1
-	}
+	payment_filters = {"party_type": "Supplier", "party": donor, "payment_type": "Receive", "docstatus": 1}
 	payments = frappe.get_all(
 		"Payment Entry",
 		filters=payment_filters,
-		fields=["name", "received_amount", "paid_amount", "posting_date"]
+		fields=["name", "received_amount", "paid_amount", "posting_date"],
 	)
 	total_given = sum(flt(p.received_amount or p.paid_amount) for p in payments)
 
@@ -75,7 +81,8 @@ def get_dashboard():
 	gl_entries = []
 	if spent_conditions:
 		query_where = " OR ".join(spent_conditions)
-		gl_entries = frappe.db.sql(f"""
+		gl_entries = frappe.db.sql(
+			f"""
 			SELECT
 				gle.name, gle.posting_date, gle.account, gle.debit, gle.credit,
 				gle.project, gle.cost_center, gle.voucher_type, gle.voucher_no
@@ -86,7 +93,10 @@ def get_dashboard():
 			  AND gle.is_cancelled = 0
 			  AND gle.debit > 0
 			ORDER BY gle.posting_date ASC
-		""", spent_params, as_dict=True)
+		""",
+			spent_params,
+			as_dict=True,
+		)
 
 	total_spent = sum(flt(entry.debit) - flt(entry.credit) for entry in gl_entries)
 	if total_spent < 0:
@@ -104,11 +114,15 @@ def get_dashboard():
 			p_where.append("cost_center IN %(cost_centers)s")
 			p_params["cost_centers"] = tuple(cost_centers)
 
-		purchases = frappe.db.sql(f"""
+		purchases = frappe.db.sql(
+			f"""
 			SELECT SUM(grand_total) as total
 			FROM `tabPurchase Invoice`
 			WHERE ({" OR ".join(p_where)}) AND docstatus = 1
-		""", p_params, as_dict=True)
+		""",
+			p_params,
+			as_dict=True,
+		)
 		if purchases and purchases[0].total:
 			total_purchases = flt(purchases[0].total)
 
@@ -145,13 +159,15 @@ def get_dashboard():
 		given_val = round(monthly_given.get(m_key, 0.0) / 100000.0, 2)  # In Lakhs
 		spent_val = round(monthly_spent.get(m_key, 0.0) / 100000.0, 2)  # In Lakhs
 		var_val = round(given_val - spent_val, 2)
-		monthly_series.append({
-			"month": m_key.split(" ")[0],
-			"month_year": m_key,
-			"given": given_val,
-			"spent": spent_val,
-			"variance": var_val
-		})
+		monthly_series.append(
+			{
+				"month": m_key.split(" ")[0],
+				"month_year": m_key,
+				"given": given_val,
+				"spent": spent_val,
+				"variance": var_val,
+			}
+		)
 
 	# 7. Spend by Category: CapEx, OpEx, Admin
 	capex_spent = 0.0
@@ -191,18 +207,18 @@ def get_dashboard():
 		"capex": {
 			"amount": round(capex_spent / 100000.0, 2),  # in Lakh
 			"raw_amount": round(capex_spent, 2),
-			"percent": round(capex_spent / cat_total * 100, 1)
+			"percent": round(capex_spent / cat_total * 100, 1),
 		},
 		"opex": {
 			"amount": round(opex_spent / 100000.0, 2),  # in Lakh
 			"raw_amount": round(opex_spent, 2),
-			"percent": round(opex_spent / cat_total * 100, 1)
+			"percent": round(opex_spent / cat_total * 100, 1),
 		},
 		"admin": {
 			"amount": round(admin_spent / 100000.0, 2),  # in Lakh
 			"raw_amount": round(admin_spent, 2),
-			"percent": round(admin_spent / cat_total * 100, 1)
-		}
+			"percent": round(admin_spent / cat_total * 100, 1),
+		},
 	}
 
 	# 8. Spend by Project
@@ -215,23 +231,23 @@ def get_dashboard():
 	# Fetch project names/details
 	if project_ids:
 		projects_meta = frappe.get_all(
-			"Project",
-			filters={"name": ["in", project_ids]},
-			fields=["name", "project_name", "custom_sector"]
+			"Project", filters={"name": ["in", project_ids]}, fields=["name", "project_name", "custom_sector"]
 		)
 		meta_dict = {p.name: p for p in projects_meta}
 		for pid in project_ids:
 			pm = meta_dict.get(pid)
 			p_name = pm.project_name if pm else pid
 			p_amt = project_spent_map.get(pid, 0.0)
-			spend_by_project.append({
-				"project_id": pid,
-				"project_name": p_name,
-				"sector": getattr(pm, "custom_sector", "") or "General",
-				"amount_lakh": round(p_amt / 100000.0, 2),
-				"amount_raw": round(p_amt, 2),
-				"percent": round(p_amt / (total_spent or 1.0) * 100, 1)
-			})
+			spend_by_project.append(
+				{
+					"project_id": pid,
+					"project_name": p_name,
+					"sector": getattr(pm, "custom_sector", "") or "General",
+					"amount_lakh": round(p_amt / 100000.0, 2),
+					"amount_raw": round(p_amt, 2),
+					"percent": round(p_amt / (total_spent or 1.0) * 100, 1),
+				}
+			)
 	spend_by_project.sort(key=lambda x: x["amount_raw"], reverse=True)
 
 	# 9. Project proposals awaiting decision
@@ -239,10 +255,16 @@ def get_dashboard():
 		"Project Proposal",
 		filters={"donor_profile": donor, "docstatus": ["in", [0, 1]]},
 		fields=[
-			"name", "proposal_title", "proposal_code", "sector", "total_budget",
-			"proposed_start_date", "proposed_end_date", "workflow_state"
+			"name",
+			"proposal_title",
+			"proposal_code",
+			"sector",
+			"total_budget",
+			"proposed_start_date",
+			"proposed_end_date",
+			"workflow_state",
 		],
-		order_by="creation desc"
+		order_by="creation desc",
 	)
 
 	pending_proposals = []
@@ -250,9 +272,7 @@ def get_dashboard():
 		state = prop.workflow_state or ""
 		if state in ["Donor Approval Pending", "Under Review", "Draft", "Internal Review", "Pending"]:
 			items = frappe.get_all(
-				"Budget Item",
-				filters={"parent": prop.name},
-				fields=["category", "amount"]
+				"Budget Item", filters={"parent": prop.name}, fields=["category", "amount"]
 			)
 			c_capex = sum(flt(i.amount) for i in items if i.category == "CapEx")
 			c_opex = sum(flt(i.amount) for i in items if i.category == "OpEx")
@@ -264,27 +284,33 @@ def get_dashboard():
 				d2 = getdate(prop.proposed_end_date)
 				months = max(round((d2 - d1).days / 30), 1)
 
-			pending_proposals.append({
-				"name": prop.name,
-				"title": prop.proposal_title or prop.name,
-				"code": prop.proposal_code or prop.name,
-				"sector": prop.sector or "Community Development",
-				"total_budget_lakh": round(flt(prop.total_budget) / 100000.0, 2),
-				"duration_months": months,
-				"capex_lakh": round(c_capex / 100000.0, 2),
-				"opex_lakh": round(c_opex / 100000.0, 2),
-				"admin_lakh": round(c_admin / 100000.0, 2),
-				"state": state
-			})
+			pending_proposals.append(
+				{
+					"name": prop.name,
+					"title": prop.proposal_title or prop.name,
+					"code": prop.proposal_code or prop.name,
+					"sector": prop.sector or "Community Development",
+					"total_budget_lakh": round(flt(prop.total_budget) / 100000.0, 2),
+					"duration_months": months,
+					"capex_lakh": round(c_capex / 100000.0, 2),
+					"opex_lakh": round(c_opex / 100000.0, 2),
+					"admin_lakh": round(c_admin / 100000.0, 2),
+					"state": state,
+				}
+			)
 
 	# 10. Beneficiaries reached count
 	beneficiaries_reached = 0
 	if project_ids:
-		b_count = frappe.db.sql("""
+		b_count = frappe.db.sql(
+			"""
 			SELECT COUNT(DISTINCT beneficiary) as total
 			FROM `tabBeneficiary Service`
 			WHERE project IN %(projects)s AND docstatus = 1
-		""", {"projects": tuple(project_ids)}, as_dict=True)
+		""",
+			{"projects": tuple(project_ids)},
+			as_dict=True,
+		)
 		if b_count and b_count[0].total:
 			beneficiaries_reached = b_count[0].total
 
@@ -302,12 +328,12 @@ def get_dashboard():
 			"active_grants_count": active_grants_count,
 			"expiring_soon_count": expiring_soon_count,
 			"total_purchase_amount": total_purchases,
-			"beneficiaries_reached": beneficiaries_reached
+			"beneficiaries_reached": beneficiaries_reached,
 		},
 		"charts": {
 			"monthly_series": monthly_series,
 			"spend_by_category": spend_by_category,
-			"spend_by_project": spend_by_project
+			"spend_by_project": spend_by_project,
 		},
-		"pending_proposals": pending_proposals
+		"pending_proposals": pending_proposals,
 	}

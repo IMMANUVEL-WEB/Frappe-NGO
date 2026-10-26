@@ -1,7 +1,9 @@
 import frappe
 from frappe import _
 from frappe.utils import flt
+
 from ngo.api.donor_portal.auth import get_current_donor
+
 
 @frappe.whitelist()
 def get_procurement(grant=None):
@@ -26,7 +28,8 @@ def get_procurement(grant=None):
 		return {"enabled": True, "items": []}
 
 	# Query Purchase Invoice items
-	items = frappe.db.sql("""
+	items = frappe.db.sql(
+		"""
 		SELECT
 			pii.item_code, pii.item_name, pii.qty, pii.rate, pii.amount,
 			pii.uom, pi.name as invoice_no, pi.posting_date, pi.status, pi.project
@@ -35,9 +38,9 @@ def get_procurement(grant=None):
 		WHERE pi.project IN %(projects)s AND pi.docstatus = 1
 		ORDER BY pi.posting_date DESC
 		LIMIT 50
-	""", {"projects": tuple(projects)}, as_dict=True)
+	""",
+		{"projects": tuple(projects)},
+		as_dict=True,
+	)
 
-	return {
-		"enabled": True,
-		"items": items
-	}
+	return {"enabled": True, "items": items}

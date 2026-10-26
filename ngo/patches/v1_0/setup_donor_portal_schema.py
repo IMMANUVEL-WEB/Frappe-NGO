@@ -1,6 +1,7 @@
 import frappe
 from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 
+
 def execute():
 	# 1. Reload doctypes
 	try:
@@ -18,7 +19,7 @@ def execute():
 				"label": "Shared with Donor",
 				"fieldtype": "Check",
 				"default": "0",
-				"insert_after": "attached_to_name"
+				"insert_after": "attached_to_name",
 			}
 		],
 		"Project Proposal": [
@@ -27,9 +28,9 @@ def execute():
 				"label": "Donor Rejection Reason",
 				"fieldtype": "Small Text",
 				"insert_after": "approval_notes",
-				"read_only": 1
+				"read_only": 1,
 			}
-		]
+		],
 	}
 	create_custom_fields(custom_fields, update=True)
 
@@ -45,7 +46,9 @@ def execute():
 		if grant_col:
 			indices = [idx[2] for idx in frappe.db.sql("SHOW INDEX FROM `tabGL Entry`")]
 			if "idx_gl_donor_grant" not in indices:
-				frappe.db.sql(f"CREATE INDEX idx_gl_donor_grant ON `tabGL Entry` ({grant_col}, voucher_type, posting_date)")
+				frappe.db.sql(
+					f"CREATE INDEX idx_gl_donor_grant ON `tabGL Entry` ({grant_col}, voucher_type, posting_date)"
+				)
 				frappe.db.commit()
 	except Exception as e:
 		frappe.log_error(f"Error adding index on GL Entry: {e}")

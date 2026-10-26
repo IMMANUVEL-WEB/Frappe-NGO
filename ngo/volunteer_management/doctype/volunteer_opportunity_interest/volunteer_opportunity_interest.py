@@ -24,9 +24,8 @@ def make_volunteer_shift(source_name):
 	shift.required_count = 1
 	if interest.volunteer:
 		vol_name = frappe.db.get_value("Volunteer", interest.volunteer, "full_name") or interest.volunteer
-		shift.append("participants", {
-			"volunteer": interest.volunteer,
-			"volunteer_name": vol_name,
-			"status": "Confirmed"
-		})
+		shift.append(
+			"participants",
+			{"volunteer": interest.volunteer, "volunteer_name": vol_name, "status": "Confirmed"},
+		)
 	return shift.as_dict()

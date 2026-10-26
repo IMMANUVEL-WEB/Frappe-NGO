@@ -1,12 +1,14 @@
 import frappe
 from frappe import _
 
+
 def get_donor_portal_role():
 	try:
 		role = frappe.db.get_single_value("NGO Settings", "donor_portal_role")
 		return role or "Donor Liaison"
 	except Exception:
 		return "Donor Liaison"
+
 
 def get_current_donor(allow_admin_preview=True):
 	"""
@@ -17,16 +19,11 @@ def get_current_donor(allow_admin_preview=True):
 	if not user or user == "Guest":
 		frappe.throw(_("Please log in to access the Donor Portal."), frappe.PermissionError)
 
-	portal_role = get_donor_portal_role()
 	roles = frappe.get_roles(user)
 	is_system_user = frappe.db.get_value("User", user, "user_type") == "System User"
 
 	# 1. Resolve Donor Supplier from Supplier's portal_users child table
-	donor = frappe.db.get_value(
-		"Portal User",
-		{"parenttype": "Supplier", "user": user},
-		"parent"
-	)
+	donor = frappe.db.get_value("Portal User", {"parenttype": "Supplier", "user": user}, "parent")
 
 	# 2. Fallback: check custom Donor Portal User doctype if present
 	if not donor and frappe.db.table_exists("Donor Portal User"):
@@ -46,9 +43,15 @@ def get_current_donor(allow_admin_preview=True):
 			active_donor = frappe.db.get_value("Supplier", {"supplier_type": "Donor"}, "name")
 			if active_donor:
 				return active_donor
-		frappe.throw(_("Admin user has no linked Donor organisation for live operations."), frappe.PermissionError)
+		frappe.throw(
+			_("Admin user has no linked Donor organisation for live operations."), frappe.PermissionError
+		)
 
-	frappe.throw(_("Access Denied: No active Donor organisation linked to account {0}.").format(user), frappe.PermissionError)
+	frappe.throw(
+		_("Access Denied: No active Donor organisation linked to account {0}.").format(user),
+		frappe.PermissionError,
+	)
+
 
 @frappe.whitelist(allow_guest=True, methods=["GET", "POST"])
 def get_portal_route():
@@ -78,11 +81,7 @@ def get_portal_route():
 
 	# 1. Donor Liaison with linked donor or donor role takes precedence
 	if has_donor_role and (donor or "System Manager" not in roles):
-		return {
-			"route": "/donor-portal",
-			"role": portal_role,
-			"donor": donor
-		}
+		return {"route": "/donor-portal", "role": portal_role, "donor": donor}
 
 	# 2. System User -> Frappe Desk
 	if user_type == "System User":
@@ -96,21 +95,16 @@ def get_portal_route():
 			"role": "System User",
 			"is_admin": True,
 			"admin_donor_preview": preview_donor,
-			"allow_donor_portal": True
+			"allow_donor_portal": True,
 		}
 
 	# 3. Volunteer -> /frontend
 	if "Volunteer" in roles or "Volunteer Coordinator" in roles:
-		return {
-			"route": "/frontend",
-			"role": "Volunteer"
-		}
+		return {"route": "/frontend", "role": "Volunteer"}
 
 	# 4. Fallback
-	return {
-		"route": "/",
-		"role": "Website User"
-	}
+	return {"route": "/", "role": "Website User"}
+
 
 def get_website_user_home_page(user):
 	"""
@@ -145,9 +139,11 @@ def get_website_user_home_page(user):
 
 	return None
 
+
 # =========================================================================
 # Frappe Permission Hooks (to guarantee zero /api/resource cross-tenant leaks)
 # =========================================================================
+
 
 def get_donor_grant_query_conditions(user):
 	if not user:
@@ -160,8 +156,11 @@ def get_donor_grant_query_conditions(user):
 		donor = frappe.db.get_value("Donor Portal User", {"user": user, "enabled": 1}, "donor")
 
 	if donor:
-		return f"`tabDonor Grant`.donor_name = {frappe.db.escape(donor)} AND `tabDonor Grant`.status = 'Active'"
+		return (
+			f"`tabDonor Grant`.donor_name = {frappe.db.escape(donor)} AND `tabDonor Grant`.status = 'Active'"
+		)
 	return "1=2"
+
 
 def get_project_proposal_query_conditions(user):
 	if not user:
@@ -177,6 +176,7 @@ def get_project_proposal_query_conditions(user):
 		return f"`tabProject Proposal`.donor_profile = {frappe.db.escape(donor)} AND `tabProject Proposal`.docstatus = 1"
 	return "1=2"
 
+
 def has_donor_grant_permission(doc, user=None, permission_type=None):
 	if not user:
 		user = frappe.session.user
@@ -188,6 +188,7 @@ def has_donor_grant_permission(doc, user=None, permission_type=None):
 		donor = frappe.db.get_value("Donor Portal User", {"user": user, "enabled": 1}, "donor")
 
 	return bool(donor and doc.donor_name == donor and doc.status == "Active")
+
 
 def has_project_proposal_permission(doc, user=None, permission_type=None):
 	if not user:

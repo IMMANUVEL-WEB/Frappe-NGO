@@ -1,7 +1,7 @@
-import { userResource } from "@/data/user"
-import { createRouter, createWebHistory } from "vue-router"
-import { session } from "./data/session"
-import { donorApi } from "./donor_portal/api"
+import { userResource } from "@/data/user";
+import { createRouter, createWebHistory } from "vue-router";
+import { session } from "./data/session";
+import { donorApi } from "./donor_portal/api";
 
 const routes = [
 	// ==================== VOLUNTEER PORTAL ROUTES (UNTOUCHED) ====================
@@ -49,11 +49,7 @@ const routes = [
 	// ==================== DONOR PORTAL ROUTES ====================
 	{
 		path: "/donor-portal",
-		alias: [
-			"/donor_portal",
-			"/frontend/donor-portal",
-			"/frontend/donor_portal",
-		],
+		alias: ["/donor_portal", "/frontend/donor-portal", "/frontend/donor_portal"],
 		component: () => import("@/donor_portal/layouts/DonorLayout.vue"),
 		children: [
 			{
@@ -106,104 +102,97 @@ const routes = [
 	{
 		path: "/donor_portal/:subpath(.*)*",
 		redirect: (to) => {
-			const sub = to.params.subpath
-			return sub ? `/donor-portal/${sub}` : "/donor-portal"
+			const sub = to.params.subpath;
+			return sub ? `/donor-portal/${sub}` : "/donor-portal";
 		},
 	},
 	{
 		path: "/:catchAll(.*)*",
 		redirect: (to) => {
 			if (window.location.pathname.toLowerCase().includes("donor")) {
-				return "/donor-portal"
+				return "/donor-portal";
 			}
-			return "/"
+			return "/";
 		},
 	},
-]
+];
 
 // Determine base history cleanly based on current URL
-const pathname = window.location.pathname.toLowerCase()
-const isDonorUrl = pathname.includes("donor")
-const base = isDonorUrl ? "" : "/frontend"
+const pathname = window.location.pathname.toLowerCase();
+const isDonorUrl = pathname.includes("donor");
+const base = isDonorUrl ? "" : "/frontend";
 
 const router = createRouter({
 	history: createWebHistory(base),
 	routes,
-})
+});
 
-let cachedPortalRoute = null
+let cachedPortalRoute = null;
 
 router.beforeEach(async (to, from, next) => {
-	let isLoggedIn = session.isLoggedIn
+	let isLoggedIn = session.isLoggedIn;
 	try {
-		await userResource.promise
+		await userResource.promise;
 	} catch (error) {
-		isLoggedIn = false
+		isLoggedIn = false;
 	}
 
-	const isDonorRoute = to.path.includes("donor")
+	const isDonorRoute = to.path.includes("donor");
 
 	// Allow unauthenticated preview on donor portal routes so it never renders blank
 	if (isDonorRoute) {
-		next()
-		return
+		next();
+		return;
 	}
 
 	// If not logged in and accessing protected volunteer pages
 	if (!isLoggedIn) {
 		if (to.name !== "Login" && to.name !== "Apply") {
-			next({ name: "Login" })
-			return
+			next({ name: "Login" });
+			return;
 		}
-		next()
-		return
+		next();
+		return;
 	}
 
 	// If user is logged in, resolve role-based redirect
 	try {
 		if (!cachedPortalRoute) {
-			const res = await fetch(
-				"/api/method/ngo.api.donor_portal.auth.get_portal_route",
-			)
-			const json = await res.json()
-			cachedPortalRoute = json?.message
+			const res = await fetch("/api/method/ngo.api.donor_portal.auth.get_portal_route");
+			const json = await res.json();
+			cachedPortalRoute = json?.message;
 		}
 
 		if (cachedPortalRoute) {
-			const isDonorUser = cachedPortalRoute.role === "Donor Liaison"
+			const isDonorUser = cachedPortalRoute.role === "Donor Liaison";
 			const isSystemUser =
-				cachedPortalRoute.is_admin || cachedPortalRoute.role === "System User"
+				cachedPortalRoute.is_admin || cachedPortalRoute.role === "System User";
 
 			// If on Login page, redirect to appropriate destination
 			if (to.name === "Login") {
 				if (isDonorUser && !isSystemUser) {
-					window.location.href = "/donor-portal"
-					return
+					window.location.href = "/donor-portal";
+					return;
 				}
 				if (isSystemUser) {
-					window.location.href = "/app"
-					return
+					window.location.href = "/app";
+					return;
 				}
-				next({ name: "Dashboard" })
-				return
+				next({ name: "Dashboard" });
+				return;
 			}
 
 			// If a Donor Liaison visits volunteer portal pages (e.g. "/" or "/assignments"), immediately redirect to donor portal
-			if (
-				!isDonorRoute &&
-				isDonorUser &&
-				!isSystemUser &&
-				to.name !== "Apply"
-			) {
-				window.location.href = "/donor-portal"
-				return
+			if (!isDonorRoute && isDonorUser && !isSystemUser && to.name !== "Apply") {
+				window.location.href = "/donor-portal";
+				return;
 			}
 		}
 	} catch (e) {
-		console.warn("Cross-portal guard error:", e)
+		console.warn("Cross-portal guard error:", e);
 	}
 
-	next()
-})
+	next();
+});
 
-export default router
+export default router;

@@ -1,6 +1,7 @@
 import frappe
-from frappe.model.document import Document
 from frappe import _
+from frappe.model.document import Document
+
 
 class BeneficiaryEnrollment(Document):
 	def validate(self):
@@ -17,8 +18,8 @@ class BeneficiaryEnrollment(Document):
 					"beneficiary": self.beneficiary,
 					"project": self.project,
 					"status": "Active",
-					"name": ("!=", self.name)
-				}
+					"name": ("!=", self.name),
+				},
 			)
 			if existing:
 				frappe.throw(_("Beneficiary is already actively enrolled in this Project."))

@@ -1,8 +1,11 @@
+from collections import defaultdict
+
 import frappe
 from frappe import _
 from frappe.utils import flt
-from collections import defaultdict
+
 from ngo.api.donor_portal.auth import get_current_donor
+
 
 @frappe.whitelist()
 def get_impact(project=None):
@@ -30,35 +33,47 @@ def get_impact(project=None):
 			"by_service_type": [],
 			"by_district": [],
 			"aid_items": [],
-			"geojson": {"type": "FeatureCollection", "features": []}
+			"geojson": {"type": "FeatureCollection", "features": []},
 		}
 
 	# 1. Total distinct beneficiaries served
-	ben_count_res = frappe.db.sql("""
+	ben_count_res = frappe.db.sql(
+		"""
 		SELECT COUNT(DISTINCT beneficiary) as total, COUNT(*) as services_count
 		FROM `tabBeneficiary Service`
 		WHERE project IN %(projects)s AND docstatus = 1
-	""", {"projects": tuple(projects)}, as_dict=True)
+	""",
+		{"projects": tuple(projects)},
+		as_dict=True,
+	)
 	total_beneficiaries = ben_count_res[0].total if ben_count_res else 0
 	services_count = ben_count_res[0].services_count if ben_count_res else 0
 
 	# 2. Aggregates by Service Type
-	by_service = frappe.db.sql("""
+	by_service = frappe.db.sql(
+		"""
 		SELECT service_type, COUNT(*) as count, SUM(qty) as total_qty, SUM(amount) as total_amount
 		FROM `tabBeneficiary Service`
 		WHERE project IN %(projects)s AND docstatus = 1
 		GROUP BY service_type
 		ORDER BY count DESC
-	""", {"projects": tuple(projects)}, as_dict=True)
+	""",
+		{"projects": tuple(projects)},
+		as_dict=True,
+	)
 
 	# 3. Location aggregates (Coarse District/Territory level from Beneficiary Enrollment)
-	by_district = frappe.db.sql("""
+	by_district = frappe.db.sql(
+		"""
 		SELECT be.territory, COUNT(DISTINCT bs.beneficiary) as beneficiary_count
 		FROM `tabBeneficiary Service` bs
 		JOIN `tabBeneficiary Enrollment` be ON be.name = bs.enrollment
 		WHERE bs.project IN %(projects)s AND bs.docstatus = 1
 		GROUP BY be.territory
-	""", {"projects": tuple(projects)}, as_dict=True)
+	""",
+		{"projects": tuple(projects)},
+		as_dict=True,
+	)
 
 	# Coarse Centroids for Indian territories (District/State level)
 	COARSE_COORDINATES = {
@@ -73,41 +88,41 @@ def get_impact(project=None):
 		"Madurai": [78.1198, 9.9252],
 		"Chennai": [80.2707, 13.0827],
 		"Maharashtra": [73.8567, 18.5204],
-		"India": [78.9629, 20.5937]
+		"India": [78.9629, 20.5937],
 	}
 
 	features = []
 	for d in by_district:
 		t_name = d.territory or "India"
 		coords = COARSE_COORDINATES.get(t_name, [78.9629, 20.5937])
-		features.append({
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": coords
-			},
-			"properties": {
-				"district": t_name,
-				"beneficiaries": d.beneficiary_count
+		features.append(
+			{
+				"type": "Feature",
+				"geometry": {"type": "Point", "coordinates": coords},
+				"properties": {"district": t_name, "beneficiaries": d.beneficiary_count},
 			}
-		})
+		)
 
 	# If no specific territory data, add a general centroid
 	if not features and total_beneficiaries > 0:
-		features.append({
-			"type": "Feature",
-			"geometry": {"type": "Point", "coordinates": [85.1376, 25.5941]},
-			"properties": {"district": "Project Region", "beneficiaries": total_beneficiaries}
-		})
+		features.append(
+			{
+				"type": "Feature",
+				"geometry": {"type": "Point", "coordinates": [85.1376, 25.5941]},
+				"properties": {"district": "Project Region", "beneficiaries": total_beneficiaries},
+			}
+		)
 
 	# 4. Aid items distributed
 	aid_items = []
 	for s in by_service:
-		aid_items.append({
-			"service_type": s.service_type,
-			"units": flt(s.total_qty) or flt(s.count),
-			"amount": flt(s.total_amount)
-		})
+		aid_items.append(
+			{
+				"service_type": s.service_type,
+				"units": flt(s.total_qty) or flt(s.count),
+				"amount": flt(s.total_amount),
+			}
+		)
 
 	return {
 		"total_beneficiaries": total_beneficiaries,
@@ -115,8 +130,5 @@ def get_impact(project=None):
 		"by_service_type": by_service,
 		"by_district": by_district,
 		"aid_items": aid_items,
-		"geojson": {
-			"type": "FeatureCollection",
-			"features": features
-		}
+		"geojson": {"type": "FeatureCollection", "features": features},
 	}

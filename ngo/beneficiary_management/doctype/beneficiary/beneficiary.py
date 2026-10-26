@@ -1,7 +1,8 @@
 import frappe
-from frappe.model.document import Document
-from frappe.utils import getdate, today, date_diff
 from frappe import _
+from frappe.model.document import Document
+from frappe.utils import date_diff, getdate, today
+
 
 class Beneficiary(Document):
 	def validate(self):
@@ -25,7 +26,11 @@ class Beneficiary(Document):
 		if dob_date > today_date:
 			frappe.throw(_("Date of Birth cannot be in the future."))
 
-		years = today_date.year - dob_date.year - ((today_date.month, today_date.day) < (dob_date.month, dob_date.day))
+		years = (
+			today_date.year
+			- dob_date.year
+			- ((today_date.month, today_date.day) < (dob_date.month, dob_date.day))
+		)
 
 		if years < 2:
 			months = (today_date.year - dob_date.year) * 12 + (today_date.month - dob_date.month)
@@ -42,8 +47,8 @@ class Beneficiary(Document):
 				{
 					"national_id_type": self.national_id_type,
 					"national_id_number": self.national_id_number,
-					"name": ("!=", self.name)
-				}
+					"name": ("!=", self.name),
+				},
 			)
 			if existing:
 				frappe.throw(_("Beneficiary with this National ID already exists: {0}").format(existing))
@@ -56,8 +61,13 @@ class Beneficiary(Document):
 					"full_name": self.full_name,
 					"date_of_birth": self.date_of_birth,
 					"territory": self.territory,
-					"name": ("!=", self.name)
-				}
+					"name": ("!=", self.name),
+				},
 			)
 			if existing:
-				frappe.msgprint(_("Warning: A beneficiary with the same name, date of birth, and territory already exists ({0})").format(existing), alert=True)
+				frappe.msgprint(
+					_(
+						"Warning: A beneficiary with the same name, date of birth, and territory already exists ({0})"
+					).format(existing),
+					alert=True,
+				)
