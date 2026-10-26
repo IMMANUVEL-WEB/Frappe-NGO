@@ -11,12 +11,12 @@ def get_spend_breakdown(grant=None, from_date=None, to_date=None):
 	Goods purchased vs Cash assistance vs Services/salaries vs Admin vs Remaining balance.
 	"""
 	donor = get_current_donor(allow_admin_preview=True)
-	
+
 	grant_filters = {"donor_name": donor, "status": "Active"}
 	if grant:
 		grant_filters["name"] = grant
 	grants = frappe.get_all("Donor Grant", filters=grant_filters, fields=["name", "linked_project", "total_amount"])
-	
+
 	projects = list(set([g.linked_project for g in grants if g.linked_project]))
 	total_committed = sum(flt(g.total_amount) for g in grants)
 
@@ -143,8 +143,8 @@ def get_transactions(grant=None, from_date=None, to_date=None, category=None, pa
 
 	# Fetch rows
 	rows = frappe.db.sql(f"""
-		SELECT 
-			gle.name, gle.posting_date, gle.account, gle.debit, gle.credit, 
+		SELECT
+			gle.name, gle.posting_date, gle.account, gle.debit, gle.credit,
 			gle.voucher_type, gle.voucher_no, gle.party, gle.remarks, gle.project
 		FROM `tabGL Entry` gle
 		JOIN `tabAccount` acc ON acc.name = gle.account

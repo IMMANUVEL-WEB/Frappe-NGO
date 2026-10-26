@@ -27,8 +27,8 @@ def get_procurement(grant=None):
 
 	# Query Purchase Invoice items
 	items = frappe.db.sql("""
-		SELECT 
-			pii.item_code, pii.item_name, pii.qty, pii.rate, pii.amount, 
+		SELECT
+			pii.item_code, pii.item_name, pii.qty, pii.rate, pii.amount,
 			pii.uom, pi.name as invoice_no, pi.posting_date, pi.status, pi.project
 		FROM `tabPurchase Invoice Item` pii
 		JOIN `tabPurchase Invoice` pi ON pi.name = pii.parent

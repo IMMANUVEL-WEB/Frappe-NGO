@@ -11,22 +11,22 @@ class Beneficiary(Document):
 
 	def calculate_ages(self):
 		self.age = self.get_age_string(self.date_of_birth)
-		
+
 		for member in self.family_members:
 			member.age = self.get_age_string(member.date_of_birth)
 
 	def get_age_string(self, dob):
 		if not dob:
 			return ""
-		
+
 		dob_date = getdate(dob)
 		today_date = getdate(today())
-		
+
 		if dob_date > today_date:
 			frappe.throw(_("Date of Birth cannot be in the future."))
-			
+
 		years = today_date.year - dob_date.year - ((today_date.month, today_date.day) < (dob_date.month, dob_date.day))
-		
+
 		if years < 2:
 			months = (today_date.year - dob_date.year) * 12 + (today_date.month - dob_date.month)
 			if today_date.day < dob_date.day:
@@ -38,7 +38,7 @@ class Beneficiary(Document):
 	def check_duplicate_id(self):
 		if self.national_id_type and self.national_id_number:
 			existing = frappe.db.exists(
-				"Beneficiary", 
+				"Beneficiary",
 				{
 					"national_id_type": self.national_id_type,
 					"national_id_number": self.national_id_number,

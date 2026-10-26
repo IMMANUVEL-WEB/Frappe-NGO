@@ -10,13 +10,13 @@ def get_grants():
 	Returns list of active/submitted grants for the current authenticated donor.
 	"""
 	donor = get_current_donor(allow_admin_preview=True)
-	
+
 	grants = frappe.get_all(
 		"Donor Grant",
 		filters={"donor_name": donor, "status": ["in", ["Active", "Closed"]]},
 		fields=[
-			"name", "grant_id", "grant_title", "currency", "linked_project", 
-			"valid_from", "valid_to", "status", "cost_center", "funding_type", 
+			"name", "grant_id", "grant_title", "currency", "linked_project",
+			"valid_from", "valid_to", "status", "cost_center", "funding_type",
 			"total_amount", "compliance_tag", "donor_notes"
 		],
 		order_by="creation desc"
@@ -56,7 +56,7 @@ def get_grants():
 		pe = frappe.db.sql("""
 			SELECT SUM(received_amount) as total_received
 			FROM `tabPayment Entry`
-			WHERE party_type = 'Supplier' AND party = %(donor)s 
+			WHERE party_type = 'Supplier' AND party = %(donor)s
 			  AND payment_type = 'Receive' AND docstatus = 1
 		""", {"donor": donor}, as_dict=True)
 		if pe and pe[0].total_received:

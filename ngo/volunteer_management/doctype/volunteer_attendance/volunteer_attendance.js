@@ -13,7 +13,7 @@ function calculate_hours(frm) {
         var out_time = moment(frm.doc.out_time, 'HH:mm:ss');
         var duration = moment.duration(out_time.diff(in_time));
         var hours = duration.asHours();
-        
+
         if (hours > 0) {
             frm.set_value('total_hours', parseFloat(hours.toFixed(2)));
         } else {

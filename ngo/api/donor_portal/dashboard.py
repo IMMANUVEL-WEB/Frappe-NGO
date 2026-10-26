@@ -21,7 +21,7 @@ def get_dashboard():
 		filters={"donor_name": donor, "status": "Active"},
 		fields=["name", "grant_id", "grant_title", "total_amount", "linked_project", "cost_center", "valid_from", "valid_to", "currency"]
 	)
-	
+
 	active_grants_count = len(grants)
 	project_ids = list(set([g.linked_project for g in grants if g.linked_project]))
 	cost_centers = list(set([g.cost_center for g in grants if g.cost_center]))
@@ -76,8 +76,8 @@ def get_dashboard():
 	if spent_conditions:
 		query_where = " OR ".join(spent_conditions)
 		gl_entries = frappe.db.sql(f"""
-			SELECT 
-				gle.name, gle.posting_date, gle.account, gle.debit, gle.credit, 
+			SELECT
+				gle.name, gle.posting_date, gle.account, gle.debit, gle.credit,
 				gle.project, gle.cost_center, gle.voucher_type, gle.voucher_no
 			FROM `tabGL Entry` gle
 			JOIN `tabAccount` acc ON acc.name = gle.account
@@ -103,7 +103,7 @@ def get_dashboard():
 		if cost_centers:
 			p_where.append("cost_center IN %(cost_centers)s")
 			p_params["cost_centers"] = tuple(cost_centers)
-		
+
 		purchases = frappe.db.sql(f"""
 			SELECT SUM(grand_total) as total
 			FROM `tabPurchase Invoice`

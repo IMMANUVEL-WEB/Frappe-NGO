@@ -17,7 +17,7 @@ Covers:
 Execution Modes:
   1. bench --site <site> execute ngo.seed.seed_ngo_data.run
   2. cd sites && ../env/bin/python ../apps/ngo/ngo/seed/seed_ngo_data.py <site> [options]
-  
+
 """
 
 import os

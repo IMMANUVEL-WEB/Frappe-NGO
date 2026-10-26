@@ -34,8 +34,8 @@ def get_projects():
 		"Project",
 		filters={"name": ["in", proj_names]},
 		fields=[
-			"name", "project_name", "status", "percent_complete", 
-			"expected_start_date", "expected_end_date", "custom_sector", 
+			"name", "project_name", "status", "percent_complete",
+			"expected_start_date", "expected_end_date", "custom_sector",
 			"custom_geography", "custom_total_budget"
 		],
 		order_by="creation desc"
@@ -72,7 +72,7 @@ def get_project_detail(project):
 	Returns deep details, tasks/milestones, and impact for a project.
 	"""
 	donor = get_current_donor(allow_admin_preview=True)
-	
+
 	p = frappe.get_doc("Project", project)
 	# Verify grant or donor link
 	has_grant = frappe.db.exists("Donor Grant", {"donor_name": donor, "linked_project": project})
@@ -109,7 +109,7 @@ def approve_proposal(proposal):
 	Applies the workflow action 'Mark as Approved' to the Project Proposal.
 	"""
 	donor = get_current_donor(allow_admin_preview=False)
-	
+
 	if not frappe.db.exists("Project Proposal", proposal):
 		frappe.throw(_("Proposal {0} not found.").format(proposal), frappe.DoesNotExistError)
 

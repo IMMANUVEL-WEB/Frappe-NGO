@@ -41,7 +41,7 @@ class TestDonorPortal(FrappeTestCase):
 				u.send_welcome_email = 0
 				u.insert(ignore_permissions=True)
 				u.add_roles("Donor Liaison")
-			
+
 			if not frappe.db.exists("Portal User", {"parent": dname, "user": u_email}):
 				supp = frappe.get_doc("Supplier", dname)
 				supp.append("portal_users", {"user": u_email})

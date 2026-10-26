@@ -10,7 +10,7 @@ class TestServiceType(FrappeTestCase):
 			"accounting_mode": "Journal Entry",
 			# Missing default_expense_account
 		})
-		
+
 		with self.assertRaises(frappe.exceptions.ValidationError):
 			service.insert()
 
@@ -27,6 +27,6 @@ class TestServiceType(FrappeTestCase):
 			"accounting_mode": "Stock Entry",
 			# Missing default_item
 		})
-		
+
 		with self.assertRaises(frappe.exceptions.ValidationError):
 			service.insert()

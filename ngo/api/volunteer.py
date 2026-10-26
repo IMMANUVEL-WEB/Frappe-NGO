@@ -6,7 +6,7 @@ def get_current_volunteer():
     user = frappe.session.user
     if not user or user == "Guest":
         return None
-        
+
     volunteer = frappe.db.get_value("Volunteer", {"user": user, "status": "Active"}, "name")
     if not volunteer:
         volunteer = frappe.db.get_value("Volunteer", {"user": user}, "name")
@@ -63,12 +63,12 @@ def my_dashboard():
     vol_data = frappe.db.get_value("Volunteer", volunteer, ["full_name", "total_hours"], as_dict=True) or {}
     total_hours = vol_data.get("total_hours") or 0.0
     vol_name = vol_data.get("full_name") or display_name
-    
+
     # Hours this month
     current_month_start = get_first_day(today())
     current_month_end = get_last_day(today())
-    
-    attendances = frappe.get_list("Volunteer Attendance", 
+
+    attendances = frappe.get_list("Volunteer Attendance",
         filters={
             "volunteer": volunteer,
             "date": ["between", [current_month_start, current_month_end]]
@@ -76,22 +76,22 @@ def my_dashboard():
         pluck="total_hours", ignore_permissions=True
     )
     hours_this_month = sum([float(h) for h in attendances if h])
-    
+
     # Active assignments
     active_assignments = frappe.db.count("Volunteer Assignment", {
         "volunteer": volunteer,
         "status": ["in", ["Assigned", "Active"]]
     })
-    
+
     # Shifts where volunteer is participant
     shifts = frappe.get_all("Volunteer Shift Participant",
         filters={"volunteer": volunteer},
         pluck="parent"
     )
-    
+
     next_shift = None
     upcoming_shifts = []
-    
+
     if shifts:
         upcoming_shifts_data = frappe.get_list("Volunteer Shift",
             filters={
@@ -104,7 +104,7 @@ def my_dashboard():
             limit_page_length=5,
             ignore_permissions=True
         )
-        
+
         if upcoming_shifts_data:
             next_shift_doc = upcoming_shifts_data[0]
             opportunity_title = ""
@@ -113,9 +113,9 @@ def my_dashboard():
                 opp_info = frappe.db.get_value("Volunteer Opportunity", next_shift_doc.opportunity, ["title", "location"], as_dict=True) or {}
                 opportunity_title = opp_info.get("title") or next_shift_doc.opportunity
                 location = opp_info.get("location") or ""
-            
+
             project_title = frappe.db.get_value("Project", next_shift_doc.project, "project_name") if next_shift_doc.project else ""
-            
+
             next_shift = {
                 "opportunity_title": opportunity_title,
                 "project": project_title or next_shift_doc.project or "",
@@ -124,7 +124,7 @@ def my_dashboard():
                 "end_time": str(next_shift_doc.end_time),
                 "location": location
             }
-            
+
             for s in upcoming_shifts_data:
                 opp_title = frappe.db.get_value("Volunteer Opportunity", s.opportunity, "title") or s.opportunity
                 upcoming_shifts.append({
@@ -177,18 +177,18 @@ def my_dashboard():
 @frappe.whitelist()
 def my_assignments(status=None):
     volunteer = get_current_volunteer()
-    
+
     filters = {"volunteer": volunteer, "docstatus": ["<", 2]}
     if status:
         filters["status"] = status
-        
+
     assignments = frappe.get_list("Volunteer Assignment",
         filters=filters,
         fields=["name", "opportunity", "project", "role", "from_date", "to_date", "status"],
         order_by="from_date desc",
         ignore_permissions=True
     )
-    
+
     for a in assignments:
         a["opportunity_title"] = frappe.db.get_value("Volunteer Opportunity", a.opportunity, "title") or a.opportunity
         if a.project:
@@ -204,7 +204,7 @@ def my_assignments(status=None):
         else:
             a["location"] = ""
             a["skills"] = []
-        
+
         # Calculate real hours done for this assignment from attendance
         cond = ["volunteer = %s", "docstatus < 2", "status IN ('Present', 'Half Day', 'Approved')"]
         params = [volunteer]
@@ -225,42 +225,42 @@ def my_assignments(status=None):
             WHERE {" AND ".join(cond)}
         """, tuple(params))
         a["hours_done"] = round(float(att_hours[0][0]), 1) if (att_hours and att_hours[0][0]) else 0.0
-        
+
     return assignments
 
 @frappe.whitelist()
 def my_shifts(period="upcoming"):
     volunteer = get_current_volunteer()
-    
+
     # Get all shift names where the volunteer is a participant
     # Use get_all to bypass child table permission check limitation
     participants = frappe.get_all("Volunteer Shift Participant",
         filters={"volunteer": volunteer},
         fields=["parent", "status"]
     )
-    
+
     if not participants:
         return []
-        
+
     shift_names = [p.parent for p in participants]
     participant_status_map = {p.parent: p.status for p in participants}
-    
+
     filters = {"name": ["in", shift_names]}
-    
+
     if period == "upcoming":
         filters["shift_date"] = [">=", today()]
         order = "shift_date asc, start_time asc"
     else:
         filters["shift_date"] = ["<", today()]
         order = "shift_date desc, start_time desc"
-        
+
     shifts = frappe.get_list("Volunteer Shift",
         filters=filters,
         fields=["name", "opportunity", "project", "shift_date", "start_time", "end_time", "status"],
         order_by=order,
         ignore_permissions=True
     )
-    
+
     for s in shifts:
         s["opportunity_title"] = frappe.db.get_value("Volunteer Opportunity", s.opportunity, "title") or s.opportunity
         s["participant_status"] = participant_status_map.get(s.name)
@@ -276,36 +276,36 @@ def my_shifts(period="upcoming"):
         else:
             s["location"] = ""
             s["vacancies"] = 0
-        
+
     return shifts
 
 @frappe.whitelist()
 def my_attendance(from_date=None, to_date=None):
     volunteer = get_current_volunteer()
-    
+
     filters = {
         "volunteer": volunteer,
-        
+
     }
-    
+
     date_filter = []
     if from_date:
         date_filter.append([">=", from_date])
     if to_date:
         date_filter.append(["<=", to_date])
-        
+
     if len(date_filter) == 2:
         filters["date"] = ["between", [from_date, to_date]]
     elif len(date_filter) == 1:
         filters["date"] = date_filter[0]
-        
+
     attendances = frappe.get_list("Volunteer Attendance",
         filters=filters,
         fields=["name", "date", "shift", "opportunity", "project", "in_time", "out_time", "total_hours", "status"],
         order_by="date desc",
         ignore_permissions=True
     )
-    
+
     period_total = 0.0
     for a in attendances:
         if a.total_hours:
@@ -320,7 +320,7 @@ def my_attendance(from_date=None, to_date=None):
             a["project_name"] = frappe.db.get_value("Project", a.project, "project_name") or a.project
         else:
             a["project_name"] = ""
-            
+
     return {
         "data": attendances,
         "period_total": period_total
@@ -332,11 +332,11 @@ import re
 def my_profile():
     volunteer = get_current_volunteer()
     doc = frappe.get_doc("Volunteer", volunteer)
-    
+
     # Calculate stats
     total_assignments = frappe.db.count("Volunteer Assignment", {"volunteer": volunteer, "docstatus": ["<", 2]})
     completed_assignments = frappe.db.count("Volunteer Assignment", {"volunteer": volunteer, "status": "Completed", "docstatus": ["<", 2]})
-    
+
     # Shifts count
     shift_parts = frappe.get_all("Volunteer Shift Participant", filters={"volunteer": volunteer}, fields=["parent"])
     upcoming_shifts = 0
@@ -384,7 +384,7 @@ def update_my_profile(full_name=None, phone=None, address=None, date_of_birth=No
         frappe.throw("Volunteer record not found")
 
     doc = frappe.get_doc("Volunteer", volunteer)
-    
+
     if full_name:
         doc.full_name = full_name.strip()
         if getattr(doc, "user", None):
@@ -396,7 +396,7 @@ def update_my_profile(full_name=None, phone=None, address=None, date_of_birth=No
                 "last_name": last_name,
                 "full_name": doc.full_name
             })
-            
+
     if phone is not None:
         p = phone.strip()
         if p and not re.match(r"^\+?[\d\s-]{7,30}$", p):
@@ -404,51 +404,51 @@ def update_my_profile(full_name=None, phone=None, address=None, date_of_birth=No
         doc.phone = p
         if getattr(doc, "user", None):
             frappe.db.set_value("User", doc.user, "mobile_no", p)
-        
+
     if date_of_birth:
         try:
             from frappe.utils import getdate
             doc.date_of_birth = getdate(date_of_birth)
         except Exception:
             pass
-            
+
     if address is not None:
         doc.address = address.strip()
-        
+
     if bio is not None and getattr(doc, "user", None):
         frappe.db.set_value("User", doc.user, "bio", bio)
-        
+
     if image is not None:
         doc.image = image
         if getattr(doc, "user", None):
             frappe.db.set_value("User", doc.user, "user_image", image)
-        
+
     if availability is not None:
         if isinstance(availability, str):
             import json
             availability = json.loads(availability)
-            
+
         valid_days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-        
+
         # Clear existing
         doc.set("availability", [])
-        
+
         for row in availability:
             if row.get("day_of_week") not in valid_days:
                 frappe.throw(f"Invalid day of week: {row.get('day_of_week')}")
-            
+
             from_time = row.get("from_time")
             to_time = row.get("to_time")
-            
+
             if from_time and to_time and str(from_time) >= str(to_time):
                 frappe.throw(f"From Time must be before To Time on {row.get('day_of_week')}")
-                
+
             doc.append("availability", {
                 "day_of_week": row.get("day_of_week"),
                 "from_time": from_time,
                 "to_time": to_time
             })
-            
+
     doc.flags.ignore_permissions = True
     doc.save()
     frappe.db.commit()
@@ -459,10 +459,10 @@ def upload_profile_image():
     volunteer = get_current_volunteer()
     if not volunteer:
         frappe.throw("Volunteer not found")
-        
+
     if "file" not in frappe.request.files:
         frappe.throw("No file uploaded")
-        
+
     uploaded_file = frappe.request.files["file"]
     from frappe.utils.file_manager import save_file
     file_doc = save_file(
@@ -472,33 +472,33 @@ def upload_profile_image():
         volunteer,
         is_private=0
     )
-    
+
     frappe.db.set_value("Volunteer", volunteer, "image", file_doc.file_url)
-    
+
     user = frappe.db.get_value("Volunteer", volunteer, "user")
     if user:
         frappe.db.set_value("User", user, "user_image", file_doc.file_url)
-        
+
     frappe.db.commit()
     return {"file_url": file_doc.file_url}
 
 @frappe.whitelist()
 def open_opportunities():
     volunteer = get_current_volunteer()
-    
+
     opportunities = frappe.get_list("Volunteer Opportunity",
         filters={"status": "Open"},
         fields=["name", "title", "project", "description", "vacancies", "end_date", "location"],
         order_by="end_date asc",
         ignore_permissions=True
     )
-    
+
     # Check which ones the user has already expressed interest in
     interests = frappe.get_all("Volunteer Opportunity Interest",
         filters={"volunteer": volunteer},
         pluck="opportunity"
     )
-    
+
     # Map human-readable project names
     project_names = {}
     project_ids = list({o.get("project") for o in opportunities if o.get("project")})
@@ -514,24 +514,24 @@ def open_opportunities():
         skills = frappe.get_all("Volunteer Skill Item", filters={"parent": opp.name, "parenttype": "Volunteer Opportunity"}, pluck="skill")
         opp["required_skills"] = ", ".join(skills) if skills else ""
 
-        
+
     return opportunities
 
 @frappe.whitelist()
 def submit_interest(opportunity):
     volunteer = get_current_volunteer()
-    
+
     if not frappe.db.exists("Volunteer Opportunity", opportunity):
         frappe.throw("Invalid Opportunity")
-        
+
     exists = frappe.db.exists("Volunteer Opportunity Interest", {
         "volunteer": volunteer,
         "opportunity": opportunity
     })
-    
+
     if exists:
         return "Already submitted"
-        
+
     doc = frappe.get_doc({
         "doctype": "Volunteer Opportunity Interest",
         "volunteer": volunteer,
@@ -544,10 +544,10 @@ def submit_interest(opportunity):
 @frappe.whitelist()
 def update_password(old_password, new_password):
     user = frappe.session.user
-    
+
     if user == "Guest":
         frappe.throw("Not logged in")
-        
+
     try:
         frappe.core.doctype.user.user.update_password(new_password=new_password, old_password=old_password)
         return "Password updated successfully"
@@ -626,7 +626,7 @@ def submit_application(applicant_name, email, phone=None, date_of_birth=None, ge
         )
         if existing:
             return {"status": "error", "message": "An application is already pending for this email address. Please wait for it to be reviewed."}
-            
+
         doc = frappe.new_doc("Volunteer Application")
         doc.applicant_name = applicant_name
         doc.email = email
@@ -652,12 +652,12 @@ def submit_application(applicant_name, email, phone=None, date_of_birth=None, ge
                             "doctype": "Volunteer Skill",
                             "skill_name": skill_name
                         }).insert(ignore_permissions=True)
-                        
+
                     doc.append("skills", {
                         "skill": skill_name,
                         "proficiency": s.get("proficiency")
                     })
-                
+
         if availability:
             if isinstance(availability, str):
                 availability = json.loads(availability)
@@ -667,13 +667,13 @@ def submit_application(applicant_name, email, phone=None, date_of_birth=None, ge
                     "from_time": a.get("from_time"),
                     "to_time": a.get("to_time")
                 })
-                
+
         doc.insert(ignore_permissions=True)
-        
+
         # Override the workflow state directly
         if getattr(doc, "workflow_state", None) == "Draft":
             doc.db_set("workflow_state", "Pending")
-            
+
         frappe.db.commit()
         return {"status": "success"}
     except Exception as e:
