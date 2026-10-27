@@ -1,8 +1,10 @@
 <template>
 	<div
-		class="min-h-screen bg-[#f8fafc] flex flex-col md:flex-row font-sans text-black-800 antialiased"
+		class="min-h-screen bg-[#f8fafc] flex flex-col font-sans text-black-800 antialiased overflow-x-clip"
 	>
-		<!-- Mobile Top Header -->
+		<!-- Portal Body Layout: Sidebar + Main Content -->
+		<div class="flex-1 flex flex-col md:flex-row min-h-0 w-full">
+			<!-- Mobile Top Header -->
 		<div
 			class="md:hidden bg-[#043226] text-white px-4 py-3.5 flex justify-between items-center shadow-md sticky top-0 z-30"
 		>
@@ -93,7 +95,7 @@
 		<!-- Left Sidebar (Desktop + Mobile Drawer) -->
 		<aside
 			:class="[
-				'fixed md:sticky top-0 h-screen inset-y-0 left-0 flex flex-col w-64 bg-[#043226] text-white z-40 transition-transform duration-300 ease-in-out shadow-2xl md:shadow-none select-none overflow-hidden',
+				'fixed md:static inset-y-0 left-0 flex flex-col w-64 bg-[#043226] text-white z-40 transition-transform duration-300 ease-in-out shadow-2xl md:shadow-none select-none shrink-0 self-stretch min-h-full relative overflow-hidden',
 				mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
 			]"
 		>
@@ -124,6 +126,7 @@
 				</svg>
 			</div>
 
+			<div class="md:sticky md:top-0 md:h-screen flex flex-col justify-between overflow-hidden flex-1 relative z-10">
 			<!-- Brand Header with Dynamic Portal Settings Logo -->
 			<div class="px-6 pt-7 pb-6 flex items-center gap-3 border-b border-emerald-900/40">
 				<template v-if="portalSettings.login_logo">
@@ -220,6 +223,7 @@
 					Sign Out
 				</button>
 			</div>
+			</div>
 		</aside>
 
 		<!-- Mobile Backdrop Overlay -->
@@ -230,7 +234,7 @@
 		></div>
 
 		<!-- Main Content Area with Top Header -->
-		<div class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+		<div class="flex-1 flex flex-col min-w-0">
 			<!-- Top Header Bar: Rich, Aesthetic, Interactive Navbar -->
 			<header
 				class="bg-white/95 backdrop-blur-md border-b border-black-200/70 px-4 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between sticky top-0 z-20 shadow-[0_1px_3px_rgba(0,0,0,0.02)] transition-all"
@@ -623,12 +627,13 @@
 			<main class="flex-1 p-5 md:p-8 max-w-7xl mx-auto w-full">
 				<slot />
 			</main>
-
-			<!-- Configurable Portal Footer -->
-			<PortalFooter portalType="volunteer" />
 		</div>
+	</div>
 
-		<!-- Solid, Perfectly Aligned Sign Out Modal -->
+	<!-- Configurable Portal Footer: Placed at bottom of portal layout -->
+	<PortalFooter portalType="volunteer" />
+
+	<!-- Solid, Perfectly Aligned Sign Out Modal -->
 		<Teleport to="body">
 			<Transition
 				enter-active-class="transition duration-200 ease-out"

@@ -1,4 +1,5 @@
 import frappeUIPreset from "frappe-ui/src/tailwind/preset";
+import colors from "tailwindcss/colors";
 
 export default {
 	presets: [frappeUIPreset],
@@ -14,6 +15,8 @@ export default {
 				secondary: "var(--secondary-color)",
 				login: "var(--login-color)",
 				sidebar: "var(--sidebar-color)",
+				slate: colors.slate,
+				emerald: colors.emerald,
 			},
 		},
 	},

@@ -1,8 +1,10 @@
 <template>
 	<div
-		class="min-h-screen bg-slate-50 flex flex-col md:flex-row font-sans text-slate-800 overflow-x-hidden"
+		class="min-h-screen bg-slate-50 flex flex-col font-sans text-slate-800 overflow-x-clip"
 	>
-		<!-- Mobile Sidebar Backdrop -->
+		<!-- Portal Body Layout: Sidebar + Main Content -->
+		<div class="flex-1 flex flex-col md:flex-row min-h-0 w-full">
+			<!-- Mobile Sidebar Backdrop -->
 		<div
 			v-if="isMobileMenuOpen"
 			class="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-sm md:hidden"
@@ -12,11 +14,12 @@
 		<!-- Sidebar -->
 		<aside
 			:class="[
-				'fixed md:static inset-y-0 left-0 z-50 w-64 bg-[#0d1b2a] text-slate-200 flex flex-col justify-between transition-transform duration-300 ease-in-out shadow-xl md:shadow-none',
+				'fixed md:static inset-y-0 left-0 z-50 w-64 bg-[#0d1b2a] text-slate-200 flex flex-col transition-transform duration-300 ease-in-out shadow-xl md:shadow-none select-none shrink-0 self-stretch min-h-full',
 				isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
 			]"
 		>
-			<div>
+			<div class="md:sticky md:top-0 md:h-screen flex flex-col justify-between overflow-y-auto flex-1">
+				<div>
 				<!-- Brand Header -->
 				<div class="px-6 py-6 border-b border-slate-800/80 flex items-center space-x-3">
 					<div
@@ -289,10 +292,11 @@
 					Log Out
 				</button>
 			</div>
+			</div>
 		</aside>
 
 		<!-- Main Content Wrapper -->
-		<div class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+		<div class="flex-1 flex flex-col min-w-0">
 			<!-- Top Navbar -->
 			<header
 				class="bg-white border-b border-slate-200/80 px-4 md:px-8 py-4 flex items-center justify-between sticky top-0 z-30 shadow-xs"
@@ -424,11 +428,12 @@
 			<main class="flex-1 p-4 md:p-8 overflow-x-hidden">
 				<router-view />
 			</main>
-
-			<!-- Configurable Portal Footer -->
-			<PortalFooter portalType="donor" />
 		</div>
 	</div>
+
+	<!-- Configurable Portal Footer: Placed at bottom of portal layout -->
+	<PortalFooter portalType="donor" />
+</div>
 
 	<!-- Logout Confirmation Modal Popup -->
 	<teleport to="body">

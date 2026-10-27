@@ -62,16 +62,16 @@ def execute():
 			ngo_settings.footer_enabled = 1
 			updated = True
 		if not getattr(ngo_settings, "footer_organization_name", None):
-			ngo_settings.footer_organization_name = "Kindred ImpactSphere"
+			ngo_settings.footer_organization_name = "Non Governmentl Organization"
 			updated = True
 		if not getattr(ngo_settings, "footer_tagline", None):
-			ngo_settings.footer_tagline = "People helping people creates a stronger tomorrow."
+			ngo_settings.footer_tagline = "Non Governmentl Organization Platform"
 			updated = True
 		if not getattr(ngo_settings, "footer_copyright_text", None):
-			ngo_settings.footer_copyright_text = "© 2026 Kindred ImpactSphere. All rights reserved."
+			ngo_settings.footer_copyright_text = "© 2026 Non Governmentl Organization. All rights reserved."
 			updated = True
 		if not getattr(ngo_settings, "footer_powered_by", None):
-			ngo_settings.footer_powered_by = "Kindred NGO Platform"
+			ngo_settings.footer_powered_by = "Non Governmentl Organization Platform"
 			updated = True
 		if (
 			getattr(ngo_settings, "footer_show_quick_links", None) is None
@@ -92,10 +92,10 @@ def execute():
 			ngo_settings.footer_show_contact_info = 1
 			updated = True
 		if not getattr(ngo_settings, "footer_contact_email", None):
-			ngo_settings.footer_contact_email = "support@impactsphere.org"
+			ngo_settings.footer_contact_email = "ngo@support.com"
 			updated = True
 		if not getattr(ngo_settings, "footer_contact_phone", None):
-			ngo_settings.footer_contact_phone = "+1 (800) 555-0199"
+			ngo_settings.footer_contact_phone = "+91 1234567890"
 			updated = True
 		if updated:
 			ngo_settings.save(ignore_permissions=True)
