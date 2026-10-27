@@ -114,7 +114,7 @@
 
 						<!-- Headline -->
 						<h1
-							class="text-2xl sm:text-[26px] lg:text-[28px] font-extrabold text-white tracking-tight leading-[1.2] mt-4"
+							class="text-2xl sm:text-[26px] lg:text-[28px] font-extrabold text-white tracking-tight leading-[1.2] mt-6"
 						>
 							{{
 								settings.apply_hero_title || "Step Forward. Create Lasting Impact."
@@ -123,7 +123,7 @@
 
 						<!-- Description -->
 						<p
-							class="text-emerald-100/90 text-xs sm:text-[13px] leading-relaxed mt-2.5 font-normal"
+							class="text-emerald-100/90 text-xs sm:text-[13px] leading-relaxed mt-2.5 font-normal mt-3"
 						>
 							{{
 								settings.apply_hero_description ||

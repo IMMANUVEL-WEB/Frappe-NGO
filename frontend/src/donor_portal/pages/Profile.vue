@@ -65,7 +65,7 @@
 						</div>
 						<div>
 							<div class="flex flex-wrap items-center gap-2">
-								<h3 class="text-2xl font-black tracking-tight text-black">
+								<h3 class="text-2xl font-black tracking-tight text-white">
 									{{ profile.donor_name }}
 								</h3>
 								<span
@@ -138,18 +138,6 @@
 								profile.active_grants_count || 1
 							}}</span>
 							<span class="text-[10px] text-slate-400">Current Portfolio</span>
-						</div>
-						<div
-							class="bg-black/10 backdrop-blur-md rounded-2xl p-4 border border-black/10 min-w-[130px] text-center"
-						>
-							<span
-								class="text-[10px] font-bold uppercase tracking-wider text-slate-300 block"
-								>Security Tier</span
-							>
-							<span class="text-sm font-black text-black mt-1 block"
-								>Tier-1 Principal</span
-							>
-							<span class="text-[10px] text-emerald-300">Audited & Verified</span>
 						</div>
 					</div>
 				</div>
@@ -316,7 +304,7 @@
 								:class="
 									showInquiry
 										? 'bg-slate-100 text-slate-700'
-										: 'bg-emerald-600 hover:bg-emerald-700 text-black shadow-xs'
+										: 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs'
 								"
 							>
 								<span>{{ showInquiry ? "Hide Form" : "New Inquiry" }}</span>
@@ -536,7 +524,7 @@
 						<button
 							type="button"
 							@click="showInquiry = true"
-							class="w-full mt-2 py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-black text-xs font-bold transition flex items-center justify-center gap-1.5"
+							class="w-full mt-2 py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition flex items-center justify-center gap-1.5"
 						>
 							<span>Contact Liaison Desk</span>
 							<span>&rarr;</span>

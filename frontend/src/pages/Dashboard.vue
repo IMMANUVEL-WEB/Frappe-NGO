@@ -538,7 +538,7 @@
 						</p>
 						<router-link
 							to="/opportunities"
-							class="mt-4 inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-black text-xs font-semibold rounded-xl transition-all shadow-sm"
+							class="mt-4 inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-800 hover:bg-emerald-900 text-white text-xs font-semibold rounded-xl transition-all shadow-sm"
 						>
 							Browse Opportunities →
 						</router-link>

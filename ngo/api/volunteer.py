@@ -650,7 +650,7 @@ def get_portal_settings():
 		"secondary_color": "#0891b2",
 		"login_color": "#1e3a8a",
 		"sidebar_color": "#1f2937",
-		"login_portal_title": "Kindred",
+		"login_portal_title": "Non Govermental Organization",
 		"login_portal_subtitle": "IMPACTSPHERE",
 		"login_hero_badge": "GLOBAL NGO COMMUNITY",
 		"login_hero_title": "Empowering communities, together.",
@@ -658,8 +658,8 @@ def get_portal_settings():
 		"login_hero_image": "",
 		"login_form_title": "Welcome back, changemaker",
 		"login_form_subtitle": "Log in to access your deployment shifts, impact ledger, and verified hours.",
-		"login_email_label": "VOLUNTEER EMAIL ADDRESS",
-		"login_email_placeholder": "you@example.com",
+		"login_email_label": "EMAIL ADDRESS",
+		"login_email_placeholder": "volunteer@example.com / donor@example.com",
 		"login_password_label": "PASSWORD",
 		"login_forgot_password_label": "Forgot password?",
 		"login_forgot_password_url": "#",
@@ -799,3 +799,54 @@ def get_website_user_home_page(user):
 		pass
 
 	return None
+
+
+@frappe.whitelist(allow_guest=True)  # nosemgrep
+def get_portal_footer_settings():
+	doc = frappe.get_single("NGO Settings")
+	d = doc.as_dict() if doc else {}
+
+	defaults = {
+		"footer_enabled": 1,
+		"footer_organization_name": "Kindred ImpactSphere",
+		"footer_tagline": "People helping people creates a stronger tomorrow.",
+		"footer_description": "Together, we drive community empowerment through transparent volunteer action and accountable donor partnerships.",
+		"footer_logo": "",
+		"footer_copyright_text": "© 2026 Kindred ImpactSphere. All rights reserved.",
+		"footer_powered_by": "Kindred NGO Platform",
+		"footer_show_quick_links": 1,
+		"footer_show_social_links": 1,
+		"footer_show_contact_info": 1,
+		"footer_contact_email": "support@impactsphere.org",
+		"footer_contact_phone": "+1 (800) 555-0199",
+		"footer_address": "100 Impact Way, Social Innovation Hub, CA 94105",
+		"footer_privacy_url": "/privacy",
+		"footer_terms_url": "/terms",
+		"footer_support_url": "/support",
+		"footer_website_url": "https://impactsphere.org",
+		"footer_facebook_url": "https://facebook.com",
+		"footer_twitter_url": "https://x.com",
+		"footer_linkedin_url": "https://linkedin.com",
+		"footer_instagram_url": "https://instagram.com",
+		"footer_youtube_url": "https://youtube.com",
+		"footer_custom_links": "",
+	}
+
+	is_unconfigured = not d.get("footer_organization_name")
+	res = {}
+	for k, v in defaults.items():
+		val = d.get(k)
+		if k in (
+			"footer_enabled",
+			"footer_show_quick_links",
+			"footer_show_social_links",
+			"footer_show_contact_info",
+		):
+			if is_unconfigured or val is None:
+				res[k] = 1
+			else:
+				res[k] = 1 if (val == 1 or val == "1" or val is True) else 0
+		else:
+			res[k] = val if (val is not None and val != "") else v
+
+	return res
